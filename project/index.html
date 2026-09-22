@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fluid Kinematics | وصف حركة الموائع — Fluid Mechanics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=Cairo:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&family=Amiri&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    tags: 'none'
+  },
+  chtml: {
+    scale: 1,
+    displayAlign: 'center'
+  }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+:root{
+  --navy:#0B2447; --royal:#1B4F8A; --sky:#2E86C1; --azure:#5DADE2; --mist:#D6EAF8; --pearl:#EBF5FB; --white:#FFFFFF; --ink:#1A1A2E; --graphite:#2C3E50; --slate:#5D6D7E; --gold:#D4AC0D; --amber:#F0B429; --mint:#1ABC9C; --mint-light:#D5F5E3; --coral:#E74C3C; --coral-light:#FADBD8; --shadow:0 4px 20px rgba(11,36,71,0.10); --shadow-lg:0 8px 40px rgba(11,36,71,0.16); --radius:14px; --radius-sm:8px;
+}
+
+*{box-sizing:border-box;}
+*{max-width:100%;}
+html,body{overflow-x:hidden;}
+
+body{
+  margin:0;
+  background:linear-gradient(160deg, #f0f6ff 0%, #e8f1fb 50%, #f5f9ff 100%);
+  font-family:'Cairo','Source Serif 4',serif;
+  font-size:17px;
+  line-height:1.85;
+  color:var(--ink);
+}
+
+.ltr{ direction:ltr; unicode-bidi:isolate; font-family:'JetBrains Mono', monospace; }
+
+/* ===================== HEADER ===================== */
+header.lecture-header{
+  position:relative;
+  background:linear-gradient(135deg, var(--navy) 0%, var(--royal) 60%, var(--sky) 100%);
+  padding:60px 40px 50px;
+  overflow:hidden;
+  color:#fff;
+  text-align:center;
+}
+header.lecture-header::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:
+    repeating-linear-gradient(115deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 2px, transparent 2px, transparent 40px),
+    repeating-linear-gradient(25deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 2px, transparent 2px, transparent 40px);
+  pointer-events:none;
+}
+.header-inner{ position:relative; z-index:1; max-width:960px; margin:0 auto; }
+.badge{
+  display:inline-block;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.3);
+  padding:6px 18px;
+  border-radius:20px;
+  font-size:0.78rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-family:'Cairo',sans-serif;
+  margin-bottom:22px;
+}
+h1.main-title{
+  font-family:'Playfair Display', serif;
+  font-weight:800;
+  font-size:clamp(2rem, 5vw, 3.2rem);
+  text-shadow:0 2px 12px rgba(0,0,0,0.25);
+  margin:0 0 18px 0;
+  line-height:1.25;
+}
+h1.main-title .ar-line{
+  display:block;
+  font-size:0.65em;
+  opacity:0.85;
+  margin-top:8px;
+}
+.subtitle{
+  font-family:'Source Serif 4', serif;
+  font-style:italic;
+  font-size:1.1rem;
+  opacity:0.85;
+  direction:ltr;
+  max-width:650px;
+  margin:0 auto 28px;
+}
+.meta-pills{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin-top:10px;
+}
+.pill{
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.28);
+  padding:7px 16px;
+  border-radius:20px;
+  font-size:0.85rem;
+  font-family:'Cairo',sans-serif;
+  white-space:nowrap;
+}
+
+/* ===================== DUA SECTION ===================== */
+.dua-wrapper{
+  max-width:960px;
+  margin:28px auto 0;
+  padding:0 24px;
+}
+.dua-card{
+  background:#fff;
+  border:1.5px solid #e8b84b;
+  border-radius:14px;
+  box-shadow:0 2px 12px rgba(168,120,42,0.10);
+  overflow:hidden;
+}
+.dua-toggle-btn{
+  width:100%;
+  background:linear-gradient(135deg,#7a5800,#b8860b);
+  color:#fff;
+  border:none;
+  padding:16px 22px;
+  font-family:'Cairo',sans-serif;
+  font-size:1.05rem;
+  font-weight:700;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  text-align:right;
+  border-radius:14px;
+}
+.dua-toggle-btn .arrow{
+  display:inline-block;
+  transition:transform 0.3s ease;
+  font-size:0.9rem;
+}
+.dua-toggle-btn[aria-expanded="true"] .arrow{
+  transform:rotate(180deg);
+}
+.dua-content{
+  display:none;
+  padding:26px 28px;
+  background:linear-gradient(135deg,#fffbea,#fff9f0);
+}
+.dua-content p{
+  font-family:'Amiri', serif;
+  font-size:17px;
+  line-height:2.1;
+  color:#5a3e00;
+  border-right:3px solid #e8b84b;
+  padding-right:14px;
+  margin:0 0 18px 0;
+}
+.dua-content p:last-child{ margin-bottom:0; }
+
+/* ===================== TOC ===================== */
+.toc-wrapper{
+  max-width:900px;
+  margin:32px auto 0;
+  padding:0 24px;
+}
+.toc-card{
+  background:#fff;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.toc-header{
+  background:linear-gradient(90deg, var(--royal), var(--sky));
+  color:#fff;
+  padding:18px 26px;
+  font-family:'Playfair Display', serif;
+  font-size:1.2rem;
+  font-weight:700;
+}
+.toc-body{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  padding:20px;
+}
+.toc-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 10px;
+  border-radius:var(--radius-sm);
+  text-decoration:none;
+  color:var(--graphite);
+  font-family:'Cairo',sans-serif;
+  font-size:0.95rem;
+  transition:background 0.2s;
+}
+.toc-item:hover{ background:var(--pearl); }
+.toc-num{
+  flex:0 0 26px;
+  width:26px; height:26px;
+  border-radius:50%;
+  background:var(--sky);
+  color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.78rem;
+  font-weight:500;
+}
+@media (max-width:600px){
+  .toc-body{ grid-template-columns:1fr; }
+}
+
+/* ===================== CONTENT WRAPPER ===================== */
+.content-wrapper{
+  max-width:960px;
+  margin:0 auto;
+  padding:0 24px;
+}
+hr.section-divider{
+  border:none;
+  height:2px;
+  background:linear-gradient(90deg, transparent, rgba(46,134,193,0.35), transparent);
+  margin:50px 0;
+}
+.section{ scroll-margin-top:20px; }
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding-bottom:16px;
+  border-bottom:3px solid var(--mist);
+  margin-bottom:28px;
+}
+.section-icon{
+  flex:0 0 52px;
+  width:52px; height:52px;
+  border-radius:14px;
+  background:linear-gradient(135deg, var(--royal), var(--sky));
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.6rem;
+  box-shadow:var(--shadow);
+}
+.section-titles h2{
+  font-family:'Playfair Display', serif;
+  font-size:1.75rem;
+  color:var(--navy);
+  margin:0 0 4px 0;
+}
+.section-titles .section-subtitle{
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.8rem;
+  color:var(--slate);
+  direction:ltr;
+  display:inline-block;
+}
+
+p{ margin:0 0 16px 0; }
+strong{ color:var(--navy); }
+
+/* ===================== BOXES ===================== */
+.def-box{
+  background:linear-gradient(135deg, var(--mist), var(--pearl));
+  border-right:5px solid var(--sky);
+  border-radius:var(--radius-sm);
+  padding:18px 22px;
+  margin:20px 0;
+}
+.def-box .box-label{
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.72rem;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--royal);
+  font-weight:500;
+  margin-bottom:8px;
+  display:block;
+}
+
+.formula-box{
+  background:var(--navy);
+  color:#fff;
+  border-radius:var(--radius-sm);
+  padding:22px 24px;
+  margin:20px 0;
+  box-shadow:var(--shadow);
+}
+.formula-box .box-label{
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.72rem;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--azure);
+  font-weight:500;
+  margin-bottom:6px;
+  display:block;
+}
+.formula-box mjx-container{ color:#fff !important; }
+.equation-scroll{
+  width:100%;
+  max-width:100%;
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  padding:4px 0;
+}
+.equation-scroll mjx-container{
+  margin:0.5em 0 !important;
+}
+
+.note-box{
+  background:#fffbea;
+  border-right:5px solid var(--amber);
+  border-radius:var(--radius-sm);
+  padding:18px 22px;
+  margin:20px 0;
+}
+.note-box .box-label{
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.72rem;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:#8a6100;
+  font-weight:500;
+  margin-bottom:8px;
+  display:block;
+}
+
+.insight-box{
+  background:var(--mint-light);
+  border-right:5px solid var(--mint);
+  border-radius:var(--radius-sm);
+  padding:18px 22px;
+  margin:20px 0;
+}
+.insight-box .box-label{
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.72rem;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:#0e6b56;
+  font-weight:500;
+  margin-bottom:8px;
+  display:block;
+}
+
+.assumption-box{
+  background:var(--coral-light);
+  border-right:5px solid var(--coral);
+  border-radius:var(--radius-sm);
+  padding:18px 22px;
+  margin:20px 0;
+}
+.assumption-box .box-label{
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.72rem;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:#a4331e;
+  font-weight:500;
+  margin-bottom:8px;
+  display:block;
+}
+
+/* ===================== EXAMPLE CARD ===================== */
+.example-card{
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  margin:26px 0;
+  border:1px solid var(--mist);
+}
+.example-header{
+  background:linear-gradient(135deg, var(--sky), var(--azure));
+  color:#fff;
+  padding:14px 22px;
+  font-family:'Playfair Display', serif;
+  font-weight:700;
+  font-size:1.1rem;
+}
+.example-body{ padding:22px; background:#fff; }
+.example-question{
+  background:var(--pearl);
+  border-radius:var(--radius-sm);
+  padding:16px 20px;
+  direction:ltr;
+  text-align:left;
+  font-family:'Source Serif 4', serif;
+  margin-bottom:18px;
+  color:var(--graphite);
+}
+.solution-steps{ counter-reset:step; }
+.solution-step{
+  position:relative;
+  padding:4px 0 4px 42px;
+  margin-bottom:14px;
+}
+[dir="rtl"] .solution-step{ padding:4px 42px 4px 0; }
+.solution-step::before{
+  counter-increment:step;
+  content:counter(step);
+  position:absolute;
+  right:0;
+  top:2px;
+  width:28px; height:28px;
+  border-radius:50%;
+  background:var(--royal);
+  color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.85rem;
+  font-weight:500;
+}
+.answer-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--mint);
+  color:#fff;
+  padding:10px 20px;
+  border-radius:24px;
+  font-family:'JetBrains Mono', monospace;
+  font-weight:500;
+  margin-top:12px;
+  direction:ltr;
+}
+
+/* ===================== TABLES ===================== */
+.table-container{
+  overflow-x:auto;
+  margin:20px 0;
+  border-radius:var(--radius-sm);
+  box-shadow:var(--shadow);
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+  min-width:480px;
+}
+thead th{
+  background:var(--royal);
+  color:#fff;
+  padding:14px 16px;
+  font-family:'Cairo',sans-serif;
+  font-weight:700;
+  text-align:right;
+  white-space:nowrap;
+}
+tbody td{
+  padding:12px 16px;
+  text-align:right;
+  font-family:'Cairo',sans-serif;
+  color:var(--navy);
+  border-bottom:1px solid var(--mist);
+}
+tbody td.mono, tbody td .mono-cell{
+  font-family:'JetBrains Mono', monospace;
+  text-align:center;
+  direction:ltr;
+}
+tbody tr:nth-child(even){ background:var(--pearl); }
+
+/* ===================== SCROLL HINT ===================== */
+.scroll-hint{
+  display:none;
+  text-align:center;
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.72rem;
+  color:var(--slate);
+  margin:-12px 0 14px;
+}
+@media (max-width:600px){
+  .scroll-hint{ display:block; }
+}
+
+/* ===================== IMAGES ===================== */
+figure.lecture-figure{
+  margin:24px 0;
+  text-align:center;
+}
+figure.lecture-figure img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius-sm);
+  box-shadow:var(--shadow);
+}
+figure.lecture-figure.wide img{ max-width:100%; }
+figure.lecture-figure figcaption{
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.78rem;
+  color:var(--slate);
+  margin-top:10px;
+  direction:ltr;
+}
+.figure-medium img{ max-width:480px; }
+.figure-large img{ max-width:620px; }
+figure.lecture-figure.wide img{ max-width:700px; }
+.figure-row{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin:24px 0;
+}
+.figure-row figure.lecture-figure{ margin:0; flex:1 1 260px; max-width:340px; }
+
+/* ===================== INLINE CONCEPT MEDIA (side-by-side with text/formulas) ===================== */
+.inline-concept-media{
+  display:flex;
+  gap:22px;
+  align-items:center;
+  margin:20px 0;
+}
+.inline-concept-media .media-text{
+  flex:1 1 58%;
+  min-width:240px;
+}
+.inline-concept-media .media-text p{
+  margin:0;
+}
+.inline-concept-media .media-visual{
+  flex:0 0 260px;
+  max-width:270px;
+  text-align:center;
+}
+.inline-concept-media .media-visual img{
+  width:100%;
+  max-width:260px;
+  height:auto;
+  border-radius:var(--radius-sm);
+  box-shadow:var(--shadow);
+  display:block;
+  margin:0 auto;
+}
+.inline-concept-media .media-visual figcaption{
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.72rem;
+  color:var(--slate);
+  margin-top:8px;
+  direction:ltr;
+  line-height:1.35;
+}
+@media (max-width:720px){
+  .inline-concept-media{
+    flex-direction:column;
+  }
+  .inline-concept-media .media-visual{
+    flex:1 1 auto;
+    max-width:260px;
+    margin:14px auto 0;
+  }
+}
+
+/* ===================== BESIDE-TEXT MEDIA (small, inline with explanation) ===================== */
+.media-beside{
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+  margin:20px 0;
+}
+.media-beside .media-text{ flex:1 1 55%; min-width:220px; }
+.media-beside .media-text p{ margin:0; }
+.media-beside .media-visual{ flex:0 1 280px; min-width:200px; text-align:center; }
+.media-beside .media-visual video,
+.media-beside .media-visual img{
+  width:100%;
+  max-width:280px;
+  border-radius:var(--radius-sm);
+  box-shadow:var(--shadow);
+  display:block;
+  margin:0 auto;
+}
+.media-beside .media-visual figcaption{
+  font-family:'JetBrains Mono', monospace;
+  font-size:0.7rem;
+  color:var(--slate);
+  margin-top:8px;
+  direction:ltr;
+  line-height:1.4;
+}
+@media (max-width:700px){
+  .media-beside{ flex-direction:column; }
+  .media-beside .media-visual{ flex:1 1 auto; max-width:260px; margin:0 auto; }
+}
+
+/* ===================== Q-SECTION ===================== */
+.q-section{
+  border:2px solid var(--royal);
+  border-radius:var(--radius);
+  padding:22px;
+  margin:20px 0;
+  background:#fff;
+}
+.q-section h4{
+  font-family:'Playfair Display', serif;
+  color:var(--navy);
+  margin:0 0 14px 0;
+}
+.q-item{
+  border-top:1px solid var(--mist);
+  padding-top:16px;
+  margin-top:16px;
+}
+.q-item:first-child{ border-top:none; padding-top:0; margin-top:0; }
+.q-prompt{
+  font-family:'Cairo',sans-serif;
+  margin-bottom:10px;
+}
+.q-prompt .ltr{ display:block; margin-top:6px; }
+.reveal-btn{
+  background:linear-gradient(135deg, var(--royal), var(--sky));
+  color:#fff;
+  border:none;
+  padding:9px 20px;
+  border-radius:20px;
+  font-family:'Cairo',sans-serif;
+  font-size:0.88rem;
+  font-weight:600;
+  cursor:pointer;
+}
+.q-solution{
+  display:none;
+  margin-top:16px;
+  padding:16px 18px;
+  background:var(--pearl);
+  border-radius:var(--radius-sm);
+  border-right:4px solid var(--sky);
+}
+.q-solution.open{ display:block; }
+
+/* ===================== FOOTER ===================== */
+footer.lecture-footer{
+  background:var(--navy);
+  color:#fff;
+  text-align:center;
+  border-radius:var(--radius);
+  margin:40px auto 0;
+  max-width:960px;
+  padding:34px 30px;
+}
+footer.lecture-footer h3{
+  font-family:'Playfair Display', serif;
+  font-size:1.2rem;
+  font-weight:700;
+  margin:0 0 10px 0;
+}
+footer.lecture-footer p{
+  opacity:0.7;
+  margin-bottom:18px;
+}
+.footer-tags{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+}
+.footer-tag{
+  background:rgba(255,255,255,0.1);
+  padding:6px 14px;
+  border-radius:16px;
+  font-size:0.78rem;
+  font-family:'JetBrains Mono', monospace;
+}
+
+/* ===================== CLOSING DUA (non-collapsible) ===================== */
+.closing-wrapper{
+  max-width:960px;
+  margin:24px auto 50px;
+  padding:0 24px;
+}
+.closing-card{
+  background:linear-gradient(135deg,#0B2447,#1B4F8A);
+  border-top:4px solid #D4AC0D;
+  border-radius:14px;
+  box-shadow:0 8px 32px rgba(11,36,71,0.18);
+  padding:30px 28px;
+}
+.closing-card p{
+  font-family:'Amiri', serif;
+  font-size:19px;
+  line-height:2.2;
+  color:#fff;
+  text-shadow:0 1px 4px rgba(0,0,0,0.2);
+  text-align:center;
+  margin:0;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width:768px){
+  header.lecture-header{ padding:48px 28px 40px; }
+  .content-wrapper, .toc-wrapper, .dua-wrapper{ padding:0 18px; }
+  .section-icon{ width:44px; height:44px; flex-basis:44px; font-size:1.35rem; border-radius:12px; }
+  .section-titles h2{ font-size:1.45rem; }
+}
+@media (max-width:650px){
+  body{ font-size:16px; }
+  header.lecture-header{ padding:40px 20px 34px; }
+  .formula-box{ padding:18px 16px; }
+  .example-body{ padding:16px; }
+}
+@media (max-width:600px){
+  header.lecture-header{ padding:36px 16px 30px; }
+  .meta-pills{ gap:6px; }
+  .pill{ padding:5px 12px; font-size:0.76rem; }
+  .toc-header{ padding:14px 18px; font-size:1.05rem; }
+  .section-header{ gap:12px; }
+  .def-box, .note-box, .insight-box, .assumption-box{ padding:14px 16px; }
+  .q-section{ padding:16px; }
+  .closing-card{ padding:22px 18px; }
+  .closing-card p{ font-size:17px; }
+}
+@media (max-width:380px){
+  h1.main-title{ font-size:1.7rem; }
+  .subtitle{ font-size:0.95rem; }
+  body{ font-size:15px; }
+}
+
+/* ===================== FORM SECTION HEADINGS ===================== */
+.form-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  margin: 40px 0 20px 0;
+  padding: 18px 28px;
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.form-section-heading::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  background: repeating-linear-gradient(
+    45deg,
+    currentColor 0px,
+    currentColor 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+.form-heading-icon {
+  font-size: 1.6rem;
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+.integral-heading {
+  background: linear-gradient(135deg, #0B2447 0%, #1B4F8A 100%);
+  color: #fff;
+  border-left: 6px solid var(--azure);
+  box-shadow: 0 6px 24px rgba(11, 36, 71, 0.25);
+}
+.differential-heading {
+  background: linear-gradient(135deg, #1A5276 0%, #148F77 100%);
+  color: #fff;
+  border-left: 6px solid var(--mint);
+  box-shadow: 0 6px 24px rgba(26, 82, 118, 0.25);
+}.kinematic-intro {
+  background-color: var(--card-bg);
+  border-right: 4px solid var(--gold);
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  margin-bottom: 25px;
+  box-shadow: 0 3px 12px rgba(11,36,71,0.05);
+}
+.kinematic-intro p {
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+.kinematic-intro p:last-child {
+  margin-bottom: 0;
+}
+</style>
+</head>
+<body>
+
+<header class="lecture-header">
+  <div class="header-inner">
+    <span class="badge">Fluid Mechanics · Chapter — Fluid Kinematics</span>
+    <h1 class="main-title">
+      Fluid Kinematics
+      <span class="ar-line">وصف حركة الموائع — الاندفاع الزاوي والانفعال</span>
+    </h1>
+    <p class="subtitle">Lagrangian &amp; Eulerian Description · Streamlines · Rotation, Vorticity &amp; Strain Rate</p>
+    <div class="meta-pills">
+      <span class="pill">📐 Kinematics</span>
+      <span class="pill">🌀 Vorticity &amp; Rotation</span>
+      <span class="pill">📈 Strain Rate Tensor</span>
+      <span class="pill">🧮 Solved Examples</span>
+    </div>
+  </div>
+</header>
+
+<div class="dua-wrapper">
+  <div class="dua-card">
+    <button class="dua-toggle-btn" id="duaBtn" aria-expanded="false" onclick="toggleDua()">
+      <span>📖 دعاء</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="dua-content" id="duaContent">
+      <p>"اللَّهُمَّ لا سَهْلَ إِلاَّ ما جَعَلْتَهُ سَهْلاً، وأنْتَ تَجْعَلُ الحَزْنَ إِذَا شِئْتَ سَهْلاً."</p>
+      <p>"رَبِّ اشْرَحْ لِي صَدْرِي * وَيَسِّرْ لِي أَمْرِي * وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي * يَفْقَهُوا قَوْلِي."</p>
+      <p>"اللَّهُمَّ انْفَعْنِي بِمَا عَلَّمْتَنِي، وَعَلِّمْنِي مَا يَنْفَعُنِي، وَزِدْنِي عِلْمًا."</p>
+      <p>"اللهم إني أسألك فهم النبيين، وحفظ المرسلين والملائكة المقربين، اللهم اجعل ألسنتنا عامرة بذكرك، وقلوبنا بخشيتك، وأسرارنا بطاعتك، إنك على كل شيء قدير."</p>
+      <p>"يا حي يا قيوم برحمتك أستغيث، أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين."</p>
+      <p>"اللهم يا جامع الناس ليوم لا ريب فيه، اجمع علي ضالتي."</p>
+      <p>"اللهم إني استودعتك ما قرأت وما حفظت وما تعلمت، فرده عند حاجتي إليه، إنك على كل شيء قدير، وحسبنا الله ونعم الوكيل."</p>
+      <p>"أستغفر الله، أستغفر الله، أستغفر الله."</p>
+    </div>
+  </div>
+</div>
+
+<div class="toc-wrapper">
+  <div class="toc-card">
+    <div class="toc-header">📑 محتويات المحاضرة — Table of Contents</div>
+    <div class="toc-body" id="tocBody">
+      <a class="toc-item" href="#sec1"><span class="toc-num">1</span><span>Integral vs Differential Equations</span></a>
+      <a class="toc-item" href="#sec2"><span class="toc-num">2</span><span>Fluid Kinematics — Overview</span></a>
+      <a class="toc-item" href="#sec3"><span class="toc-num">3</span><span>Lagrangian Description</span></a>
+      <a class="toc-item" href="#sec4"><span class="toc-num">4</span><span>Eulerian Description</span></a>
+      <a class="toc-item" href="#sec5"><span class="toc-num">5</span><span>Solved Example — Velocity Field</span></a>
+      <a class="toc-item" href="#sec6"><span class="toc-num">6</span><span>Material Derivative</span></a>
+      <a class="toc-item" href="#sec7"><span class="toc-num">7</span><span>Steady vs Uniform Flow</span></a>
+      <a class="toc-item" href="#sec8"><span class="toc-num">8</span><span>Acceleration Field</span></a>
+      <a class="toc-item" href="#sec9"><span class="toc-num">9</span><span>Solved Example — Acceleration</span></a>
+      <a class="toc-item" href="#sec10"><span class="toc-num">10</span><span>Streamlines</span></a>
+      <a class="toc-item" href="#sec11"><span class="toc-num">11</span><span>Rotation &amp; Vorticity</span></a>
+      <a class="toc-item" href="#sec12"><span class="toc-num">12</span><span>Linear &amp; Shear Strain Rate</span></a>
+      <a class="toc-item" href="#sec13"><span class="toc-num">13</span><span>Strain Rate Tensor</span></a>
+      <a class="toc-item" href="#sec14"><span class="toc-num">14</span><span>Rotation vs Strain — الفرق</span></a>
+      <a class="toc-item" href="#sec15"><span class="toc-num">15</span><span>Problem-Solving Roadmap</span></a>
+      <a class="toc-item" href="#sec16"><span class="toc-num">16</span><span>Summary / Key Takeaways</span></a>
+      <a class="toc-item" href="#sec17"><span class="toc-num">17</span><span>Practice Questions</span></a>
+    </div>
+  </div>
+</div>
+
+<main class="content-wrapper">
+
+<!-- ============ SECTION 1 ============ -->
+<section class="section" id="sec1">
+  <div class="section-header">
+    <div class="section-icon">🚗</div>
+    <div class="section-titles">
+      <h2>Integral vs Differential Equations</h2>
+      <span class="section-subtitle ltr">Fluid 1 (Integral) vs Fluid 2 (Differential)</span>
+    </div>
+  </div>
+
+  <p>قبل الدخول في تفاصيل الـ <span class="ltr">Kinematics</span>، ثمة سؤال جوهري ينبغي الإجابة عنه أولاً: على أي مستوى من التفاصيل نريد تحليل الـ <span class="ltr">Flow</span>؟ هذا السؤال يقودنا إلى التمييز بين أسلوبين رئيسيين في التحليل: <strong class="ltr">Integral Form</strong>، الذي يدرس سلوك السائل بشكل كلّي عند حدود منطقة محددة — و<strong class="ltr">Differential Form</strong>، الذي يتتبع تفاصيل حركة السائل عند كل نقطة في الفضاء والزمن. الاختيار بين الأسلوبين يحدد ليس فقط مستوى التعقيد الرياضي، بل أيضاً طبيعة الإجابات التي يمكننا الحصول عليها من الحل.</p>
+
+  <h3 class="form-section-heading integral-heading">
+    <span class="form-heading-icon">∯</span> Integral Form
+  </h3>
+
+  <div class="media-beside">
+    <div class="media-text">
+      <div class="def-box" style="margin:0;">
+        <span class="box-label">Definition · Fluid 1 — Integral Form</span>
+        يهدف الـ <span class="ltr">Integral Form</span> إلى حساب الخواص الكلية والعامة للـ Flow، مثل قوى الـ <span class="ltr">Drag</span> و<span class="ltr">Lift</span>، وذلك بدراسة ما يحدث عند حدود الـ <span class="ltr">Control Volume</span> فقط — أي عند الـ <span class="ltr">Control Surface</span> — دون الحاجة لمعرفة تفاصيل الـ Flow في كل نقطة داخل الحجم.
+      </div>
+    </div>
+    <div class="media-visual">
+      <img src="assets/images/control-volume-equations.jpg" alt="Car with Control Volume, showing Inlet U(inlet) and Outlet U(outlet) velocity arrows, and the Control Surface boundary — illustrating the Integral Form approach" loading="lazy">
+      <figcaption>Integral Form: only inlet &amp; outlet conditions at the Control Surface matter</figcaption>
+    </div>
+  </div>
+
+  <h3 class="form-section-heading differential-heading">
+    <span class="form-heading-icon">∂</span> Differential Form
+  </h3>
+
+  <div class="def-box">
+    <span class="box-label">Definition · Fluid 2 — Differential Form</span>
+    يهدف الـ <span class="ltr">Differential Form</span> إلى حساب الـ Flow عند كل نقطة في مجال الدراسة، أي بصيغة دالة في المكان والزمن:
+    <span class="ltr">u(x, y, z, t)</span>. هذا يعطينا معرفة تفصيلية كاملة بسلوك النظام بأكمله، لكنه أكثر تعقيدًا في الحل.
+  </div>
+
+  <div class="media-beside">
+    <div class="media-text">
+      <p>فمثلًا في حالة السيارة، الـ <span class="ltr">Integral Form</span> يركّز فقط على سرعة الدخول <span class="ltr">U(inlet)</span> وسرعة الخروج <span class="ltr">U(outlet)</span> عند حدود الـ Control Volume، بينما الـ <span class="ltr">Differential Form</span> يهتم بمعرفة السرعة عند كل نقطة محددة حول جسم السيارة، مثل <span class="ltr">u(x₁,y₁,z₁,t)</span> و<span class="ltr">u(x₂,y₂,z₂,t)</span> و<span class="ltr">u(x₃,y₃,z₃,t)</span>. الفيديو المصغّر بجانب هذا النص يوضّح الفكرة بصريًا: نقاط قياس منفصلة حول جسم السيارة، ثم تكبير عند إحدى هذه النقاط لإظهار كيف تتحلل السرعة عندها إلى مركبات <span class="ltr">Vₓ, Vy, V_z</span> على المحاور الثلاثة x, y, z — وهو بالضبط جوهر الـ Differential Form: معرفة السرعة كمتجه كامل عند كل نقطة على حدة.</p>
+    </div>
+    <div class="media-visual">
+      <video controls muted loop playsinline preload="metadata" poster="">
+        <source src="assets/videos/eulerian-flow-animation.mp4" type="video/mp4">
+      </video>
+      <figcaption>Differential Form: point velocities u(x₁,y₁,z₁,t)... zooming into Vx, Vy, Vz at one point</figcaption>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <span class="box-label">Physical Insight</span>
+    الـ <span class="ltr">Integral Form</span> أسهل في الحل لأنه يتعامل مع كميات كلية (Bulk quantities) عند حدود محددة، بينما الـ <span class="ltr">Differential Form</span> أصعب لأنه يتطلب حل معادلات تفاضلية تصف سلوك كل جزء متناهي الصغر من المائع.
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.15rem;">Example: Continuity Equation — كلا الصيغتين</h3>
+
+  <div class="formula-box">
+    <span class="box-label">Integral Form — Mass Flow Rate</span>
+    <div class="equation-scroll">
+    \[
+    \dot{m} = \int_{A_c} \delta \dot{m} = \int_{A_c} \rho V_n \, dA_c \quad \text{(kg/s)}
+    \]
+    \[
+    \dot{m} = \rho V_{avg} A_c \quad \text{(kg/s)}
+    \]
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Integral Form — Conservation of Mass over a Control Volume</span>
+    <div class="equation-scroll">
+    \[
+    \frac{d}{dt} \int_{CV} \rho \, dV + \int_{CS} \rho (\vec{V} \cdot \vec{n}) \, dA = 0
+    \]
+    \[
+    \frac{dm_{CV}}{dt} = \sum_{in} \dot{m} - \sum_{out} \dot{m}
+    \]
+    </div>
+    <p style="margin-top:14px; color:#dbe9f7; font-size:0.92rem;">عند حالة الاستقرار (Steady state):</p>
+    <div class="equation-scroll">
+    \[
+    \sum_{in} \dot{m} = \sum_{out} \dot{m}
+    \]
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Differential Form — Continuity Equation</span>
+    <div class="equation-scroll">
+    \[
+    \frac{\partial \rho}{\partial t} + \vec{\nabla} \cdot (\rho \vec{V}) = 0
+    \]
+    \[
+    \frac{\partial \rho}{\partial t} + \frac{\partial (\rho u)}{\partial x} + \frac{\partial (\rho v)}{\partial y} + \frac{\partial (\rho w)}{\partial z} = 0
+    \]
+    </div>
+  </div>
+
+  <figure class="lecture-figure figure-medium" style="margin:26px auto 16px;">
+    <img src="assets/images/continuity-equation.jpg" alt="Control Volume with two inlets (ṁ₁ = 2 kg/s and ṁ₂ = 3 kg/s) and one outlet (ṁ₃ = ṁ₁ + ṁ₂ = 5 kg/s), alongside a magnified differential fluid element dx·dy·dz" loading="lazy">
+    <figcaption>Conservation of Mass: Macroscopic Control Volume (Lagrangian/Eulerian bulk flows ṁ_in &amp; ṁ_out) vs. Infinitesimal Fluid Element dx·dy·dz (Eulerian detailed flow field)</figcaption>
+  </figure>
+
+  <div class="note-box">
+    <span class="box-label">Note</span>
+    لاحظ كيف أن نفس القانون الفيزيائي — حفظ الكتلة (<span class="ltr">Conservation of Mass</span>) — يمكن كتابته بصيغتين مختلفتين تمامًا: صيغة كلية سهلة الحل تُستخدم لحساب تدفق الكتلة الداخل والخارج من حجم تحكم (كما في مثال ṁ₁ = 2 kg/s و ṁ₂ = 3 kg/s ليعطي ṁ_out = 5 kg/s)، وصيغة تفاضلية معقدة تصف السلوك عند كل نقطة (dx, dy, dz) داخل المائع. هذا هو جوهر الفرق بين الـ Integral والـ Differential Form الذي سنبني عليه فهمنا لموضوع الـ Fluid Kinematics.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 2 ============ -->
+<section class="section" id="sec2">
+  <div class="section-header">
+    <div class="section-icon">🌊</div>
+    <div class="section-titles">
+      <h2>Fluid Kinematics — Overview</h2>
+      <span class="section-subtitle ltr">Describing motion without considering forces</span>
+    </div>
+  </div>
+
+  <div class="def-box">
+    <span class="box-label">Definition</span>
+    <strong class="ltr">Fluid Kinematics</strong> يهتم بوصف حركة الموائع دون الحاجة بالضرورة لدراسة القوى والعزوم (<span class="ltr">Forces and Moments</span>) التي تسبب هذه الحركة. بشكل عام، <strong class="ltr">Kinematics</strong> هو الفرع الذي يهتم بدراسة الحركة نفسها بمعزل عن أسبابها.
+  </div>
+
+  <p>موضوعات الـ <span class="ltr">Fluid Kinematics</span> التي سنغطيها في هذه المحاضرة تشمل:</p>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr><th>#</th><th>الموضوع</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">1</td><td>Fluid flow representation: Lagrangian &amp; Eulerian description</td></tr>
+        <tr><td class="mono">2</td><td>Flow field</td></tr>
+        <tr><td class="mono">3</td><td>Material derivative &amp; acceleration</td></tr>
+        <tr><td class="mono">4</td><td>Flow visualization: Streamlines, pathlines, streaklines, timelines</td></tr>
+        <tr><td class="mono">5</td><td>Deformation, rate of translation, rate of rotation, strain rate</td></tr>
+        <tr><td class="mono">6</td><td>Vorticity, rotationality, and irrotationality</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 3 ============ -->
+<section class="section" id="sec3">
+  <div class="kinematic-intro">
+    <p>قبل أن نتعمق في المعادلات، دعونا نطرح على أنفسنا سؤالاً بسيطًا: <strong>كيف يمكننا وصف حركة أي مائع (Fluid)؟</strong> 🤔</p>
+    <p>إذا كان لدينا ماء يتحرك داخل ماسورة، أو هواء يتحرك حول طائرة، فإن هناك طريقتين أساسيتين لدراسة هذه الحركة. هاتان الطريقتان هما الـ <strong>Lagrangian</strong> والـ <strong>Eulerian</strong>.</p>
+    <p>ولفهم الفرق بينهما ببساطة، تخيل أنك تراقب حركة السيارات على طريق سريع...</p>
+  </div>
+
+  <!-- Comparison Layout -->
+  <div class="compare-grid">
+    <!-- LEFT: Lagrangian -->
+    <div class="compare-col">
+      <div class="section-header">
+    <div class="section-icon">🎯</div>
+    <div class="section-titles">
+      <h2>Lagrangian Description</h2>
+      <span class="section-subtitle ltr">Following individual fluid particles</span>
+    </div>
+  </div>
+
+  <div class="def-box">
+    <span class="box-label">Definition</span>
+    في الـ <strong class="ltr">Lagrangian Description</strong> لا نثبت نقطة القياس في المكان، وإنما نتابع <span class="ltr">Fluid Particle</span> معينة أثناء حركتها. أي أننا نختار جسيم مائع محدد (كمية صغيرة جدًا من المائع) ونتحرك معه، مسجّلين خواصه أثناء انتقاله من مكان إلى آخر عبر تتبع الموضع <span class="ltr">(\(\vec{X}_A, \vec{X}_B, \vec{X}_C\))</span> والسرعة <span class="ltr">(\(\vec{V}_A, \vec{V}_B, \vec{V}_C\))</span> لكل جسيم على حدة.
+  </div>
+
+  <div class="assumption-box">
+    <span class="box-label">Limitation</span>
+    هذه الطريقة صعبة جدًا في وصف الموائع لأن المائع يُعامَل كـ <strong class="ltr">Continuum</strong> (وسط متصل)، أي يحتوي على عدد لا نهائي عمليًا من الجسيمات، فتتبع كل جسيم على حدة يصبح غير عملي. لذلك تُستخدم هذه الطريقة بشكل أساسي في تطبيقات الـ <span class="ltr">Discrete Phase</span> (مثل تتبع قطرات الرذاذ أو الجسيمات الصلبة داخل المائع)، وفي التجارب المعملية (<span class="ltr">Experiments</span>).
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Governing Relation</span>
+    <div class="equation-scroll">
+    \[
+    \frac{d\vec{X}_A}{dt} = \vec{V}_A
+    \]
+    </div>
+  </div>
+
+  <p>وبصورة أعم، إذا كانت إحداثيات الجسيم تتغير مع الزمن بالشكل \(x=x(t)\)، \(y=y(t)\)، \(z=z(t)\)، فإن متجه السرعة يُكتب:</p>
+
+  <div class="formula-box">
+    <div class="equation-scroll">
+    \[
+    \vec{V} = \frac{dx}{dt}\hat{i} + \frac{dy}{dt}\hat{j} + \frac{dz}{dt}\hat{k}
+    \]
+    \[
+    \vec{a} = \frac{d\vec{V}}{dt}
+    \]
+    </div>
+  </div>
+
+  <div class="figure-row">
+    <figure class="lecture-figure figure-medium">
+      <img src="assets/images/lagrangian-particle-motion.gif" alt="Animated flow with dashed streamlines and a speed gauge icon, illustrating Lagrangian tracking" loading="lazy">
+      <figcaption>Tracking properties along the fluid's path</figcaption>
+    </figure>
+  </div>
+
+  <p>الرسم يوضح فكرة تتبع <strong class="ltr">Particle A</strong> عبر الزمن: يبدأ الجسيم من موضع \(\vec{X}_A(t_1)\) عند الزمن \(t\)، ويتحرك على طول <em class="ltr">Particle path</em> (مسار حقيقي منحني في الفراغ) وصولًا إلى الموضع \(\vec{X}_A(t_2)\) عند الزمن \(t+\delta t\).</p>
+
+  <div class="note-box">
+    <span class="box-label">Applications</span>
+    Discrete phase modeling (رذاذ، جسيمات صلبة) · Experimental Fluid Mechanics (أجهزة قياس متحركة مع الجسيم)
+  </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="compare-divider"></div>
+
+    <!-- RIGHT: Eulerian -->
+    <div class="compare-col" id="sec4">
+      <div class="section-header">
+    <div class="section-icon">📍</div>
+    <div class="section-titles">
+      <h2>Eulerian Description</h2>
+      <span class="section-subtitle ltr">Fixed frame — field variables in space and time</span>
+    </div>
+  </div>
+
+  <div class="def-box">
+    <span class="box-label">Definition</span>
+    في الـ <strong class="ltr">Eulerian Description</strong> نستخدم <span class="ltr">Fixed Frame</span> (إطارًا مرجعيًا ثابتًا). يُعرَّف حجم منتهٍ يُسمى <span class="ltr">Flow Domain</span> أو <span class="ltr">Control Volume</span>، يدخل ويخرج منه المائع، ثم تُعرَّف الخواص الحقلية (<span class="ltr">Field Variables</span>) كدوال في المكان والزمن داخل هذا الحجم. أي أننا لا نتبع جسيمًا معينًا، بل نثبّت مكان القياس ونسجّل ما يحدث للـ Flow عند هذا المكان مع الزمن.
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Field Variables</span>
+    <div class="equation-scroll">
+    \[
+    \text{Velocity field: } \quad \vec{V} = \vec{V}(x, y, z, t)
+    \]
+    \[
+    \text{Pressure field: } \quad P = P(x, y, z, t)
+    \]
+    </div>
+  </div>
+
+  <p>فعلى سبيل المثال، لقياس خواص الـ Flow عند نقطة محددة مثل \((x_1, y_1, z_1)\)، نضع جهاز قياس ثابتًا عند هذه النقطة ونسجّل خواص المائع (سرعة، ضغط، درجة حرارة...) أثناء مروره بها — دون أن نتابع جسيمًا بعينه.</p>
+
+  <figure class="lecture-figure figure-medium">
+    <img src="assets/images/eulerian-velocity-field.jpg" alt="Control volume analysis of duct flow showing the Eulerian grid of fixed measurement points with coordinates (0,0), (x1,y1), (xn,yn)" loading="lazy">
+    <figcaption>A fixed grid of points inside a Control Volume — properties are recorded at each fixed location</figcaption>
+  </figure>
+
+  <div class="note-box">
+    <span class="box-label">Applications</span>
+    Continuum flow modeling (تحليل المائع كوسط متصل) · Camera-based flow visualization (تصوير المجال بأكمله في لحظة واحدة)
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.15rem; margin-top:26px;">Continuous Phase vs Discrete Phase</h3>
+  <p>في بعض التطبيقات يكون المائع نفسه هو <span class="ltr">Continuous Phase</span>، بينما توجد بداخله جسيمات أو قطرات (<span class="ltr">Particles / Droplets / Spray</span>) تمثل <span class="ltr">Discrete Phase</span>. عادة:</p>
+  <div class="table-container">
+    <table>
+      <thead><tr><th>الحالة</th><th>الطريقة المناسبة</th></tr></thead>
+      <tbody>
+        <tr><td>دراسة المائع المتصل (Continuous Fluid)</td><td class="mono">Eulerian Description</td></tr>
+        <tr><td>تتبع جسيم أو مجموعة جسيمات محددة</td><td class="mono">Lagrangian Description</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>وهذا التمييز مهم جدًا في تطبيقات <span class="ltr">CFD (Computational Fluid Dynamics)</span> حيث تُستخدم كلتا الطريقتين معًا أحيانًا لنمذجة أنظمة تحتوي على مائع مستمر مع جسيمات متفرقة بداخله.</p>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.15rem; margin-top:26px;">جدول المقارنة الشامل</h3>
+  <div class="table-container">
+    <table>
+      <thead><tr><th>Eulerian Description</th><th>Lagrangian Description</th></tr></thead>
+      <tbody>
+        <tr><td>Fixed Frame</td><td>تتحرك مع الـ Particle</td></tr>
+        <tr><td>ندرس نقطة محددة في المكان</td><td>نتابع Particle محددة</td></tr>
+        <tr><td>Flow Field</td><td>Particle Motion</td></tr>
+        <tr><td>نقيس الخواص عند نقاط ثابتة</td><td>نسجل الخواص أثناء حركة Particle</td></tr>
+        <tr><td>مناسب لوصف الـ Flow Field</td><td>مناسب لتتبع الـ Particles</td></tr>
+      </tbody>
+    </table>
+  </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 5 ============ -->
+<section class="section" id="sec5">
+  <div class="section-header">
+    <div class="section-icon">🧮</div>
+    <div class="section-titles">
+      <h2>Solved Example — Velocity Field</h2>
+      <span class="section-subtitle ltr">Stagnation point &amp; velocity magnitude</span>
+    </div>
+  </div>
+
+  <div class="example-card">
+    <div class="example-header">مثال محلول · Worked Example</div>
+    <div class="example-body">
+      <div class="example-question">
+        A steady, incompressible, two-dimensional velocity field is given by:
+        <div class="equation-scroll" style="margin-top:10px;">
+        \[
+        \vec{V} = (u, v) = (0.5 + 0.8x)\vec{i} + (1.5 - 0.8y)\vec{j}
+        \]
+        </div>
+        <p style="margin-top:12px;">
+        (a) Determine if there are any stagnation points in the flow field. If so, where?<br>
+        (b) Sketch velocity vectors at several locations in the domain between x = −2 m to 2 m and y = 0 m to 5 m.<br>
+        (c) Calculate the velocity magnitude at x = 0, y = 0.
+        </p>
+      </div>
+
+      <div class="solution-steps">
+        <div class="solution-step">
+          <strong>نقطة التوقف (Stagnation Point):</strong> هي نقطة في مجال الـ Flow تكون فيها السرعة صفرًا. بوضع \(u=0\) و \(v=0\) وحل المعادلتين، نحصل على نقطة التوقف عند:
+          <div class="equation-scroll" style="margin-top:8px;">
+          \[
+          x = -0.625 \text{ m}, \quad y = 1.875 \text{ m}
+          \]
+          </div>
+        </div>
+        <div class="solution-step">
+          <strong>رسم متجهات السرعة (b):</strong> يوضح الشكل أدناه اتجاهات ومقادير متجهات السرعة في المجال المطلوب، مع تحديد نقطة التوقف (الدائرة الزرقاء) والمنطقة المطلوب التركيز عليها بين x = 0 إلى 2 و y = 0 إلى 3 (المستطيل الأحمر).
+        </div>
+        <div class="solution-step">
+          <strong>حساب مقدار السرعة عند (0,0):</strong>
+          <div class="equation-scroll" style="margin-top:8px;">
+          \[
+          |\vec{V}| = \sqrt{u^2 + v^2 + w^2}
+          \]
+          \[
+          |\vec{V}| = 1.58 \text{ m/s}
+          \]
+          </div>
+        </div>
+      </div>
+
+      <span class="answer-badge">✓ |V| = 1.58 m/s at (0,0)</span>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <span class="box-label">Note</span>
+    <strong>A stagnation point</strong> is defined as a point in the flow field where the velocity is zero. عند نقطة التوقف، يتوقف المائع لحظيًا عن الحركة تمامًا قبل أن يتغير اتجاهه — وهذا مفهوم مهم جدًا في تحليل الجريان حول الأجسام (مثل مقدمة جناح الطائرة).
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 6 ============ -->
+<section class="section" id="sec6">
+  <div class="section-header">
+    <div class="section-icon">∂</div>
+    <div class="section-titles">
+      <h2>Material Derivative (Total Derivative)</h2>
+      <span class="section-subtitle ltr">Local derivative + Convective (spatial) derivative</span>
+    </div>
+  </div>
+
+  <div class="def-box">
+    <span class="box-label">Definition</span>
+    الـ <strong class="ltr">Material Derivative</strong> (وتُسمى أيضًا <span class="ltr">Total Derivative</span> أو <span class="ltr">Substantial Derivative</span>) هي أداة رياضية تربط بين وجهة النظر الـ Lagrangian (التغير الذي يشعر به جسيم متحرك) ووجهة النظر الـ Eulerian (الحقل المعرّف كدالة في المكان والزمن).
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Operator Definition</span>
+    <div class="equation-scroll">
+    \[
+    \frac{D}{Dt} = \frac{d}{dt} = \frac{\partial}{\partial t} + (\vec{V} \cdot \vec{\nabla})
+    \]
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <span class="box-label">Physical Insight — تفسير الحدين</span>
+    الحد الأول \(\dfrac{\partial}{\partial t}\) يُسمى <strong class="ltr">Local Derivative</strong>: يمثل التغير الحادث عند نقطة ثابتة في المكان بمرور الزمن (تغير مع الزمن فقط، دون حركة). الحد الثاني \((\vec{V}\cdot\vec{\nabla})\) يُسمى <strong class="ltr">Spatial Derivative</strong> أو <strong class="ltr">Convection (Advection)</strong>: يمثل التغير الناتج عن انتقال الجسيم من نقطة لأخرى ذات خواص مختلفة في المجال.
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Gradient (Del) Operator</span>
+    <div class="equation-scroll">
+    \[
+    \vec{\nabla} = \left(\frac{\partial}{\partial x}, \frac{\partial}{\partial y}, \frac{\partial}{\partial z}\right) = \vec{i}\frac{\partial}{\partial x} + \vec{j}\frac{\partial}{\partial y} + \vec{k}\frac{\partial}{\partial z}
+    \]
+    </div>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.1rem;">أمثلة على تطبيق المشتقة المادية</h3>
+
+  <div class="formula-box">
+    <span class="box-label">Example 1 — Material Derivative of Velocity</span>
+    <div class="equation-scroll">
+    \[
+    \frac{D\vec{V}}{Dt} = \frac{d\vec{V}}{dt} = \frac{\partial\vec{V}}{\partial t} + (\vec{V} \cdot \vec{\nabla})\vec{V}
+    \]
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Example 2 — Material Derivative of Pressure</span>
+    <div class="equation-scroll">
+    \[
+    \frac{DP}{Dt} = \frac{dP}{dt} = \frac{\partial P}{\partial t} + (\vec{V} \cdot \vec{\nabla})P
+    \]
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 7 ============ -->
+<section class="section" id="sec7">
+  <div class="section-header">
+    <div class="section-icon">⚖️</div>
+    <div class="section-titles">
+      <h2>Steady Flow vs Uniform Flow</h2>
+      <span class="section-subtitle ltr">Which term of the material derivative vanishes?</span>
+    </div>
+  </div>
+
+  <div class="def-box">
+    <span class="box-label">Definition — Steady Flow</span>
+    <strong class="ltr">Steady Flow</strong>: هو الـ Flow الذي تكون فيه كمية المائع المارة في الثانية عبر أي مقطع ثابتة لا تتغير مع الزمن.
+  </div>
+
+  <div class="formula-box">
+    <div class="equation-scroll">
+    \[
+    (\text{local derivative} = 0) \;\rightarrow\; \frac{\partial}{\partial t} = 0 \;;\quad \frac{D}{Dt} \neq 0
+    \]
+    </div>
+  </div>
+
+  <div class="def-box">
+    <span class="box-label">Definition — Uniform Flow</span>
+    <strong class="ltr">Uniform Flow</strong>: هو Flow المائع الذي يتحرك فيه كل جسيم على طول خط سريانه بسرعة ثابتة، بحيث يبقى المقطع العرضي لكل أنبوب سريان (<span class="ltr">Stream Tube</span>) دون تغيير عند لحظة زمنية معينة.
+  </div>
+
+  <div class="formula-box">
+    <div class="equation-scroll">
+    \[
+    (\text{spatial derivative} = 0) \;\rightarrow\; (\vec{V} \cdot \vec{\nabla}) = 0 \;;\quad \frac{D}{Dt} \neq 0
+    \]
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <span class="box-label">Physical Insight</span>
+    لاحظ أن انعدام الحد المحلي (<span class="ltr">Steady</span>) لا يعني انعدام المشتقة المادية الكلية، وكذلك انعدام الحد الحملي (<span class="ltr">Uniform</span>) لا يعني انعدامها أيضًا — فكل حالة تُلغي حدًا واحدًا فقط من المعادلة، بينما يبقى الحد الآخر (والمشتقة الكلية بشكل عام) غير صفري في الحالة العامة.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 8 ============ -->
+<section class="section" id="sec8">
+  <div class="section-header">
+    <div class="section-icon">🚀</div>
+    <div class="section-titles">
+      <h2>Acceleration Field</h2>
+      <span class="section-subtitle ltr">Eulerian acceleration — vector &amp; component form</span>
+    </div>
+  </div>
+
+  <p>بتطبيق مفهوم المشتقة المادية على متجه السرعة نفسه، نحصل على حقل التسارع (<span class="ltr">Acceleration Field</span>) بمنظور Eulerian:</p>
+
+  <div class="formula-box">
+    <span class="box-label">Vector Form</span>
+    <div class="equation-scroll">
+    \[
+    \vec{a} = \frac{D\vec{V}}{Dt} = \frac{d\vec{V}}{dt} = \frac{\partial\vec{V}}{\partial t} + (\vec{V} \cdot \vec{\nabla})\vec{V}
+    \]
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Component Form — Cartesian Coordinates</span>
+    <div class="equation-scroll">
+    \[
+    a_x = \frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} + v\frac{\partial u}{\partial y} + w\frac{\partial u}{\partial z}
+    \]
+    \[
+    a_y = \frac{\partial v}{\partial t} + u\frac{\partial v}{\partial x} + v\frac{\partial v}{\partial y} + w\frac{\partial v}{\partial z}
+    \]
+    \[
+    a_z = \frac{\partial w}{\partial t} + u\frac{\partial w}{\partial x} + v\frac{\partial w}{\partial y} + w\frac{\partial w}{\partial z}
+    \]
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <span class="box-label">Physical Insight</span>
+    كل مركبة من مركبات التسارع تحتوي على حد محلي (<span class="ltr">\(\partial u/\partial t\)</span>) يمثل التغير الزمني عند نقطة ثابتة، بالإضافة إلى ثلاثة حدود حملية (<span class="ltr">Convective</span>) تمثل تغير السرعة نتيجة انتقال الجسيم عبر المجال المكاني في الاتجاهات الثلاثة.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 9 ============ -->
+<section class="section" id="sec9">
+  <div class="section-header">
+    <div class="section-icon">🧮</div>
+    <div class="section-titles">
+      <h2>Solved Example — Fluid Acceleration</h2>
+      <span class="section-subtitle ltr">Applying the acceleration components</span>
+    </div>
+  </div>
+
+  <div class="example-card">
+    <div class="example-header">مثال محلول · Worked Example</div>
+    <div class="example-body">
+      <div class="example-question">
+        A steady, incompressible, two-dimensional velocity field is given by:
+        <div class="equation-scroll" style="margin-top:10px;">
+        \[
+        \vec{V} = (u, v) = (0.5 + 0.8x)\vec{i} + (1.5 - 0.8y)\vec{j}
+        \]
+        </div>
+        <p style="margin-top:12px;">
+        (a) Calculate the magnitude of the fluid acceleration in the flow field at x = 0, y = 0.
+        </p>
+      </div>
+
+      <div class="solution-steps">
+        <div class="solution-step">
+          نبدأ من الصيغة العامة لمركبات التسارع الديكارتية:
+          <div class="equation-scroll" style="margin-top:8px;">
+          \[
+          a_x = \frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} + v\frac{\partial u}{\partial y} + w\frac{\partial u}{\partial z}
+          \]
+          \[
+          a_y = \frac{\partial v}{\partial t} + u\frac{\partial v}{\partial x} + v\frac{\partial v}{\partial y} + w\frac{\partial v}{\partial z}
+          \]
+          \[
+          a_z = \frac{\partial w}{\partial t} + u\frac{\partial w}{\partial x} + v\frac{\partial w}{\partial y} + w\frac{\partial w}{\partial z}
+          \]
+          </div>
+        </div>
+        <div class="solution-step">
+          بما أن الـ Flow مستقر (Steady) فإن الحدود المحلية تساوي صفرًا. نعوّض بمشتقات \(u = 0.5+0.8x\) و \(v = 1.5-0.8y\) و \(w=0\):
+          <div class="equation-scroll" style="margin-top:8px;">
+          \[
+          a_x = (0.4 + 0.64x)
+          \]
+          \[
+          a_y = (-1.2 + 0.64y)
+          \]
+          \[
+          a_z = 0
+          \]
+          </div>
+        </div>
+        <div class="solution-step">
+          نحسب المقدار الكلي للتسارع عند x = 0, y = 0:
+          <div class="equation-scroll" style="margin-top:8px;">
+          \[
+          |\vec{a}| = \sqrt{a_x^2 + a_y^2 + a_z^2}
+          \]
+          \[
+          |\vec{a}| = 1.265 \text{ m/s}^2
+          \]
+          </div>
+        </div>
+      </div>
+
+      <span class="answer-badge">✓ |a| = 1.265 m/s²</span>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 10 ============ -->
+<section class="section" id="sec10">
+  <div class="section-header">
+    <div class="section-icon">➰</div>
+    <div class="section-titles">
+      <h2>Flow Visualization — Streamlines</h2>
+      <span class="section-subtitle ltr">Curves tangent to the velocity vector</span>
+    </div>
+  </div>
+
+  <div class="inline-concept-media">
+    <div class="media-text">
+      <div class="def-box" style="margin:0;">
+        <span class="box-label">Definition</span>
+        الـ <strong class="ltr">Streamline</strong> هي خط يكون مماسًا (<span class="ltr">Tangent</span>) لمتجه السرعة اللحظي المحلي (<span class="ltr">Instantaneous Local Velocity Vector</span>) عند كل نقطة. أي أن اتجاه الـ Streamline عند أي نقطة هو نفس اتجاه متجه السرعة عند هذه النقطة بالضبط.
+      </div>
+    </div>
+    <div class="media-visual">
+      <img src="assets/images/streamlines-diagram.jpg" alt="Laminar flow streamlines through a converging-diverging tube, parallel lines narrowing and widening" loading="lazy">
+      <figcaption>Laminar flow — streamlines remain parallel and do not cross</figcaption>
+    </div>
+  </div>
+
+  <div class="inline-concept-media">
+    <div class="media-text">
+      <p>إذا كان متجه السرعة \(\vec{V}=u\hat{i}+v\hat{j}+w\hat{k}\)، وكان عنصر الإزاحة اللانهائي الصغر على طول الـ Streamline هو \(d\vec{r}=dx\hat{i}+dy\hat{j}+dz\hat{k}\)، فإن شرط التماسّ (أن يكون \(d\vec{r}\) موازيًا للسرعة المحلية \(\vec{V}\)) يعطينا معادلة الـ Streamline:</p>
+
+      <div class="formula-box" style="margin:14px 0 0;">
+        <span class="box-label">Streamline Equation</span>
+        <div class="equation-scroll">
+        \[
+        \frac{d\vec{r}}{V} = \frac{dx}{u} = \frac{dy}{v} = \frac{dz}{w}
+        \]
+        </div>
+      </div>
+    </div>
+    <div class="media-visual">
+      <img src="assets/images/streamline-equation.png" alt="Streamline diagram showing point (x,y), vector V decomposed into u and v components, and displacement vector dr tangent to the curve to point (x+dx, y+dy)" loading="lazy">
+      <figcaption>The displacement vector dr is parallel to the local velocity vector V at every point</figcaption>
+    </div>
+  </div>
+
+  <p>وبما أن \(d\vec{r}\) يجب أن يكون موازيًا لمتجه السرعة المحلي \(\vec{V}=u\hat{i}+v\hat{j}+w\hat{k}\)، فإنه في حالة الجريان الثنائي الأبعاد داخل مستوى xy، يمكن اختصار معادلة الـ Streamline إلى:</p>
+
+  <div class="formula-box">
+    <span class="box-label">Streamline in the xy-plane</span>
+    <div class="equation-scroll">
+    \[
+    \left(\frac{dy}{dx}\right)_{\text{along a streamline}} = \frac{v}{u}
+    \]
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <span class="box-label">Physical Insight</span>
+    الـ Streamlines تعطينا صورة بصرية لشكل ومسار الـ Flow عند لحظة زمنية معينة. في حالة الـ <span class="ltr">Steady Flow</span>، تتطابق الـ Streamlines مع مسارات الجسيمات الفعلية (<span class="ltr">Pathlines</span>)، بينما في الـ <span class="ltr">Unsteady Flow</span> قد تختلف الاثنتان لأن شكل الـ Streamlines نفسه يتغير مع الزمن.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 11 ============ -->
+<section class="section" id="sec11">
+  <div class="section-header">
+    <div class="section-icon">🔄</div>
+    <div class="section-titles">
+      <h2>Rotation &amp; Vorticity</h2>
+      <span class="section-subtitle ltr">Rate of rotation, vorticity vector, irrotational flow</span>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <span class="box-label">ملاحظة مهمة من الدكتور</span>
+    وجود حركة للمائع لا يعني بالضرورة وجود <span class="ltr">Rotation</span>. فقد يتحرك عنصر المائع بسرعة منتظمة وفي خط مستقيم دون أن يدور. لذلك نحتاج إلى كمية رياضية تحدد وجود الـ Rotation ومقداره واتجاهه — وهذا ما توفره لنا الـ <span class="ltr">Vorticity</span> ومتجه معدل الدوران.
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.15rem;">Rate of Rotation (Angular Velocity)</h3>
+
+  <div class="inline-concept-media">
+    <div class="media-text">
+      <div class="def-box" style="margin:0 0 12px 0;">
+        <span class="box-label">Definition</span>
+        متجه معدل الدوران (<span class="ltr">Rate of Rotation Vector</span>) يُعرَّف بأنه نصف الـ <span class="ltr">Curl</span> لمتجه السرعة:
+      </div>
+
+      <div class="formula-box" style="margin:0;">
+        <div class="equation-scroll">
+        \[
+        \vec{\omega} = \frac{1}{2} \vec{\nabla} \times \vec{V} = \frac{1}{2}\,\text{curl}(\vec{V})
+        \]
+        </div>
+      </div>
+    </div>
+    <div class="media-visual">
+      <img src="assets/images/rotation-vorticity.jpg" alt="Right-hand rule illustration showing vector A, vector B, and their cross product C = A × B pointing in the thumb direction" loading="lazy">
+      <figcaption>Right-hand rule: the direction of the curl (and hence rotation) follows this convention</figcaption>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">3D Cartesian Coordinates</span>
+    <div class="equation-scroll">
+    \[
+    \vec{\omega} = \frac{1}{2}\left(\frac{\partial w}{\partial y} - \frac{\partial v}{\partial z}\right)\vec{i} + \frac{1}{2}\left(\frac{\partial u}{\partial z} - \frac{\partial w}{\partial x}\right)\vec{j} + \frac{1}{2}\left(\frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}\right)\vec{k}
+    \]
+    </div>
+  </div>
+
+  <div class="inline-concept-media">
+    <div class="media-text">
+      <div class="formula-box" style="margin:0;">
+        <span class="box-label">2D Case</span>
+        <div class="equation-scroll">
+        \[
+        \vec{\omega} = \frac{1}{2}\left(\frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}\right)\vec{k}
+        \]
+        </div>
+      </div>
+    </div>
+    <div class="media-visual">
+      <img src="assets/images/rotation-2d-case.png" alt="Pink square fluid element with dashed border, with curved arrows around the corners indicating counter-clockwise rotation" loading="lazy">
+      <figcaption>A rotating fluid element — the sides rotate about the center while the shape may remain square</figcaption>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.15rem; margin-top:28px;">Vorticity Vector</h3>
+
+  <div class="def-box">
+    <span class="box-label">Definition</span>
+    الـ <strong class="ltr">Vorticity</strong> تساوي ضعف السرعة الزاوية للجسيم المائع (<span class="ltr">twice the angular velocity</span>).
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Vorticity Vector</span>
+    <div class="equation-scroll">
+    \[
+    \vec{\zeta} = \vec{\nabla} \times \vec{V} = \text{curl}(\vec{V})
+    \]
+    \[
+    \vec{\omega} = \frac{1}{2}\vec{\nabla}\times\vec{V} = \frac{1}{2}\text{curl}(\vec{V}) = \frac{\vec{\zeta}}{2}
+    \]
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">3D Cartesian Coordinates</span>
+    <div class="equation-scroll">
+    \[
+    \vec{\zeta} = \left(\frac{\partial w}{\partial y} - \frac{\partial v}{\partial z}\right)\vec{i} + \left(\frac{\partial u}{\partial z} - \frac{\partial w}{\partial x}\right)\vec{j} + \left(\frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}\right)\vec{k}
+    \]
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">2D Case</span>
+    <div class="equation-scroll">
+    \[
+    \vec{\zeta} = \left(\frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}\right)\vec{k}
+    \]
+    </div>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.15rem; margin-top:28px;">Irrotational Flow</h3>
+
+  <div class="def-box">
+    <span class="box-label">Definition</span>
+    الـ <strong class="ltr">Irrotational Flow</strong> هو الحالة التي تكون فيها الـ Vorticity ومتجه معدل الدوران مساويين للصفر:
+  </div>
+
+  <div class="formula-box">
+    <div class="equation-scroll">
+    \[
+    \vec{\omega} = \frac{1}{2}\vec{\nabla}\times\vec{V} = \frac{1}{2}\text{curl}(\vec{V}) = 0
+    \]
+    \[
+    \vec{\zeta} = \vec{\nabla}\times\vec{V} = \text{curl}(\vec{V}) = 0
+    \]
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <span class="box-label">Physical Insight — نقطة مهمة أكدها الدكتور</span>
+    الـ Flow يمكن أن تكون له سرعة غير صفرية، وفي نفس الوقت يكون <span class="ltr">Irrotational</span>. أي أن وجود السرعة لا يعني بالضرورة وجود Rotation. يمكن تخيل عنصر صغير من المائع على شكل مربع: إذا تحرك المائع بحيث تغير اتجاه أضلاع العنصر وأصبح العنصر يدور حول نفسه، فهذا يعني وجود Rotation؛ أما إذا تحرك العنصر بدون أن يدور حول نفسه، فإن \(\omega=0\) والـ Flow يكون Irrotational.
+  </div>
+
+  <div class="note-box">
+    <span class="box-label">Engineering Significance</span>
+    معرفة وجود الـ Rotation ومقداره واتجاهه تساعد في وصف سلوك الـ Flow في تطبيقات هندسية مهمة مثل: أجنحة الطائرات، السيارات، التوربينات، وكل الأنظمة التي يحدث فيها تغير في اتجاه حركة المائع.
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.15rem; margin-top:28px;">Rotation في الـ 3D Flow</h3>
+  <p>في حالة الـ 3D Flow يمكن أن يكون الدوران حول أي من المحاور الثلاثة x وy وz، ويمكن حساب الـ Curl باستخدام المحدد (Determinant):</p>
+
+  <div class="formula-box">
+    <div class="equation-scroll">
+    \[
+    \vec{\nabla}\times\vec{V} =
+    \begin{vmatrix}
+    \hat{i} & \hat{j} & \hat{k} \\
+    \dfrac{\partial}{\partial x} & \dfrac{\partial}{\partial y} & \dfrac{\partial}{\partial z} \\
+    u & v & w
+    \end{vmatrix}
+    \]
+    </div>
+  </div>
+
+  <p>ومنها نحصل على نفس الصيغة الديكارتية الموضحة أعلاه، والسرعة الزاوية تكون نصف الـ Curl: \(\vec{\omega}=\frac{1}{2}\vec{\nabla}\times\vec{V}\).</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 12 ============ -->
+<section class="section" id="sec12">
+  <div class="section-header">
+    <div class="section-icon">📐</div>
+    <div class="section-titles">
+      <h2>Linear &amp; Shear Strain Rate</h2>
+      <span class="section-subtitle ltr">Deformation of a fluid element</span>
+    </div>
+  </div>
+
+  <p>بعد دراسة الـ Rotation، ننتقل إلى الـ <span class="ltr">Strain / Deformation</span>: يصف التغير الذي يحدث في شكل أو حجم عنصر المائع نتيجة الحركة. نسأل: هل العنصر المائع تغير شكله أو حجمه أثناء الحركة؟ فإذا كان العنصر في البداية مربعًا ثم تغير شكله أو أبعاده، فهذا يدل على وجود <span class="ltr">Deformation</span>. يجب التمييز بين نوعين: <span class="ltr">Normal (Linear) Strain</span> و <span class="ltr">Shear Strain</span>.</p>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.15rem;">Linear Strain Rate (Normal Strain)</h3>
+
+  <div class="inline-concept-media">
+    <div class="media-text">
+      <div class="def-box" style="margin:0 0 12px 0;">
+        <span class="box-label">Definition</span>
+        الـ <strong class="ltr">Linear Strain Rate</strong> تُعرَّف بأنها <em>معدل الزيادة في الطول لكل وحدة طول</em> (<span class="ltr">rate of increase in length per unit length</span>). ترتبط بالتغير في طول العنصر في اتجاه معين.
+      </div>
+
+      <div class="formula-box" style="margin:0;">
+        <span class="box-label">Cartesian Coordinates</span>
+        <div class="equation-scroll">
+        \[
+        \varepsilon_{xx} = \frac{\partial u}{\partial x} \qquad \varepsilon_{yy} = \frac{\partial v}{\partial y} \qquad \varepsilon_{zz} = \frac{\partial w}{\partial z}
+        \]
+        </div>
+      </div>
+    </div>
+    <div class="media-visual">
+      <img src="assets/images/linear-strain-rate.png" alt="A pale rectangle with dashed border stretching horizontally into a solid pink rectangle, with outward arrows on left and right edges showing elongation" loading="lazy">
+      <figcaption>Linear strain — elongation of a fluid element along one direction</figcaption>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.15rem; margin-top:28px;">Shear Strain Rate</h3>
+
+  <div class="inline-concept-media">
+    <div class="media-text">
+      <div class="def-box" style="margin:0 0 12px 0;">
+        <span class="box-label">Definition</span>
+        الـ <strong class="ltr">Shear Strain Rate</strong> عند نقطة تُعرَّف بأنها <em>نصف معدل نقصان الزاوية بين خطين متعامدين في البداية ويتقاطعان عند تلك النقطة</em> (<span class="ltr">half of the rate of decrease of the angle between two initially perpendicular lines</span>).
+      </div>
+
+      <div class="formula-box" style="margin:0;">
+        <span class="box-label">Cartesian Coordinates</span>
+        <div class="equation-scroll">
+        \[
+        \varepsilon_{xy} = \frac{1}{2}\left(\frac{\partial u}{\partial y} + \frac{\partial v}{\partial x}\right) \qquad \varepsilon_{zx} = \frac{1}{2}\left(\frac{\partial w}{\partial x} + \frac{\partial u}{\partial z}\right) \qquad \varepsilon_{yz} = \frac{1}{2}\left(\frac{\partial v}{\partial z} + \frac{\partial w}{\partial y}\right)
+        \]
+        </div>
+      </div>
+    </div>
+    <div class="media-visual">
+      <img src="assets/images/shear-strain-rate.png" alt="A square element deformed by shear into a parallelogram, with arrows on all four sides indicating opposing shear directions" loading="lazy">
+      <figcaption>Shear strain — the fluid element deforms into a parallelogram as adjacent sides rotate</figcaption>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <span class="box-label">Physical Insight</span>
+    لاحظ الفرق الجوهري بين الحالتين: الـ <span class="ltr">Linear Strain</span> لا يغير زوايا العنصر — العنصر يبقى مستطيلًا لكن بأبعاد مختلفة (تمدد أو انكماش). أما الـ <span class="ltr">Shear Strain</span> فيغيّر الزوايا بين الأضلاع، فيتحول المربع إلى متوازي أضلاع مائل دون بالضرورة تغيير المساحة.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 13 ============ -->
+<section class="section" id="sec13">
+  <div class="section-header">
+    <div class="section-icon">🔢</div>
+    <div class="section-titles">
+      <h2>Strain Rate Tensor</h2>
+      <span class="section-subtitle ltr">Combining linear and shear strain rate</span>
+    </div>
+  </div>
+
+  <div class="def-box">
+    <span class="box-label">Definition</span>
+    الـ <strong class="ltr">Strain Rate Tensor</strong> هو تجميع منظّم لكل من الـ <span class="ltr">Linear Strain Rate</span> (على القطر الرئيسي) والـ <span class="ltr">Shear Strain Rate</span> (خارج القطر الرئيسي) في مصفوفة واحدة \(3\times3\) تصف حالة التشوه الكاملة لعنصر المائع في الفراغ الثلاثي الأبعاد.
+  </div>
+
+  <div class="figure-row">
+    <figure class="lecture-figure">
+      <img src="assets/images/strain-tensor-linear.png" alt="Linear strain illustration" loading="lazy">
+      <figcaption>Linear (Normal) Strain</figcaption>
+    </figure>
+    <figure class="lecture-figure">
+      <img src="assets/images/strain-tensor-shear.png" alt="Shear strain illustration" loading="lazy">
+      <figcaption>Shear Strain</figcaption>
+    </figure>
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Strain Rate Tensor — Cartesian Coordinates</span>
+    <div class="equation-scroll">
+    \[
+    \varepsilon_{ij} =
+    \begin{pmatrix}
+    \varepsilon_{xx} & \varepsilon_{xy} & \varepsilon_{xz} \\
+    \varepsilon_{yx} & \varepsilon_{yy} & \varepsilon_{yz} \\
+    \varepsilon_{zx} & \varepsilon_{zy} & \varepsilon_{zz}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+    \dfrac{\partial u}{\partial x} & \dfrac{1}{2}\left(\dfrac{\partial u}{\partial y}+\dfrac{\partial v}{\partial x}\right) & \dfrac{1}{2}\left(\dfrac{\partial u}{\partial z}+\dfrac{\partial w}{\partial x}\right) \\[10pt]
+    \dfrac{1}{2}\left(\dfrac{\partial v}{\partial x}+\dfrac{\partial u}{\partial y}\right) & \dfrac{\partial v}{\partial y} & \dfrac{1}{2}\left(\dfrac{\partial v}{\partial z}+\dfrac{\partial w}{\partial y}\right) \\[10pt]
+    \dfrac{1}{2}\left(\dfrac{\partial w}{\partial x}+\dfrac{\partial u}{\partial z}\right) & \dfrac{1}{2}\left(\dfrac{\partial w}{\partial y}+\dfrac{\partial v}{\partial z}\right) & \dfrac{\partial w}{\partial z}
+    \end{pmatrix}
+    \]
+    </div>
+  </div>
+
+  <div class="note-box">
+    <span class="box-label">Note</span>
+    المصفوفة متماثلة (<span class="ltr">Symmetric</span>): \(\varepsilon_{xy}=\varepsilon_{yx}\)، \(\varepsilon_{yz}=\varepsilon_{zy}\)، \(\varepsilon_{zx}=\varepsilon_{xz}\). العناصر القطرية تمثل الـ <span class="ltr">Normal Deformation</span> (التمدد/الانكماش في كل اتجاه)، بينما العناصر خارج القطر تمثل الـ <span class="ltr">Shear Deformation</span> (تغير الزوايا).
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Normal (Diagonal) Terms</span>
+    <div class="equation-scroll">
+    \[
+    \frac{\partial u}{\partial x}, \qquad \frac{\partial v}{\partial y}, \qquad \frac{\partial w}{\partial z}
+    \]
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Shear (Off-Diagonal) Terms</span>
+    <div class="equation-scroll">
+    \[
+    \frac{1}{2}\left(\frac{\partial u}{\partial y}+\frac{\partial v}{\partial x}\right), \qquad \frac{1}{2}\left(\frac{\partial v}{\partial z}+\frac{\partial w}{\partial y}\right), \qquad \frac{1}{2}\left(\frac{\partial w}{\partial x}+\frac{\partial u}{\partial z}\right)
+    \]
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 14 ============ -->
+<section class="section" id="sec14">
+  <div class="section-header">
+    <div class="section-icon">⚡</div>
+    <div class="section-titles">
+      <h2>Rotation vs Strain — الفرق بينهما</h2>
+      <span class="section-subtitle ltr">They are independent quantities</span>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <span class="box-label">ملاحظة الدكتور</span>
+    من المهم جدًا عدم الخلط بين الـ Rotation والـ Strain. قد يكون العنصر:
+    <ul style="margin:10px 0 0; padding-right:20px;">
+      <li>يتحرك بدون Rotation.</li>
+      <li>يدور بدون أن يحدث له Deformation في بعض الحالات.</li>
+      <li>يتعرض لـ Deformation فقط.</li>
+      <li>يتعرض في الوقت نفسه لكل من Rotation و Deformation معًا.</li>
+    </ul>
+    لذلك يجب حساب كل كمية بشكل مستقل عن الأخرى.
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead><tr><th>الكمية</th><th>تعتمد على</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Rotation</td>
+          <td class="mono">\(\vec{\omega}=\frac{1}{2}\vec{\nabla}\times\vec{V}\) — الـ Curl لمتجه السرعة</td>
+        </tr>
+        <tr>
+          <td>Deformation / Strain</td>
+          <td>معدلات تغير مركبات السرعة بالنسبة للإحداثيات المكانية</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight-box">
+    <span class="box-label">Physical Insight</span>
+    فيزيائيًا، الـ <span class="ltr">Curl</span> يلتقط الجزء غير المتماثل (<span class="ltr">Antisymmetric</span>) من مصفوفة تدرّج السرعة (<span class="ltr">Velocity Gradient Tensor</span>)، بينما الـ <span class="ltr">Strain Rate Tensor</span> يلتقط الجزء المتماثل (<span class="ltr">Symmetric</span>) منها. هذا هو السبب الرياضي في أن الكميتين مستقلتان تمامًا عن بعضهما ويمكن أن توجدا معًا أو بشكل منفرد.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 15 ============ -->
+<section class="section" id="sec15">
+  <div class="section-header">
+    <div class="section-icon">🗺️</div>
+    <div class="section-titles">
+      <h2>Problem-Solving Roadmap</h2>
+      <span class="section-subtitle ltr">Given a velocity field — what to compute</span>
+    </div>
+  </div>
+
+  <p>مثال الدكتور للخطوات العامة عند إعطائك <span class="ltr">Velocity Field</span> في مسألة ويُطلب منك تحليلها بالكامل:</p>
+
+  <div class="table-container">
+    <table>
+      <thead><tr><th>#</th><th>الخطوة</th><th>القانون المستخدم</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="mono">1</td>
+          <td>حساب الـ Streamlines</td>
+          <td class="mono">\(\dfrac{dx}{u}=\dfrac{dy}{v}=\dfrac{dz}{w}\)</td>
+        </tr>
+        <tr>
+          <td class="mono">2</td>
+          <td>حساب الـ Rotation — احسب \(\nabla\times\vec{V}\) ثم \(\vec{\omega}=\frac{1}{2}\nabla\times\vec{V}\). إذا كانت \(\nabla\times\vec{V}=0\) فالـ Flow يكون Irrotational</td>
+          <td class="mono">\(\vec{\omega}=\frac{1}{2}\nabla\times\vec{V}\)</td>
+        </tr>
+        <tr>
+          <td class="mono">3</td>
+          <td>حساب الـ Strain / Deformation بحساب مشتقات مركبات السرعة بالنسبة للإحداثيات المختلفة</td>
+          <td class="mono">\(\varepsilon_{xx},\varepsilon_{yy},\varepsilon_{zz}\)</td>
+        </tr>
+        <tr>
+          <td class="mono">4</td>
+          <td>حساب الـ Shear Strain بحساب الحدود التي تجمع مشتقتين متبادلتين</td>
+          <td class="mono">\(\dfrac{\partial u}{\partial y}+\dfrac{\partial v}{\partial x}\)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="assumption-box">
+    <span class="box-label">Note on Content Completeness</span>
+    الجزء الأخير من التسجيل الأصلي (المتعلق بحل مثال رقمي كامل يطبّق هذه الخطوات الأربع على حقل سرعة محدد) كان يحتوي على تشويش شديد في التفريغ الصوتي. لذلك تم الاكتفاء بعرض العلاقات والمفاهيم والخطوات العامة التي وردت بوضوح في المصدر، دون اختراع أرقام أو قيم مسألة غير مؤكدة. أي تفاصيل رقمية إضافية من المسألة الأصلية تعتبر <span class="ltr">[غير واضح في التسجيل]</span>.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 16 ============ -->
+<section class="section" id="sec16">
+  <div class="section-header">
+    <div class="section-icon">🎓</div>
+    <div class="section-titles">
+      <h2>Summary / Key Takeaways</h2>
+      <span class="section-subtitle ltr">Three core ideas of fluid motion description</span>
+    </div>
+  </div>
+
+  <p>عند دراسة حركة المائع (<span class="ltr">Fluid Motion</span>) يجب التمييز بين ثلاث أفكار أساسية:</p>
+
+  <div class="def-box">
+    <span class="box-label">Streamline</span>
+    خط يكون مماسًا لمتجه السرعة عند كل نقطة، ويُستخدم لتحديد شكل ومسار الـ Flow:
+    <div class="equation-scroll" style="margin-top:10px;">
+    \[
+    \frac{dx}{u}=\frac{dy}{v}=\frac{dz}{w}
+    \]
+    </div>
+  </div>
+
+  <div class="def-box">
+    <span class="box-label">Rotation</span>
+    يصف دوران عنصر المائع حول نفسه، ويُحدد باستخدام:
+    <div class="equation-scroll" style="margin-top:10px;">
+    \[
+    \vec{\omega}=\frac{1}{2}\nabla\times\vec{V}
+    \]
+    </div>
+    وإذا كانت \(\nabla\times\vec{V}=0\) فالـ Flow يكون Irrotational.
+  </div>
+
+  <div class="def-box">
+    <span class="box-label">Strain / Deformation</span>
+    يصف التغير في شكل أو أبعاد عنصر المائع، وينقسم إلى:
+    <ul style="margin:10px 0 0; padding-right:20px;">
+      <li>Normal (Linear) Deformation — تغير في الطول</li>
+      <li>Shear Deformation — تغير في الزوايا</li>
+    </ul>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.15rem; margin-top:26px;">ملاحظات مهمة من الدكتور</h3>
+  <div class="table-container">
+    <table>
+      <thead><tr><th>#</th><th>الملاحظة</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">1</td><td>الفرق الجوهري بين الطريقتين: الـ Eulerian بيثبت المكان ويدرس ما يمر به، والـ Lagrangian بيتبع الـ Particle نفسها أثناء حركتها</td></tr>
+        <tr><td class="mono">2</td><td>الحركة لا تعني بالضرورة وجود Rotation — ممكن يكون فيه Velocity غير صفرية والـ Flow يكون Irrotational في نفس الوقت</td></tr>
+        <tr><td class="mono">3</td><td>Translation، Rotation، وDeformation ليست شيئًا واحدًا — يمكن أن تحدث بصورة مستقلة أو مجتمعة، ويجب حساب كل كمية على حدة</td></tr>
+        <tr><td class="mono">4</td><td>Rotation تعتمد على الـ Curl لمتجه السرعة، بينما Strain/Deformation تعتمد على مشتقات مركبات السرعة بالنسبة للإحداثيات المكانية</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============ SECTION 17 — PRACTICE QUESTIONS ============ -->
+<section class="section" id="sec17">
+  <div class="section-header">
+    <div class="section-icon">✏️</div>
+    <div class="section-titles">
+      <h2>Practice Questions</h2>
+      <span class="section-subtitle ltr">Test your understanding</span>
+    </div>
+  </div>
+
+  <div class="q-section">
+    <h4>أسئلة تدريبية قابلة للطي</h4>
+
+    <div class="q-item">
+      <div class="q-prompt">
+        <strong>Q1.</strong> Explain the fundamental difference between the Lagrangian and Eulerian descriptions of fluid motion.
+        <span class="ltr">اشرح الفرق الجوهري بين وصف Lagrangian ووصف Eulerian.</span>
+      </div>
+      <button class="reveal-btn" onclick="toggleSolution(this)">عرض الحل الكامل ▼</button>
+      <div class="q-solution">
+        في الـ <span class="ltr">Lagrangian Description</span>، نتابع جسيمًا محددًا من المائع أثناء حركته عبر الزمن، ونسجل موضعه وسرعته وخواصه — أي أن الإطار المرجعي يتحرك مع الجسيم. أما في الـ <span class="ltr">Eulerian Description</span>، فنستخدم إطارًا مرجعيًا ثابتًا (<span class="ltr">Fixed Frame</span>): نختار نقاطًا محددة في المجال ونراقب خواص أي مائع يمر بها مع الزمن، دون تتبع أي جسيم بعينه. الـ Eulerian هي الطريقة الأكثر استخدامًا عمليًا لأن المائع Continuum يصعب فيه تتبع كل جسيم على حدة.
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-prompt">
+        <strong>Q2.</strong> For the velocity field \(\vec{V}=(0.5+0.8x)\hat{i}+(1.5-0.8y)\hat{j}\), verify that the stagnation point occurs at x = −0.625 m, y = 1.875 m.
+        <span class="ltr">تحقق من موضع نقطة التوقف بوضع u = 0 و v = 0.</span>
+      </div>
+      <button class="reveal-btn" onclick="toggleSolution(this)">عرض الحل الكامل ▼</button>
+      <div class="q-solution">
+        عند نقطة التوقف تكون كل من u و v تساوي صفرًا:
+        <div class="equation-scroll" style="margin-top:8px;">
+        \[
+        u = 0.5 + 0.8x = 0 \;\Rightarrow\; x = -\frac{0.5}{0.8} = -0.625 \text{ m}
+        \]
+        \[
+        v = 1.5 - 0.8y = 0 \;\Rightarrow\; y = \frac{1.5}{0.8} = 1.875 \text{ m}
+        \]
+        </div>
+        وبالتالي فإن نقطة التوقف تقع عند \((x,y) = (-0.625,\ 1.875)\) متر، وهذا يطابق النتيجة المعطاة في المثال المحلول.
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-prompt">
+        <strong>Q3.</strong> Is it possible for a fluid element to have non-zero velocity while being irrotational? Explain.
+        <span class="ltr">هل يمكن أن يكون للمائع سرعة غير صفرية مع كونه Irrotational؟ اشرح.</span>
+      </div>
+      <button class="reveal-btn" onclick="toggleSolution(this)">عرض الحل الكامل ▼</button>
+      <div class="q-solution">
+        نعم، هذا ممكن تمامًا وهو أمر مؤكَّد من الدكتور في المحاضرة. وجود سرعة (حركة انتقالية Translation) لا يعني بالضرورة وجود دوران. الـ Flow يكون <span class="ltr">Irrotational</span> طالما أن \(\nabla\times\vec{V}=0\)، بغض النظر عن مقدار السرعة نفسها. فيزيائيًا، يمكن تخيل عنصر مائع مربع يتحرك في خط مستقيم بسرعة منتظمة دون أن تدور أضلاعه حول مركزه — هذا Flow له سرعة غير صفرية لكنه Irrotational.
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-prompt">
+        <strong>Q4.</strong> What is the difference between the terms on the diagonal and off-diagonal of the Strain Rate Tensor?
+        <span class="ltr">ما الفرق بين العناصر القطرية وغير القطرية في Strain Rate Tensor؟</span>
+      </div>
+      <button class="reveal-btn" onclick="toggleSolution(this)">عرض الحل الكامل ▼</button>
+      <div class="q-solution">
+        العناصر القطرية (\(\varepsilon_{xx}, \varepsilon_{yy}, \varepsilon_{zz}\)) تمثل الـ <span class="ltr">Linear (Normal) Strain Rate</span> — أي معدل التمدد أو الانكماش في كل اتجاه إحداثي على حدة، وتُحسب من \(\partial u/\partial x\) وما شابه. أما العناصر غير القطرية (مثل \(\varepsilon_{xy}\)) فتمثل الـ <span class="ltr">Shear Strain Rate</span> — أي معدل التغير في الزوايا بين أضلاع العنصر المتعامدة أصلًا، وتُحسب من مجموع مشتقتين متبادلتين مقسومًا على 2، مثل \(\frac{1}{2}(\partial u/\partial y + \partial v/\partial x)\).
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="lecture-footer">
+  <h3>Fluid Kinematics — وصف حركة الموائع</h3>
+  <p>Lagrangian &amp; Eulerian Description · Streamlines · Rotation, Vorticity &amp; Strain Rate Tensor</p>
+  <div class="footer-tags">
+    <span class="footer-tag">Lagrangian</span>
+    <span class="footer-tag">Eulerian</span>
+    <span class="footer-tag">Material Derivative</span>
+    <span class="footer-tag">Streamlines</span>
+    <span class="footer-tag">Vorticity</span>
+    <span class="footer-tag">Strain Rate Tensor</span>
+  </div>
+</footer>
+
+<div class="closing-wrapper">
+  <div class="closing-card">
+    <p>🤲 ولا تنسوا الصلاة على النبي صلى الله عليه وسلم، والدعاء لإخوانكم في فلسطين وغزة وفي جميع بقاع الأرض، وأن ينصر الله المسلمين المستضعفين. 🤲</p>
+  </div>
+</div>
+
+<script>
+function toggleDua(){
+  var btn = document.getElementById('duaBtn');
+  var content = document.getElementById('duaContent');
+  var expanded = btn.getAttribute('aria-expanded') === 'true';
+  if(expanded){
+    btn.setAttribute('aria-expanded','false');
+    content.style.display='none';
+  } else {
+    btn.setAttribute('aria-expanded','true');
+    content.style.display='block';
+  }
+}
+
+function toggleSolution(btn){
+  var sol = btn.nextElementSibling;
+  var open = sol.classList.contains('open');
+  if(open){
+    sol.classList.remove('open');
+    btn.textContent = 'عرض الحل الكامل ▼';
+  } else {
+    sol.classList.add('open');
+    btn.textContent = 'إخفاء الحل ▲';
+  }
+}
+
+// Smooth scroll for TOC links
+document.querySelectorAll('#tocBody a').forEach(function(link){
+  link.addEventListener('click', function(e){
+    e.preventDefault();
+    var target = document.querySelector(this.getAttribute('href'));
+    if(target){
+      target.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  });
+});
+</script>
+
+</body>
+</html>
