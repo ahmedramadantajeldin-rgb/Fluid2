@@ -784,9 +784,17 @@ footer.lecture-footer p{
 .kinematic-intro p:last-child {
   margin-bottom: 0;
 }
+
+.home-link{position:fixed; top:14px; right:14px; z-index:50; display:inline-flex; align-items:center; gap:6px;
+  padding:7px 16px; border-radius:999px; background:rgba(11,36,71,0.78); color:#fff; text-decoration:none;
+  font-family:'Cairo',sans-serif; font-weight:600; font-size:0.82rem; border:1px solid rgba(255,255,255,0.3);
+  backdrop-filter:blur(6px); transition:background 0.2s;}
+.home-link:hover{background:var(--royal);}
 </style>
 </head>
 <body>
+<a class="home-link" href="index.html">← الصفحة الرئيسية</a>
+
 
 <header class="lecture-header">
   <div class="header-inner">
@@ -875,7 +883,7 @@ footer.lecture-footer p{
       </div>
     </div>
     <div class="media-visual">
-      <img src="assets/images/control-volume-equations.jpg" alt="Car with Control Volume, showing Inlet U(inlet) and Outlet U(outlet) velocity arrows, and the Control Surface boundary — illustrating the Integral Form approach" loading="lazy">
+      <img src="assets/chapter-2/images/control-volume-equations.jpg" alt="Car with Control Volume, showing Inlet U(inlet) and Outlet U(outlet) velocity arrows, and the Control Surface boundary — illustrating the Integral Form approach" loading="lazy">
       <figcaption>Integral Form: only inlet &amp; outlet conditions at the Control Surface matter</figcaption>
     </div>
   </div>
@@ -895,8 +903,8 @@ footer.lecture-footer p{
       <p>فمثلًا في حالة السيارة، الـ <span class="ltr">Integral Form</span> يركّز فقط على سرعة الدخول <span class="ltr">U(inlet)</span> وسرعة الخروج <span class="ltr">U(outlet)</span> عند حدود الـ Control Volume، بينما الـ <span class="ltr">Differential Form</span> يهتم بمعرفة السرعة عند كل نقطة محددة حول جسم السيارة، مثل <span class="ltr">u(x₁,y₁,z₁,t)</span> و<span class="ltr">u(x₂,y₂,z₂,t)</span> و<span class="ltr">u(x₃,y₃,z₃,t)</span>. الفيديو المصغّر بجانب هذا النص يوضّح الفكرة بصريًا: نقاط قياس منفصلة حول جسم السيارة، ثم تكبير عند إحدى هذه النقاط لإظهار كيف تتحلل السرعة عندها إلى مركبات <span class="ltr">Vₓ, Vy, V_z</span> على المحاور الثلاثة x, y, z — وهو بالضبط جوهر الـ Differential Form: معرفة السرعة كمتجه كامل عند كل نقطة على حدة.</p>
     </div>
     <div class="media-visual">
-      <video controls muted loop playsinline preload="metadata" poster="">
-        <source src="assets/videos/eulerian-flow-animation.mp4" type="video/mp4">
+      <video controls muted loop playsinline preload="metadata">
+        <source src="assets/chapter-2/videos/eulerian-flow-animation.mp4" type="video/mp4">
       </video>
       <figcaption>Differential Form: point velocities u(x₁,y₁,z₁,t)... zooming into Vx, Vy, Vz at one point</figcaption>
     </div>
@@ -952,7 +960,7 @@ footer.lecture-footer p{
   </div>
 
   <figure class="lecture-figure figure-medium" style="margin:26px auto 16px;">
-    <img src="assets/images/continuity-equation.jpg" alt="Control Volume with two inlets (ṁ₁ = 2 kg/s and ṁ₂ = 3 kg/s) and one outlet (ṁ₃ = ṁ₁ + ṁ₂ = 5 kg/s), alongside a magnified differential fluid element dx·dy·dz" loading="lazy">
+    <img src="assets/chapter-2/images/continuity-equation.jpg" alt="Control Volume with two inlets (ṁ₁ = 2 kg/s and ṁ₂ = 3 kg/s) and one outlet (ṁ₃ = ṁ₁ + ṁ₂ = 5 kg/s), alongside a magnified differential fluid element dx·dy·dz" loading="lazy">
     <figcaption>Conservation of Mass: Macroscopic Control Volume (Lagrangian/Eulerian bulk flows ṁ_in &amp; ṁ_out) vs. Infinitesimal Fluid Element dx·dy·dz (Eulerian detailed flow field)</figcaption>
   </figure>
 
@@ -1054,7 +1062,7 @@ footer.lecture-footer p{
 
   <div class="figure-row">
     <figure class="lecture-figure figure-medium">
-      <img src="assets/images/lagrangian-particle-motion.gif" alt="Animated flow with dashed streamlines and a speed gauge icon, illustrating Lagrangian tracking" loading="lazy">
+      <img src="assets/chapter-2/images/lagrangian-particle-motion.gif" alt="Animated flow with dashed streamlines and a speed gauge icon, illustrating Lagrangian tracking" loading="lazy">
       <figcaption>Tracking properties along the fluid's path</figcaption>
     </figure>
   </div>
@@ -1100,7 +1108,7 @@ footer.lecture-footer p{
   <p>فعلى سبيل المثال، لقياس خواص الـ Flow عند نقطة محددة مثل \((x_1, y_1, z_1)\)، نضع جهاز قياس ثابتًا عند هذه النقطة ونسجّل خواص المائع (سرعة، ضغط، درجة حرارة...) أثناء مروره بها — دون أن نتابع جسيمًا بعينه.</p>
 
   <figure class="lecture-figure figure-medium">
-    <img src="assets/images/eulerian-velocity-field.jpg" alt="Control volume analysis of duct flow showing the Eulerian grid of fixed measurement points with coordinates (0,0), (x1,y1), (xn,yn)" loading="lazy">
+    <img src="assets/chapter-2/images/eulerian-velocity-field.jpg" alt="Control volume analysis of duct flow showing the Eulerian grid of fixed measurement points with coordinates (0,0), (x1,y1), (xn,yn)" loading="lazy">
     <figcaption>A fixed grid of points inside a Control Volume — properties are recorded at each fixed location</figcaption>
   </figure>
 
@@ -1446,7 +1454,7 @@ footer.lecture-footer p{
       </div>
     </div>
     <div class="media-visual">
-      <img src="assets/images/streamlines-diagram.jpg" alt="Laminar flow streamlines through a converging-diverging tube, parallel lines narrowing and widening" loading="lazy">
+      <img src="assets/chapter-2/images/streamlines-diagram.jpg" alt="Laminar flow streamlines through a converging-diverging tube, parallel lines narrowing and widening" loading="lazy">
       <figcaption>Laminar flow — streamlines remain parallel and do not cross</figcaption>
     </div>
   </div>
@@ -1465,7 +1473,7 @@ footer.lecture-footer p{
       </div>
     </div>
     <div class="media-visual">
-      <img src="assets/images/streamline-equation.png" alt="Streamline diagram showing point (x,y), vector V decomposed into u and v components, and displacement vector dr tangent to the curve to point (x+dx, y+dy)" loading="lazy">
+      <img src="assets/chapter-2/images/streamline-equation.png" alt="Streamline diagram showing point (x,y), vector V decomposed into u and v components, and displacement vector dr tangent to the curve to point (x+dx, y+dy)" loading="lazy">
       <figcaption>The displacement vector dr is parallel to the local velocity vector V at every point</figcaption>
     </div>
   </div>
@@ -1522,7 +1530,7 @@ footer.lecture-footer p{
       </div>
     </div>
     <div class="media-visual">
-      <img src="assets/images/rotation-vorticity.jpg" alt="Right-hand rule illustration showing vector A, vector B, and their cross product C = A × B pointing in the thumb direction" loading="lazy">
+      <img src="assets/chapter-2/images/rotation-vorticity.jpg" alt="Right-hand rule illustration showing vector A, vector B, and their cross product C = A × B pointing in the thumb direction" loading="lazy">
       <figcaption>Right-hand rule: the direction of the curl (and hence rotation) follows this convention</figcaption>
     </div>
   </div>
@@ -1548,7 +1556,7 @@ footer.lecture-footer p{
       </div>
     </div>
     <div class="media-visual">
-      <img src="assets/images/rotation-2d-case.png" alt="Pink square fluid element with dashed border, with curved arrows around the corners indicating counter-clockwise rotation" loading="lazy">
+      <img src="assets/chapter-2/images/rotation-2d-case.png" alt="Pink square fluid element with dashed border, with curved arrows around the corners indicating counter-clockwise rotation" loading="lazy">
       <figcaption>A rotating fluid element — the sides rotate about the center while the shape may remain square</figcaption>
     </div>
   </div>
@@ -1670,7 +1678,7 @@ footer.lecture-footer p{
       </div>
     </div>
     <div class="media-visual">
-      <img src="assets/images/linear-strain-rate.png" alt="A pale rectangle with dashed border stretching horizontally into a solid pink rectangle, with outward arrows on left and right edges showing elongation" loading="lazy">
+      <img src="assets/chapter-2/images/linear-strain-rate.png" alt="A pale rectangle with dashed border stretching horizontally into a solid pink rectangle, with outward arrows on left and right edges showing elongation" loading="lazy">
       <figcaption>Linear strain — elongation of a fluid element along one direction</figcaption>
     </div>
   </div>
@@ -1694,7 +1702,7 @@ footer.lecture-footer p{
       </div>
     </div>
     <div class="media-visual">
-      <img src="assets/images/shear-strain-rate.png" alt="A square element deformed by shear into a parallelogram, with arrows on all four sides indicating opposing shear directions" loading="lazy">
+      <img src="assets/chapter-2/images/shear-strain-rate.png" alt="A square element deformed by shear into a parallelogram, with arrows on all four sides indicating opposing shear directions" loading="lazy">
       <figcaption>Shear strain — the fluid element deforms into a parallelogram as adjacent sides rotate</figcaption>
     </div>
   </div>
@@ -1724,11 +1732,11 @@ footer.lecture-footer p{
 
   <div class="figure-row">
     <figure class="lecture-figure">
-      <img src="assets/images/strain-tensor-linear.png" alt="Linear strain illustration" loading="lazy">
+      <img src="assets/chapter-2/images/strain-tensor-linear.png" alt="Linear strain illustration" loading="lazy">
       <figcaption>Linear (Normal) Strain</figcaption>
     </figure>
     <figure class="lecture-figure">
-      <img src="assets/images/strain-tensor-shear.png" alt="Shear strain illustration" loading="lazy">
+      <img src="assets/chapter-2/images/strain-tensor-shear.png" alt="Shear strain illustration" loading="lazy">
       <figcaption>Shear Strain</figcaption>
     </figure>
   </div>
