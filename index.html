@@ -34,7 +34,7 @@ img{max-width:100%; height:auto; display:block;}
 header.lecture-header{
   position:relative;
   background:linear-gradient(135deg, var(--navy) 0%, var(--royal) 60%, var(--sky) 100%);
-  padding:60px 40px 50px; overflow:hidden; color:#fff;
+  padding:84px 28px 76px; overflow:hidden; color:#fff;
 }
 header.lecture-header::before{
   content:""; position:absolute; inset:0; opacity:0.06; pointer-events:none;
@@ -42,7 +42,7 @@ header.lecture-header::before{
     repeating-linear-gradient(115deg, transparent 0 40px, rgba(255,255,255,0.5) 40px 41px),
     repeating-linear-gradient(25deg, transparent 0 60px, rgba(255,255,255,0.5) 60px 61px);
 }
-.header-inner{position:relative; max-width:960px; margin:0 auto; text-align:center;}
+header.lecture-header .header-inner{max-width:640px; margin:0 auto; text-align:center; position:relative;}
 .badge{
   display:inline-block; padding:7px 18px; margin-bottom:22px;
   background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3);
@@ -308,13 +308,10 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
 
 
 /* ---- landing page ---- */
-header.lecture-header{padding:84px 28px 76px;}
-header.lecture-header .header-inner{max-width:640px; margin:0 auto; text-align:center;}
 .landing{max-width:680px; margin:0 auto; padding:0 22px;}
 .landing-intro{text-align:center; margin:52px 0 34px;}
 .landing-intro .eyebrow{display:inline-block; font-family:'Cairo',sans-serif; font-weight:700; font-size:0.78rem;
   letter-spacing:2px; text-transform:uppercase; color:var(--sky);}
-.landing-intro h2{font-family:'Playfair Display',serif; font-size:1.7rem; color:var(--navy); margin:8px 0 0; border:none; padding:0;}
 .landing-intro .rule{width:56px; height:3px; border-radius:3px; margin:16px auto 0; background:linear-gradient(90deg,var(--royal),var(--sky));}
 .chapter-list{display:flex; flex-direction:column; gap:28px; margin-bottom:64px;}
 .chapter-card{position:relative; display:block; background:#fff; border-radius:18px; box-shadow:var(--shadow);
@@ -355,41 +352,40 @@ header.lecture-header .header-inner{max-width:640px; margin:0 auto; text-align:c
       Fluid Mechanics
       <span class="ar-line">ميكانيكا الموائع</span>
     </h1>
-    <p class="header-subtitle">ملخصات دراسية مفصّلة لفصول المادة — اختر الفصل للبدء</p>
+    <p class="header-subtitle">ملخصات دراسية مفصّلة لفصول المادة</p>
   </div>
 </header>
 
 <main class="landing">
   <div class="landing-intro">
     <span class="eyebrow">Chapters · الفصول</span>
-    <h2>Choose a Chapter</h2>
     <div class="rule"></div>
   </div>
   <div class="chapter-list">
+    <a class="chapter-card" href="chapter-2.html">
+      <div class="chapter-head">
+        <div class="section-icon">🌀</div>
+        <div>
+          <span class="chapter-num">Chapter 1</span>
+          <h3>Fluid Dynamics</h3>
+          <span class="ar">وصف حركة الموائع</span>
+        </div>
+      </div>
+      <p>الوصف اللاجرانجي والأويلري، الـMaterial Derivative، خطوط الجريان، والدوران والـVorticity ومعدلات الانفعال.</p>
+      <div class="topic-list"><span class="topic">Lagrangian &amp; Eulerian</span><span class="topic">Streamlines</span><span class="topic">Vorticity</span><span class="topic">Strain Rate Tensor</span></div>
+      <span class="open-btn">فتح الفصل 1 <span aria-hidden="true">←</span></span>
+    </a>
     <a class="chapter-card" href="chapter-1.html">
       <div class="chapter-head">
         <div class="section-icon">⚖️</div>
         <div>
-          <span class="chapter-num">Chapter 1</span>
+          <span class="chapter-num">Chapter 2</span>
           <h3>The Continuity Equation</h3>
           <span class="ar">معادلة الاستمرارية</span>
         </div>
       </div>
       <p>الاشتقاق الكامل من الـControl Volume والـTaylor Expansion للصيغة التفاضلية، ثم الإحداثيات الأسطوانية والـStream Function مع أمثلة محلولة.</p>
       <div class="topic-list"><span class="topic">Control Volume</span><span class="topic">Taylor Expansion</span><span class="topic">Cylindrical Coordinates</span><span class="topic">Stream Function ψ</span></div>
-      <span class="open-btn">فتح الفصل 1 <span aria-hidden="true">←</span></span>
-    </a>
-    <a class="chapter-card" href="chapter-2.html">
-      <div class="chapter-head">
-        <div class="section-icon">🌀</div>
-        <div>
-          <span class="chapter-num">Chapter 2</span>
-          <h3>Fluid Kinematics</h3>
-          <span class="ar">وصف حركة الموائع</span>
-        </div>
-      </div>
-      <p>الوصف اللاجرانجي والأويلري، الـMaterial Derivative، خطوط الجريان، والدوران والـVorticity ومعدلات الانفعال.</p>
-      <div class="topic-list"><span class="topic">Lagrangian &amp; Eulerian</span><span class="topic">Streamlines</span><span class="topic">Vorticity</span><span class="topic">Strain Rate Tensor</span></div>
       <span class="open-btn">فتح الفصل 2 <span aria-hidden="true">←</span></span>
     </a>
   </div>
