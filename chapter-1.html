@@ -355,6 +355,19 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
   font-family:'Cairo',sans-serif; font-weight:600; font-size:0.82rem; border:1px solid rgba(255,255,255,0.3);
   backdrop-filter:blur(6px); transition:background 0.2s;}
 .home-link:hover{background:var(--royal);}
+
+/* ===== COMPACT INTEGRAL | DIFFERENTIAL (section 1 only) ===== */
+#sec1 .section-header{margin-bottom:14px; padding-bottom:10px;}
+#sec1 + .section-divider{margin:26px 0;}
+.id-compare{display:flex; gap:16px; align-items:stretch; direction:ltr; margin:0;}
+.id-col{flex:1 1 0; min-width:0; display:flex; flex-direction:column;}
+.id-col .subhead{text-align:center; margin:0 0 8px;}
+.id-col figure.lec-figure{margin:0 0 10px;}
+.id-col figure.lec-figure img{max-width:230px; max-height:140px; padding:4px;}
+.id-col .def-box{direction:rtl; padding:12px 14px; margin:0 0 10px; font-size:0.9rem; line-height:1.7; flex:1 1 auto;}
+.id-col .formula-box{margin:0; padding:14px 14px; font-size:0.85rem;}
+.id-col .formula-box .box-label{margin-bottom:6px;}
+@media (max-width:520px){.id-compare{flex-direction:column; gap:22px;}}
 </style>
 </head>
 <body>
@@ -423,98 +436,43 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
     <div class="section-icon">⚖️</div>
     <div class="section-titles">
       <h2>1. Integral vs. Differential — Two Ways to Look at Mass</h2>
-      <span class="section-sub">Why we start here before deriving anything</span>
+      <span class="section-sub">Quick reminder — explained in the previous chapter</span>
     </div>
   </div>
 
-  <div class="doctor-box">
-    <span class="box-label">🎓 Explanation</span>
-    <p style="margin-bottom:0;">قبل ما نبدأ اشتقاق أي معادلة، لازم نحدد إحنا عايزين نعرف إيه بالظبط عن الـflow. فيه طريقتين لدراسة أي مسألة في fluid mechanics: إما نبص على الـ<span class="eng-term">control volume</span> ككل ونشوف بس اللي بيدخل ويخرج من حدوده (الـcontrol surface)، أو نبص على كل نقطة جوه الـflow field لوحدها ونعرف الـvelocity عندها بالظبط. الطريقة الأولى هي الـ<span class="eng-term">Integral Form</span> والتانية هي الـ<span class="eng-term">Differential Form</span>.</p>
-  </div>
-
-  <div class="def-box">
-    <span class="box-label">Fluid 1 — Integral Form (Control Volume Approach)</span>
-    <p style="margin-bottom:0;">بتهدف إنها تحسب الخصائص الكلية (<em>overall</em>) للـflow — زي الـdrag أو الـlift الكلي على جسم — من خلال دراسة اللي بيحصل بس عند حدود الـcontrol volume، يعني عند الـ<span class="eng-term">control surface</span>. مش محتاجين نعرف إيه اللي بيحصل جوه الحجم، بس اللي بيعدي من على حدوده.</p>
-  </div>
-
-  <figure class="lec-figure">
-    <img src="assets/chapter-1/images/cfd-car-controlvolume.jpg" alt="CFD simulation of airflow over a car with a control volume box drawn around it, showing inlet velocity U(inlet) and outlet velocity U(outlet) crossing the control surface">
-    <figcaption>Control Volume &amp; Control Surface — إحنا بس مهتمين باللي بيعدي من على الحدود</figcaption>
-  </figure>
-
-  <div class="def-box">
-    <span class="box-label">Fluid 2 — Differential Form (Field Approach)</span>
-    <p style="margin-bottom:0;">بتهدف إنها تحسب الـflow عند كل نقطة على حدة، بالشكل \(u(x,y,z,t)\)، عشان نطلع بمعرفة تفصيلية عن النظام كله — السرعة والضغط والكثافة عند أي مكان وأي لحظة.</p>
-  </div>
-
-  <figure class="lec-figure">
-    <img src="assets/chapter-1/images/cfd-car-streamlines.jpg" alt="CFD simulation of airflow over a car with three marked points labeled u(x1,y1,z1,t), u(x2,y2,z2,t), u(x3,y3,z3,t) showing the velocity field at different locations">
-    <figcaption>الطريقة التفاضلية بتحل الـvelocity field نقطة بنقطة: u(x₁,y₁,z₁,t)، u(x₂,y₂,z₂,t)، u(x₃,y₃,z₃,t) ...</figcaption>
-  </figure>
-
-  <p>بتطبيق المقارنة دي على <strong>حفظ الكتلة</strong> تحديدًا، نفس القانون الفيزيائي (إن الكتلة متتخلقش ولا تتفني) بياخد شكلين رياضيين مختلفين:</p>
-
-  <div class="table-scroll">
-    <table class="lec-table">
-      <thead>
-        <tr><th></th><th>Fluid 1 — Integral Form</th><th>Fluid 2 — Differential Form</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="label-cell">الطبيعة</td><td>بتحل integral equation</td><td>بتحل نظام من الـdifferential equations</td></tr>
-        <tr><td class="label-cell">الصعوبة</td><td>سهلة الحل</td><td>معقدة الحل</td></tr>
-        <tr><td class="label-cell">المثال</td><td>Continuity equation (صيغة mass flow rate)</td><td>Continuity equation (field form)</td></tr>
-        <tr><td class="label-cell">النتيجة</td><td>ميزان كتلة كلي \(\dot m\)</td><td>الحقل الكامل \(u(x,y,z,t)\)</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p class="scroll-hint">← اسحب لرؤية المزيد →</p>
-
-  <div class="formula-box">
-    <span class="box-label">Integral form — معدل تدفق الكتلة خلال مقطع عرضي</span>
-    <div class="equation-scroll">
-      \[ \dot{m} = \int_{A_c} \delta \dot{m} = \int_{A_c} \rho V_n \, dA_c \quad (\text{kg/s}) \]
+  <div class="id-compare">
+    <div class="id-col">
+      <div class="subhead">Integral Form</div>
+      <figure class="lec-figure">
+        <img src="assets/chapter-1/images/cfd-car-controlvolume.jpg" alt="CFD simulation of airflow over a car with a control volume drawn around it, showing inlet velocity U(inlet) and outlet velocity U(outlet)">
+      </figure>
+      <div class="def-box">
+        <span class="box-label">Fluid 1 — Control Volume Approach</span>
+        <p style="margin-bottom:0;">بتحسب الخصائص الكلية (<em>overall</em>) زي الـdrag والـlift، من خلال اللي بيحصل بس عند حدود الـcontrol volume، يعني عند الـ<span class="eng-term">control surface</span>. سهلة الحل.</p>
+      </div>
+      <div class="formula-box">
+        <span class="box-label">Integral form — control-volume mass balance</span>
+        <div class="equation-scroll">
+          \[ \frac{dm_{CV}}{dt} = \sum_{\text{in}} \dot{m} - \sum_{\text{out}} \dot{m} \]
+        </div>
+      </div>
     </div>
-    <div class="equation-scroll">
-      \[ \dot{m} = \rho \, V_{\text{avg}} \, A_c \quad (\text{kg/s}) \]
+    <div class="id-col">
+      <div class="subhead">Differential Form</div>
+      <figure class="lec-figure">
+        <img src="assets/chapter-1/images/cfd-car-streamlines.jpg" alt="CFD simulation of airflow over a car with three marked points showing the velocity field u(x,y,z,t) at different locations">
+      </figure>
+      <div class="def-box">
+        <span class="box-label">Fluid 2 — Field Approach</span>
+        <p style="margin-bottom:0;">بتحسب الـflow عند كل نقطة بالشكل \(u(x,y,z,t)\)، عشان نطلع بمعرفة تفصيلية عن النظام كله. معقدة الحل.</p>
+      </div>
+      <div class="formula-box">
+        <span class="box-label">Differential form — continuity equation</span>
+        <div class="equation-scroll">
+          \[ \frac{\partial \rho}{\partial t} + \vec{\nabla}\cdot(\rho \vec{V}) = 0 \]
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="formula-box">
-    <span class="box-label">Integral form — حفظ الكتلة العام لـcontrol volume</span>
-    <div class="equation-scroll">
-      \[ \frac{d}{dt}\int_{CV} \rho \, dV + \int_{CS} \rho (\vec{V}\cdot \vec{n}) \, dA = 0 \]
-    </div>
-    <div class="equation-scroll">
-      \[ \frac{dm_{CV}}{dt} = \sum_{\text{in}} \dot{m} - \sum_{\text{out}} \dot{m} \]
-    </div>
-    <p style="color:#dce8f5; margin:10px 0 0; font-size:0.92rem;">في حالة الـsteady state، الكتلة المخزنة جوه الـcontrol volume مبتتغيرش مع الزمن، يبقى:</p>
-    <div class="equation-scroll">
-      \[ \sum_{\text{in}} \dot{m} = \sum_{\text{out}} \dot{m} \]
-    </div>
-  </div>
-
-  <div class="formula-box">
-    <span class="box-label">Differential form — continuity equation (field form)</span>
-    <div class="equation-scroll">
-      \[ \frac{\partial \rho}{\partial t} + \vec{\nabla}\cdot(\rho \vec{V}) = 0 \]
-    </div>
-    <div class="equation-scroll">
-      \[ \frac{\partial \rho}{\partial t} + \frac{\partial(\rho u)}{\partial x} + \frac{\partial(\rho v)}{\partial y} + \frac{\partial(\rho w)}{\partial z} = 0 \]
-    </div>
-  </div>
-
-  <div class="meaning-block">
-    <h4>💡 What This Part Means</h4>
-    <p style="margin-bottom:0;">هذا الجزء التمهيدي كان هدفه إن الطالب يفهم إن المعادلة اللي هنشتقها بعد شوية (Continuity Equation) هي <strong>نفس القانون الفيزيائي</strong> بس بصيغة تفصيلية أكتر. وده تمهيد عشان نوضح ليه محتاجين نشتق صيغة تفاضلية أصلًا — لأن مش كل مسألة محتاجة بس الإجابة الكلية.</p>
-  </div>
-
-  <div class="takeaway-block">
-    <h4>🔑 Key Takeaway</h4>
-    <ul>
-      <li>Integral Form = ميزان كتلة كلي عند حدود الـcontrol volume (سهل، لكن بدون تفاصيل داخلية).</li>
-      <li>Differential Form = معرفة كاملة بالـvelocity field عند كل نقطة (معقد، لكن تفصيلي).</li>
-      <li>الاثنين بيعبّروا عن نفس قانون حفظ الكتلة — الفرق في شكل الرياضيات مش في الفيزياء.</li>
-    </ul>
   </div>
 </section>
 
