@@ -401,16 +401,18 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
     <div class="toc-head">Table of Contents · جدول المحتويات</div>
     <div class="toc-body">
       <a class="toc-item" href="#sec1"><span class="toc-num">1</span> Integral vs. Differential — Two Ways to Look at Mass</a>
-      <a class="toc-item" href="#sec2"><span class="toc-num">2</span> The Control Volume &amp; Taylor Expansion</a>
-      <a class="toc-item" href="#sec3"><span class="toc-num">3</span> From Mass Flow Rate to the Differential Form</a>
+      <a class="toc-item" href="#sec2"><span class="toc-num">2</span> Cartesian — The Control Volume &amp; Taylor Expansion</a>
+      <a class="toc-item" href="#sec3"><span class="toc-num">3</span> Cartesian — From Mass Flow Rate to the Differential Form</a>
       <a class="toc-item" href="#sec4"><span class="toc-num">4</span> The General Continuity Equation</a>
-      <a class="toc-item" href="#sec5"><span class="toc-num">5</span> Special Cases: Steady &amp; Incompressible</a>
-      <a class="toc-item" href="#sec6"><span class="toc-num">6</span> Cylindrical Coordinates</a>
+      <a class="toc-item" href="#sec5"><span class="toc-num">5</span> Cylindrical Coordinates</a>
+      <a class="toc-item" href="#sec6"><span class="toc-num">6</span> Special Cases: Steady &amp; Incompressible</a>
       <a class="toc-item" href="#sec7"><span class="toc-num">7</span> Steady, 2-D, Incompressible Flow</a>
-      <a class="toc-item" href="#sec8"><span class="toc-num">8</span> The Stream Function ψ</a>
-      <a class="toc-item" href="#sec9"><span class="toc-num">9</span> Stream Function in Cylindrical Coordinates</a>
-      <a class="toc-item" href="#sec10"><span class="toc-num">10</span> Worked Examples</a>
-      <a class="toc-item" href="#sec11"><span class="toc-num">11</span> Practice Questions</a>
+      <a class="toc-item" href="#sec8"><span class="toc-num">8</span> The Stream Function ψ — General Concept</a>
+      <a class="toc-item" href="#sec9"><span class="toc-num">9</span> Stream Function in Different Coordinate Systems</a>
+      <a class="toc-item" href="#sec10"><span class="toc-num">10</span> Cylindrical-Coordinate Special Cases</a>
+      <a class="toc-item" href="#sec11"><span class="toc-num">11</span> Stream Function — Summary of All Forms</a>
+      <a class="toc-item" href="#sec12"><span class="toc-num">12</span> Worked Examples</a>
+      <a class="toc-item" href="#sec13"><span class="toc-num">13</span> Practice Questions</a>
     </div>
   </div>
 </div>
@@ -521,9 +523,14 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
   <div class="section-header">
     <div class="section-icon">📦</div>
     <div class="section-titles">
-      <h2>2. The Control Volume &amp; Taylor Expansion</h2>
+      <h2>2. Cartesian Coordinates — The Control Volume &amp; Taylor Expansion</h2>
       <span class="section-sub">Setting up the infinitesimal element</span>
     </div>
+  </div>
+
+  <div class="doctor-box">
+    <span class="box-label">🎓 Transition — من الـIntegral للـDifferential</span>
+    <p style="margin-bottom:0;">بدأنا في Section 1 بالـIntegral Form والـDifferential Form. عشان نحصل على الـ<span class="eng-term">continuity equation</span> نفسها، لازم الأول نعبّر عن المسألة بمكونات السرعة في نظام إحداثيات معين، وأبسط نظام هو <span class="eng-term">Cartesian coordinates</span> \((x,y,z)\). فهنشتق المعادلة من هنا، وبعد ما تتأسس نقدم صيغتها العامة (Section 4)، وبعدها ننتقل لنظام الإحداثيات الأسطواني (Section 5) والحالات الخاصة.</p>
   </div>
 
   <div class="doctor-box">
@@ -660,7 +667,7 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
   <div class="section-header">
     <div class="section-icon">🧮</div>
     <div class="section-titles">
-      <h2>3. From Mass Flow Rate to the Differential Form</h2>
+      <h2>3. Cartesian Coordinates — From Mass Flow Rate to the Differential Form</h2>
       <span class="section-sub">Summing all six faces and simplifying</span>
     </div>
   </div>
@@ -801,14 +808,76 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
 <hr class="section-divider">
 <section class="section" id="sec5">
   <div class="section-header">
-    <div class="section-icon">🎛️</div>
+    <div class="section-icon">🌀</div>
     <div class="section-titles">
-      <h2>5. Special Cases: Steady &amp; Incompressible</h2>
-      <span class="section-sub">Simplifying the general equation — the "Cases"</span>
+      <h2>5. Cylindrical Coordinates</h2>
+      <span class="section-sub">Coordinate transformation → the full continuity equation</span>
     </div>
   </div>
 
-  <p>نقسّم الحالات الخاصة لتلات حالات — steady الأول، وبعدين incompressible، وبعدين اجتماعهم سوا. الافتراضين مختلفين تمامًا، فكل واحد بيصفّر حد مختلف في المعادلة العامة (Section 4):</p>
+  <p>بعد ما اشتقينا الـcontinuity equation في الإحداثيات الكارتيزية (Section 3) وكتبنا صيغتها العامة (Section 4)، ننتقل للنظام التاني: <span class="eng-term">Cylindrical coordinates</span> \((r,\theta,z)\).</p>
+
+  <div class="doctor-box">
+    <span class="box-label">🎓 Explanation</span>
+    <p style="margin-bottom:0;">في كتير من مسائل الـfluid mechanics — زي الجريان حوالين أسطوانة أو جوه ماسورة — بيكون أسهل بكتير إننا نستخدم <span class="eng-term">cylindrical coordinates</span> \((r,\theta,z)\) بدل \((x,y,z)\)، لأن الشكل الهندسي للمسألة نفسه بيكون أسطواني.</p>
+  </div>
+
+  <div class="subhead">التحويل بين Cartesian و Cylindrical</div>
+
+  <p>العلاقة بين الإحداثيات الكارتيزية والأسطوانية (<em>"convert between cartesian &amp; cylindrical"</em>):</p>
+
+  <div class="formula-box">
+    <span class="box-label">Coordinate transformation</span>
+    <div class="equation-scroll">
+      \[ r = \sqrt{x^2+y^2} \qquad x = r\cos\theta \qquad y = r\sin\theta \]
+    </div>
+  </div>
+
+  <div class="figure-row">
+    <figure class="lec-figure">
+      <img src="assets/chapter-1/images/cylindrical-element.png" alt="3D cylindrical differential volume element with sides dr, dz, and arc length r dθ, alongside a cylinder diagram showing the volume segment dV">
+      <figcaption>عنصر الحجم الأسطواني التفاضلي: dr, r dθ, dz</figcaption>
+    </figure>
+    <figure class="lec-figure">
+      <img src="assets/chapter-1/images/polar-unit-vectors.png" alt="2D xy-plane showing point P at distance r and angle θ from origin, with unit vectors e-r and e-theta, and velocity components u-r and u-theta">
+      <figcaption>متجهات الوحدة \(\vec e_r,\ \vec e_\theta\) ومكونات السرعة \(u_r,\ u_\theta\) عند النقطة P</figcaption>
+    </figure>
+  </div>
+
+  <div class="subhead">الصيغة الكاملة لـCylindrical Continuity</div>
+
+  <p>الـcontinuity equation في الإحداثيات الأسطوانية بصيغتها الكاملة (بتشمل \(\partial\rho/\partial t\)):</p>
+
+  <div class="formula-box">
+    <span class="box-label">🎯 Continuity Equation — Cylindrical Coordinates (الصيغة الكاملة)</span>
+    <div class="equation-scroll">
+      \[ \boxed{\ \frac{\partial \rho}{\partial t} + \frac{1}{r}\frac{\partial(r\rho u_r)}{\partial r} + \frac{1}{r}\frac{\partial(\rho u_\theta)}{\partial \theta} + \frac{\partial(\rho u_z)}{\partial z} = 0\ } \]
+    </div>
+  </div>
+
+  <div class="doctor-box">
+    <span class="box-label">🎓 Explanation</span>
+    <p style="margin-bottom:0;">الحالات الخاصة (steady / incompressible) هتتطبق على الصيغة الأسطوانية دي بنفس الطريقة اللي بتتطبق بيها على الصيغة الكارتيزية — وده اللي هنشوفه في Section 6.</p>
+  </div>
+
+  <div class="meaning-block">
+    <h4>💡 What This Part Means</h4>
+    <p style="margin-bottom:0;">بننتقل من صيغة الكارتيزيان للأسطوانية لأن الهندسة الأسطوانية بتظهر كتير في التطبيقات الهندسية (مواسير، أسطوانات، ماكينات دوّارة). الفكرة الرياضية للاشتقاق نفسها زي الكارتيزيان — بس شكل عنصر الحجم اتغيّر لقطاع أسطواني بدل مكعب، وده اللي ولّد حدود الـ\(1/r\) الإضافية.</p>
+  </div>
+
+  </section>
+
+<hr class="section-divider">
+<section class="section" id="sec6">
+  <div class="section-header">
+    <div class="section-icon">🎛️</div>
+    <div class="section-titles">
+      <h2>6. Special Cases: Steady &amp; Incompressible</h2>
+      <span class="section-sub">One common concept — applied to the general, Cartesian, and cylindrical forms</span>
+    </div>
+  </div>
+
+  <p>نقسّم الحالات الخاصة لتلات حالات — steady الأول، وبعدين incompressible، وبعدين اجتماعهم سوا. الافتراضين مختلفين تمامًا، فكل واحد بيصفّر حد مختلف في المعادلة العامة (Section 4). وهنطبّق كل حالة على الصيغة الكارتيزية (Section 3) والأسطوانية (Section 5) اللي اتشرحوا قبل كده:</p>
 
   <div class="subhead">Case 1 — Steady State</div>
 
@@ -820,6 +889,18 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
   <div class="formula-box">
     <div class="equation-scroll">
       \[ \cancel{\frac{\partial \rho}{\partial t}} + \vec{\nabla}\cdot(\rho\vec{V}) = 0 \quad\Longrightarrow\quad \vec{\nabla}\cdot(\rho\vec{V}) = 0 \]
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Steady State — تطبيقها على الإحداثيات</span>
+    <p style="color:#dce8f5; margin:0 0 4px; font-size:0.92rem;">In Cartesian coordinates:</p>
+    <div class="equation-scroll">
+      \[ \frac{\partial(\rho u)}{\partial x} + \frac{\partial(\rho v)}{\partial y} + \frac{\partial(\rho w)}{\partial z} = 0 \]
+    </div>
+    <p style="color:#dce8f5; margin:10px 0 4px; font-size:0.92rem;">In cylindrical coordinates:</p>
+    <div class="equation-scroll">
+      \[ \frac{1}{r}\frac{\partial(r\rho u_r)}{\partial r} + \frac{1}{r}\frac{\partial(\rho u_\theta)}{\partial \theta} + \frac{\partial(\rho u_z)}{\partial z} = 0 \]
     </div>
   </div>
 
@@ -847,6 +928,18 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
     </div>
     <div class="equation-scroll">
       \[ \boxed{\ \vec{\nabla}\cdot\vec{V} = 0\ } \]
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="box-label">Incompressible Flow — تطبيقها على الإحداثيات</span>
+    <p style="color:#dce8f5; margin:0 0 4px; font-size:0.92rem;">In Cartesian coordinates:</p>
+    <div class="equation-scroll">
+      \[ \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial z} = 0 \]
+    </div>
+    <p style="color:#dce8f5; margin:10px 0 4px; font-size:0.92rem;">In cylindrical coordinates:</p>
+    <div class="equation-scroll">
+      \[ \frac{1}{r}\frac{\partial(r u_r)}{\partial r} + \frac{1}{r}\frac{\partial u_\theta}{\partial \theta} + \frac{\partial u_z}{\partial z} = 0 \]
     </div>
   </div>
 
@@ -878,23 +971,26 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
   <div class="table-scroll">
     <table class="lec-table">
       <thead>
-        <tr><th>الحالة</th><th>General Form</th><th>Cartesian</th></tr>
+        <tr><th>الحالة</th><th>General Form</th><th>Cartesian</th><th>Cylindrical</th></tr>
       </thead>
       <tbody>
         <tr>
           <td class="label-cell">Steady State</td>
           <td>\(\vec\nabla\cdot(\rho\vec V)=0\)</td>
           <td>\(\frac{\partial(\rho u)}{\partial x}+\frac{\partial(\rho v)}{\partial y}+\frac{\partial(\rho w)}{\partial z}=0\)</td>
+          <td>\(\frac{1}{r}\frac{\partial(r\rho u_r)}{\partial r}+\frac{1}{r}\frac{\partial(\rho u_\theta)}{\partial \theta}+\frac{\partial(\rho u_z)}{\partial z}=0\)</td>
         </tr>
         <tr>
           <td class="label-cell">Incompressible Flow</td>
           <td>\(\vec\nabla\cdot\vec V=0\)</td>
           <td>\(\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}+\frac{\partial w}{\partial z}=0\)</td>
+          <td>\(\frac{1}{r}\frac{\partial(ru_r)}{\partial r}+\frac{1}{r}\frac{\partial u_\theta}{\partial \theta}+\frac{\partial u_z}{\partial z}=0\)</td>
         </tr>
         <tr>
           <td class="label-cell">Steady + Incompressible</td>
           <td>\(\vec\nabla\cdot\vec V=0\)</td>
           <td>\(\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}+\frac{\partial w}{\partial z}=0\)</td>
+          <td>\(\frac{1}{r}\frac{\partial(ru_r)}{\partial r}+\frac{1}{r}\frac{\partial u_\theta}{\partial \theta}+\frac{\partial u_z}{\partial z}=0\)</td>
         </tr>
       </tbody>
     </table>
@@ -912,132 +1008,6 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
       <li>Incompressible: \(D\rho/Dt=0\) → \(\rho\,\vec\nabla\cdot\vec V=0\) → \(\vec\nabla\cdot\vec V=0\)</li>
       <li>Steady state: \(\partial\rho/\partial t = 0\) → \(\vec\nabla\cdot(\rho\vec V)=0\)</li>
       <li>Steady + Incompressible: \(\vec\nabla\cdot\vec V=0\)</li>
-    </ul>
-  </div>
-</section>
-
-<hr class="section-divider">
-<section class="section" id="sec6">
-  <div class="section-header">
-    <div class="section-icon">🌀</div>
-    <div class="section-titles">
-      <h2>6. Cylindrical Coordinates</h2>
-      <span class="section-sub">2D planar/polar → axisymmetric → full form</span>
-    </div>
-  </div>
-
-  <div class="doctor-box">
-    <span class="box-label">🎓 Explanation</span>
-    <p style="margin-bottom:0;">في كتير من مسائل الـfluid mechanics — زي الجريان حوالين أسطوانة أو جوه ماسورة — بيكون أسهل بكتير إننا نستخدم <span class="eng-term">cylindrical coordinates</span> \((r,\theta,z)\) بدل \((x,y,z)\)، لأن الشكل الهندسي للمسألة نفسه بيكون أسطواني.</p>
-  </div>
-
-  <div class="subhead">التحويل بين Cartesian و Cylindrical</div>
-
-  <p>العلاقة بين الإحداثيات الكارتيزية والأسطوانية (<em>"convert between cartesian &amp; cylindrical"</em>):</p>
-
-  <div class="formula-box">
-    <span class="box-label">Coordinate transformation</span>
-    <div class="equation-scroll">
-      \[ r = \sqrt{x^2+y^2} \qquad x = r\cos\theta \qquad y = r\sin\theta \]
-    </div>
-  </div>
-
-  <div class="figure-row">
-    <figure class="lec-figure">
-      <img src="assets/chapter-1/images/cylindrical-element.png" alt="3D cylindrical differential volume element with sides dr, dz, and arc length r dθ, alongside a cylinder diagram showing the volume segment dV">
-      <figcaption>عنصر الحجم الأسطواني التفاضلي: dr, r dθ, dz</figcaption>
-    </figure>
-    <figure class="lec-figure">
-      <img src="assets/chapter-1/images/polar-unit-vectors.png" alt="2D xy-plane showing point P at distance r and angle θ from origin, with unit vectors e-r and e-theta, and velocity components u-r and u-theta">
-      <figcaption>متجهات الوحدة \(\vec e_r,\ \vec e_\theta\) ومكونات السرعة \(u_r,\ u_\theta\) عند النقطة P</figcaption>
-    </figure>
-  </div>
-
-  <div class="subhead">2D Planar / Polar Continuity</div>
-
-  <p>نبدأ من الصيغة المبسطة في حالة الجريان ثنائي الأبعاد (planar/polar):</p>
-
-  <div class="formula-box">
-    <span class="box-label">2D planar/polar</span>
-    <div class="equation-scroll">
-      \[ \frac{\partial u_r}{\partial r} + \frac{1}{r}\frac{\partial u_\theta}{\partial \theta} = 0 \]
-    </div>
-  </div>
-
-  <div class="subhead">Axisymmetric Flow</div>
-
-  <div class="doctor-box">
-    <span class="box-label">🎓 Explanation</span>
-    <p style="margin-bottom:0;">معنى <span class="eng-term">Axisymmetric</span>: <em>"حركة منتظمة لا يوجد تغيّر في θ"</em>. يعني في الجريان المتماثل حول المحور (axisymmetric)، الخصائص مبتتغيرش مع الزاوية \(\theta\) — الجريان "منتظم" حوالين المحور بحيث مفيش أي اعتماد على الاتجاه الزاوي.</p>
-  </div>
-
-  <div class="def-box">
-    <span class="box-label">📖 Axisymmetric flow — الشرط الرياضي</span>
-    <p style="margin-bottom:0;">\(\partial(\cdot)/\partial\theta = 0\) لكل الخصائص.</p>
-  </div>
-
-
-  <div class="subhead">Stream Function Relations في Cylindrical (Planar/Polar)</div>
-
-  <p>في حالة الـplanar/polar:</p>
-
-  <div class="formula-box">
-    <div class="equation-scroll">
-      \[ u_r = \frac{1}{r}\frac{\partial \psi}{\partial \theta} \qquad u_\theta = -\frac{\partial \psi}{\partial r} \]
-    </div>
-  </div>
-
-  <div class="subhead">الحالة الـAxisymmetric</div>
-
-  <p>وبالنسبة لحالة الـaxisymmetric تحديدًا:</p>
-
-  <div class="formula-box">
-    <span class="box-label">Continuity — Axisymmetric</span>
-    <div class="equation-scroll">
-      \[ \frac{1}{r}\frac{\partial(r u_r)}{\partial r} + \frac{\partial u_z}{\partial z} = 0 \]
-    </div>
-  </div>
-
-  <div class="formula-box">
-    <span class="box-label">Stream Function Relations — Axisymmetric</span>
-    <div class="equation-scroll">
-      \[ u_r = -\frac{1}{r}\frac{\partial \psi}{\partial z} \]
-    </div>
-    <div class="equation-scroll">
-      \[ u_z = \frac{1}{r}\frac{\partial \psi}{\partial r} \]
-    </div>
-  </div>
-
-  <div class="warning-box">
-    <span class="box-label">⚠️ ملاحظة على الإشارات</span>
-    <p style="margin-bottom:0;">لاحظوا إن علامة السالب بتتنقل بين \(u_r\) و\(u_z\) حسب الحالة المستخدمة — في الـplanar/polar، \(u_\theta = -\partial\psi/\partial r\)، لكن في الـaxisymmetric، \(u_r = -\dfrac{1}{r}\dfrac{\partial\psi}{\partial z}\) هي اللي فيها السالب بدل \(u_z\). لازم الانتباه لأي فورم إحنا شغالين بيه عشان منلخبطش الإشارات.</p>
-  </div>
-
-  <div class="subhead">الصيغة الكاملة لـCylindrical Continuity</div>
-
-  <p>وأخيرًا، الصيغة الكاملة اللي بتشمل \(\partial\rho/\partial t\) كمان:</p>
-
-  <div class="formula-box">
-    <span class="box-label">🎯 Continuity Equation — Cylindrical Coordinates (الصيغة الكاملة)</span>
-    <div class="equation-scroll">
-      \[ \boxed{\ \frac{\partial \rho}{\partial t} + \frac{1}{r}\frac{\partial(r\rho u_r)}{\partial r} + \frac{1}{r}\frac{\partial(\rho u_\theta)}{\partial \theta} + \frac{\partial(\rho u_z)}{\partial z} = 0\ } \]
-    </div>
-  </div>
-
-  <div class="doctor-box">
-    <span class="box-label">🎓 Explanation</span>
-    <p style="margin-bottom:0;">زي ما ربطنا في الإحداثيات الكارتيزية، لو افترضنا steady أو incompressible، حد \(\partial\rho/\partial t\) بيتلغي أو بتتبسط المعادلة بنفس الطريقة. ونفس منطق الحالات الخاصة من Section 5 بينطبق هنا كمان.</p>
-  </div>
-
-  <div class="meaning-block">
-    <h4>💡 What This Part Means</h4>
-    <p style="margin-bottom:0;">بننتقل من صيغة الكارتيزيان للأسطوانية لأن الهندسة الأسطوانية بتظهر كتير في التطبيقات الهندسية (مواسير، أسطوانات، ماكينات دوّارة). الفكرة الرياضية للاشتقاق نفسها زي الكارتيزيان — بس شكل عنصر الحجم اتغيّر لقطاع أسطواني بدل مكعب، وده اللي ولّد حدود الـ\(1/r\) الإضافية.</p>
-  </div>
-
-  <div class="takeaway-block">
-    <h4>🔑 Key Takeaway</h4>
-    <ul>
-      <li>Stream function relations بتختلف شكلها حسب كوننا في planar/polar أو axisymmetric — انتبه للإشارات.</li>
     </ul>
   </div>
 </section>
@@ -1065,7 +1035,7 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
     <p style="margin-bottom:0;">Incompressible: \(\rho=\text{constant}\)</p>
   </div>
 
-  <p>بالتعويض في معادلة الاستمرارية في الحالة الـincompressible (من Section 5)، وبإسقاط حد \(z\)، بتبسط لصيغة فيها متغيرين بس:</p>
+  <p>بالتعويض في معادلة الاستمرارية في الحالة الـincompressible (من Section 6)، وبإسقاط حد \(z\)، بتبسط لصيغة فيها متغيرين بس:</p>
 
   <div class="formula-box">
     <span class="box-label">🎯 Continuity — Steady, 2-D, Incompressible (Cartesian)</span>
@@ -1094,7 +1064,7 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
   <div class="section-header">
     <div class="section-icon">🌊</div>
     <div class="section-titles">
-      <h2>8. The Stream Function (ψ)</h2>
+      <h2>8. The Stream Function (ψ) — General Concept</h2>
       <span class="section-sub">Collapsing two unknowns (u, v) into one scalar</span>
     </div>
   </div>
@@ -1199,14 +1169,132 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
 <hr class="section-divider">
 <section class="section" id="sec9">
   <div class="section-header">
+    <div class="section-icon">🔀</div>
+    <div class="section-titles">
+      <h2>9. Stream Function in Different Coordinate Systems</h2>
+      <span class="section-sub">Cartesian 2-D · cylindrical planar/polar · cylindrical axisymmetric</span>
+    </div>
+  </div>
+
+  <div class="doctor-box">
+    <span class="box-label">🎓 Explanation</span>
+    <p style="margin-bottom:0;">بعد ما فهمنا الـstream function كفكرة عامة في Section 8 (من خلال الحالة الكارتيزية الثنائية)، نشوف دلوقتي شكل علاقاتها في كل نظام إحداثيات. الحالة الكارتيزية اتعرفت قبل كده، أما في الـcylindrical فيه حالتين: <span class="eng-term">planar/polar</span> و<span class="eng-term">axisymmetric</span>. شروط الحالتين دول وشكل الـcontinuity equation لكل واحدة هيتشرحوا في Section 10.</p>
+  </div>
+
+  <div class="subhead">Cartesian (2-D)</div>
+
+  <p>زي ما عرفناها في Section 8:</p>
+
+  <div class="formula-box">
+    <div class="equation-scroll">
+      \[ u = \frac{\partial \psi}{\partial y} \qquad v = -\frac{\partial \psi}{\partial x} \]
+    </div>
+  </div>
+
+  <div class="subhead">Stream Function Relations في Cylindrical (Planar/Polar)</div>
+
+  <p>في حالة الـplanar/polar:</p>
+
+  <div class="formula-box">
+    <div class="equation-scroll">
+      \[ u_r = \frac{1}{r}\frac{\partial \psi}{\partial \theta} \qquad u_\theta = -\frac{\partial \psi}{\partial r} \]
+    </div>
+  </div>
+
+  <div class="subhead">Cylindrical — Axisymmetric</div>
+
+  <p>وفي حالة الـaxisymmetric:</p>
+
+  <div class="formula-box">
+    <span class="box-label">Stream Function Relations — Axisymmetric</span>
+    <div class="equation-scroll">
+      \[ u_r = -\frac{1}{r}\frac{\partial \psi}{\partial z} \]
+    </div>
+    <div class="equation-scroll">
+      \[ u_z = \frac{1}{r}\frac{\partial \psi}{\partial r} \]
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <span class="box-label">⚠️ ملاحظة على الإشارات</span>
+    <p style="margin-bottom:0;">لاحظوا إن علامة السالب بتتنقل بين \(u_r\) و\(u_z\) حسب الحالة المستخدمة — في الـplanar/polar، \(u_\theta = -\partial\psi/\partial r\)، لكن في الـaxisymmetric، \(u_r = -\dfrac{1}{r}\dfrac{\partial\psi}{\partial z}\) هي اللي فيها السالب بدل \(u_z\). لازم الانتباه لأي فورم إحنا شغالين بيه عشان منلخبطش الإشارات.</p>
+  </div>
+
+  <div class="takeaway-block">
+    <h4>🔑 Key Takeaway</h4>
+    <ul>
+      <li>Stream function relations بتختلف شكلها حسب كوننا في planar/polar أو axisymmetric — انتبه للإشارات.</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section class="section" id="sec10">
+  <div class="section-header">
+    <div class="section-icon">🎯</div>
+    <div class="section-titles">
+      <h2>10. Cylindrical-Coordinate Special Cases</h2>
+      <span class="section-sub">2-D planar/polar → axisymmetric</span>
+    </div>
+  </div>
+
+  <div class="doctor-box">
+    <span class="box-label">🎓 Explanation</span>
+    <p style="margin-bottom:0;">دلوقتي نرجع للـcylindrical continuity equation (Section 5) ونشوف الحالتين الخاصتين اللي استخدمناهم في علاقات الـstream function في Section 9: الجريان ثنائي الأبعاد <span class="eng-term">planar/polar</span>، والجريان <span class="eng-term">axisymmetric</span>. (الافتراض هنا إن الجريان incompressible، زي ما في علاقات الـstream function.)</p>
+  </div>
+
+  <div class="subhead">2D Planar / Polar Continuity</div>
+
+  <p>نبدأ من الصيغة المبسطة في حالة الجريان ثنائي الأبعاد (planar/polar):</p>
+
+  <div class="formula-box">
+    <span class="box-label">2D planar/polar</span>
+    <div class="equation-scroll">
+      \[ \frac{\partial (r u_r)}{\partial r} + \frac{\partial u_\theta}{\partial \theta} = 0 \]
+    </div>
+  </div>
+
+  <div class="subhead">Axisymmetric Flow</div>
+
+  <div class="doctor-box">
+    <span class="box-label">🎓 Explanation</span>
+    <p style="margin-bottom:0;">معنى <span class="eng-term">Axisymmetric</span>: <em>"حركة منتظمة لا يوجد تغيّر في θ"</em>. يعني في الجريان المتماثل حول المحور (axisymmetric)، الخصائص مبتتغيرش مع الزاوية \(\theta\) — الجريان "منتظم" حوالين المحور بحيث مفيش أي اعتماد على الاتجاه الزاوي.</p>
+  </div>
+
+  <div class="def-box">
+    <span class="box-label">📖 Axisymmetric flow — الشرط الرياضي</span>
+    <p style="margin-bottom:0;">\(\partial(\cdot)/\partial\theta = 0\) لكل الخصائص.</p>
+  </div>
+
+
+  <div class="subhead">Axisymmetric Continuity</div>
+
+  <p>وبالنسبة لحالة الـaxisymmetric تحديدًا:</p>
+
+  <div class="formula-box">
+    <span class="box-label">Continuity — Axisymmetric</span>
+    <div class="equation-scroll">
+      \[ \frac{1}{r}\frac{\partial(r u_r)}{\partial r} + \frac{\partial u_z}{\partial z} = 0 \]
+    </div>
+  </div>
+
+  <div class="note-box">
+    <span class="box-label">🔗 ربط بالـStream Function</span>
+    <p style="margin-bottom:0;">علاقات الـstream function اللي بتقابل كل حالة من الحالتين دول موجودة في Section 9، ومتجمعة كلها في جدول واحد في Section 11.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section class="section" id="sec11">
+  <div class="section-header">
     <div class="section-icon">📋</div>
     <div class="section-titles">
-      <h2>9. Stream Function — Summary of All Forms</h2>
+      <h2>11. Stream Function — Summary of All Forms</h2>
       <span class="section-sub">Cartesian, planar/polar, and axisymmetric — gathered together</span>
     </div>
   </div>
 
-  <p>بعد ما اشتقينا علاقات الـstream function في الإحداثيات الكارتيزية (Section 8)، وفي الإحداثيات الأسطوانية بحالتيها (Section 6)، نجمعهم في جدول ملخص واحد:</p>
+  <p>بعد ما اشتقينا علاقات الـstream function في الإحداثيات الكارتيزية (Section 8)، وفي الإحداثيات الأسطوانية بحالتيها (Section 9 و10)، نجمعهم في جدول ملخص واحد:</p>
 
   <div class="table-scroll">
     <table class="lec-table">
@@ -1250,11 +1338,11 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
 </section>
 
 <hr class="section-divider">
-<section class="section" id="sec10">
+<section class="section" id="sec12">
   <div class="section-header">
     <div class="section-icon">✍️</div>
     <div class="section-titles">
-      <h2>10. Worked Examples</h2>
+      <h2>12. Worked Examples</h2>
       <span class="section-sub">Applied in order</span>
     </div>
   </div>
@@ -1268,7 +1356,7 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
       <ol class="solution-steps">
         <li>
           <span class="step-title">تطبيق شرط الـincompressible continuity</span>
-          للجريان الـincompressible (Section 5)، لازم يتحقق \(\vec\nabla\cdot\vec V = \dfrac{\partial u}{\partial x}+\dfrac{\partial v}{\partial y}+\dfrac{\partial w}{\partial z}=0\).
+          للجريان الـincompressible (Section 6)، لازم يتحقق \(\vec\nabla\cdot\vec V = \dfrac{\partial u}{\partial x}+\dfrac{\partial v}{\partial y}+\dfrac{\partial w}{\partial z}=0\).
         </li>
         <li>
           <span class="step-title">اشتقاق كل مكون سرعة</span>
@@ -1414,11 +1502,11 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
 </section>
 
 <hr class="section-divider">
-<section class="section" id="sec11">
+<section class="section" id="sec13">
   <div class="section-header">
     <div class="section-icon">📝</div>
     <div class="section-titles">
-      <h2>11. Practice Questions</h2>
+      <h2>13. Practice Questions</h2>
       <span class="section-sub">Test your understanding — solutions hidden until you check them</span>
     </div>
   </div>
