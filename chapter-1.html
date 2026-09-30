@@ -356,6 +356,20 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
   backdrop-filter:blur(6px); transition:background 0.2s;}
 .home-link:hover{background:var(--royal);}
 
+/* ===== OPTIONAL DERIVATION (collapsible) ===== */
+.proof-details{margin:-8px 0 26px;}
+.proof-details > summary{
+  list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:12px;
+  background:linear-gradient(135deg, var(--royal), var(--sky)); color:#fff; border-radius:999px;
+  padding:10px 22px; font-family:'Cairo',sans-serif; font-weight:600; font-size:0.9rem; box-shadow:var(--shadow);
+}
+.proof-details > summary::-webkit-details-marker{display:none;}
+.proof-details > summary .arrow{display:inline-block; transition:transform 0.3s ease; font-size:0.85em;}
+.proof-details[open] > summary .arrow{transform:rotate(180deg);}
+.proof-body{background:#fff; border:1.5px solid var(--mist); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px 26px; margin-top:14px;}
+.proof-body .formula-box{margin:14px 0 8px;}
+@media (max-width:650px){.proof-body{padding:16px 14px;} .proof-details > summary{font-size:0.82rem; padding:9px 16px;}}
+
 /* ===== COMPACT INTEGRAL | DIFFERENTIAL (section 1 only) ===== */
 #sec1 .section-header{margin-bottom:14px; padding-bottom:10px;}
 #sec1 + .section-divider{margin:26px 0;}
@@ -378,9 +392,7 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
     <span class="badge">Fluid Mechanics · Reconstructed Lecture Notes</span>
     <h1 class="lecture-title">
       The Continuity Equation
-      <span class="ar-line">معادلة الاستمرارية — نسخة دراسية معاد بناؤها</span>
     </h1>
-    <p class="header-subtitle">A full reconstruction of the derivation path — from Control Volume &amp; Taylor Expansion to the Differential Form, Cylindrical Coordinates, and the Stream Function</p>
     <div class="meta-pills">
       <span class="meta-pill">📦 Control Volume Derivation</span>
       <span class="meta-pill">🧮 Taylor Expansion Method</span>
@@ -813,7 +825,154 @@ footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
     </div>
   </div>
 
-  <div class="doctor-box">
+    <details class="proof-details">
+    <summary><span>📐 Optional — Derivation (Not Required) · اشتقاق المعادلة (اختياري)</span><span class="arrow">▼</span></summary>
+    <div class="proof-body">
+
+      <div class="note-box">
+        <span class="box-label">⚠️ Optional — Not Required</span>
+        <p style="margin-bottom:0;">The derivation of these equations is not required. This section is provided only for those who want to understand the mathematical proof and derivation.</p>
+        <p style="margin:8px 0 0;">اشتقاق المعادلات دي <strong>مش مطلوب</strong>. القسم ده موجود بس لمن يحب يفهم أصل المعادلة والإثبات الرياضي.</p>
+      </div>
+
+      <div class="subhead">Symbols — تعريف الرموز</div>
+
+      <div class="table-scroll">
+        <table class="lec-table">
+          <thead>
+            <tr><th>Symbol</th><th>Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>\(x,\ y,\ z\)</td><td class="label-cell">الإحداثيات الكارتيزية (و\(z\) هو نفسه المحور الطولي في الأسطواني)</td></tr>
+            <tr><td>\(r\)</td><td class="label-cell">المسافة العمودية من النقطة \(P\) لمحور \(z\) (radial distance)</td></tr>
+            <tr><td>\(\theta\)</td><td class="label-cell">الزاوية (بالراديان) بين محور \(x\) والخط الواصل من المحور للنقطة \(P\) في مستوى \(xy\)</td></tr>
+            <tr><td>\(u_r,\ u_\theta,\ u_z\)</td><td class="label-cell">مركبات السرعة في اتجاه زيادة \(r\)، وزيادة \(\theta\)، وزيادة \(z\)</td></tr>
+            <tr><td>\(\rho\)</td><td class="label-cell">الكثافة (kg/m³)</td></tr>
+            <tr><td>\(t\)</td><td class="label-cell">الزمن</td></tr>
+            <tr><td>\(dr,\ d\theta,\ dz\)</td><td class="label-cell">التغيّرات التفاضلية الصغيرة اللي بتحدد حدود العنصر</td></tr>
+            <tr><td>\(r\,d\theta\)</td><td class="label-cell">طول القوس المقابل للزاوية \(d\theta\) على نصف قطر \(r\)</td></tr>
+            <tr><td>\(dV\)</td><td class="label-cell">حجم العنصر التفاضلي</td></tr>
+            <tr><td>\(A\)</td><td class="label-cell">مساحة وجه من أوجه العنصر</td></tr>
+            <tr><td>\(\dot m\)</td><td class="label-cell">معدل تدفق الكتلة (mass flow rate) خلال وجه (kg/s)</td></tr>
+            <tr><td>\(m_{CV}\)</td><td class="label-cell">كتلة المائع داخل العنصر (control volume)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="scroll-hint">← اسحب لرؤية المزيد →</p>
+
+      <ol class="solution-steps">
+        <li>
+          <span class="step-title">Step 1 — من الإحداثيات \((x,y)\) إلى \((r,\theta)\)</span>
+          نبدأ من \(r\): النقطة \(P\) على بُعد \(r\) من محور \(z\) وبزاوية \(\theta\) من محور \(x\). لو أسقطنا \(P\) على مستوى \(xy\) بنحصل على مثلث قائم الزاوية وتره \(r\)، ضلعيه \(x\) و\(y\):
+          <div class="equation-scroll">
+            \[ x = r\cos\theta \qquad y = r\sin\theta \]
+          </div>
+          بتربيع المعادلتين وجمعهم، ومن \(\cos^2\theta+\sin^2\theta=1\):
+          <div class="equation-scroll">
+            \[ x^2 + y^2 = r^2\left(\cos^2\theta + \sin^2\theta\right) = r^2 \quad\Longrightarrow\quad r = \sqrt{x^2+y^2} \]
+          </div>
+          وبقسمة \(y\) على \(x\):
+          <div class="equation-scroll">
+            \[ \frac{y}{x} = \frac{r\sin\theta}{r\cos\theta} = \tan\theta \quad\Longrightarrow\quad \theta = \tan^{-1}\frac{y}{x} \]
+          </div>
+          دي هي علاقات التحويل اللي فوق، و\(z\) بيفضل زي ما هو.
+        </li>
+        <li>
+          <span class="step-title">Step 2 — العنصر التفاضلي (Differential Control Volume)</span>
+          ناخد عنصر ثابت في الفراغ محدود بين \(r\) و\(r+dr\)، وبين \(\theta\) و\(\theta+d\theta\)، وبين \(z\) و\(z+dz\) (زي الشكل اللي فوق). أطوال أحرفه:
+          <div class="equation-scroll">
+            \[ \underbrace{dr}_{\text{radial}} \qquad \underbrace{r\,d\theta}_{\text{arc length}} \qquad \underbrace{dz}_{\text{axial}} \]
+          </div>
+          طول القوس = نصف القطر × الزاوية، عشان كده البُعد في اتجاه \(\theta\) هو \(r\,d\theta\) وليس \(d\theta\). وبالتالي حجم العنصر (مع إهمال الحدود من الرتبة الأعلى):
+          <div class="equation-scroll">
+            \[ dV = dr \cdot (r\,d\theta) \cdot dz = r\,dr\,d\theta\,dz \]
+          </div>
+        </li>
+        <li>
+          <span class="step-title">Step 3 — مساحة كل وجه والسرعة العمودية عليه</span>
+          معدل تدفق الكتلة خلال أي وجه = \(\rho \times\) (مركبة السرعة العمودية على الوجه) \(\times\) (مساحة الوجه):
+          <div class="equation-scroll">
+            \[ \dot m = \rho\, u_n\, A \]
+          </div>
+          الأوجه الستة:
+          <div class="table-scroll">
+            <table class="lec-table">
+              <thead>
+                <tr><th>الوجه</th><th>موقعه</th><th>السرعة العمودية</th><th>المساحة</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="label-cell">داخلي (r-face)</td><td>\(r\)</td><td>\(u_r\)</td><td>\(r\,d\theta\,dz\)</td></tr>
+                <tr><td class="label-cell">خارجي (r-face)</td><td>\(r+dr\)</td><td>\(u_r\)</td><td>\((r+dr)\,d\theta\,dz\)</td></tr>
+                <tr><td class="label-cell">θ-faces</td><td>\(\theta,\ \theta+d\theta\)</td><td>\(u_\theta\)</td><td>\(dr\,dz\)</td></tr>
+                <tr><td class="label-cell">z-faces</td><td>\(z,\ z+dz\)</td><td>\(u_z\)</td><td>\(r\,dr\,d\theta\)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="scroll-hint">← اسحب لرؤية المزيد →</p>
+          لاحظ إن مساحة الوجه في اتجاه \(r\) <strong>بتزيد مع \(r\)</strong> (لأن طول القوس \(r\,d\theta\) بيكبر كل ما ابتعدنا عن المحور)، أما مساحة وجهي \(\theta\) ووجهي \(z\) فهي واحدة على الوجهين المتقابلين.
+        </li>
+        <li>
+          <span class="step-title">Step 4 — معادلة حفظ الكتلة للعنصر</span>
+          نبدأ من نفس معادلة الـmass balance اللي استخدمناها في الكارتيزي:
+          <div class="equation-scroll">
+            \[ \frac{dm_{CV}}{dt} = \sum_{\text{in}} \dot m - \sum_{\text{out}} \dot m \]
+          </div>
+          العنصر ثابت في الفراغ فحجمه ثابت، وكتلته \(m_{CV} = \rho\,dV = \rho\, r\,dr\,d\theta\,dz\). إذن الطرف الأيسر:
+          <div class="equation-scroll">
+            \[ \frac{dm_{CV}}{dt} = \frac{\partial \rho}{\partial t}\, r\,dr\,d\theta\,dz \]
+          </div>
+        </li>
+        <li>
+          <span class="step-title">Step 5 — صافي الكتلة في كل اتجاه (Taylor Expansion من الدرجة الأولى)</span>
+          لأي دالة \(f\): \(f(r+dr) = f(r) + \dfrac{\partial f}{\partial r}\,dr + \ldots\) والحدود اللي بعدها (\(dr^2\) وما فوق) بتختفي بالنسبة للحد الأول لما العنصر يصغر.
+          <p style="margin:10px 0 4px;"><strong>اتجاه \(r\):</strong> التدفق الداخل عند \(r\) هو \(\rho u_r \cdot r\,d\theta\,dz = (r\rho u_r)\,d\theta\,dz\). والخارج عند \(r+dr\) هو نفس الكمية \((r\rho u_r)\) لكن عند \(r+dr\) (المساحة \((r+dr)\) اتحسبت جوه الحاصل):</p>
+          <div class="equation-scroll">
+            \[ \dot m_{\text{in},r} = (r\rho u_r)\,d\theta\,dz \qquad \dot m_{\text{out},r} = \left[(r\rho u_r) + \frac{\partial (r\rho u_r)}{\partial r}\,dr\right] d\theta\,dz \]
+          </div>
+          <div class="equation-scroll">
+            \[ \dot m_{\text{in},r} - \dot m_{\text{out},r} = -\frac{\partial (r\rho u_r)}{\partial r}\,dr\,d\theta\,dz \]
+          </div>
+          <p style="margin:10px 0 4px;"><strong>اتجاه \(\theta\):</strong></p>
+          <div class="equation-scroll">
+            \[ \dot m_{\text{in},\theta} = (\rho u_\theta)\,dr\,dz \qquad \dot m_{\text{out},\theta} = \left[(\rho u_\theta) + \frac{\partial (\rho u_\theta)}{\partial \theta}\,d\theta\right] dr\,dz \]
+          </div>
+          <div class="equation-scroll">
+            \[ \dot m_{\text{in},\theta} - \dot m_{\text{out},\theta} = -\frac{\partial (\rho u_\theta)}{\partial \theta}\,dr\,d\theta\,dz \]
+          </div>
+          <p style="margin:10px 0 4px;"><strong>اتجاه \(z\):</strong></p>
+          <div class="equation-scroll">
+            \[ \dot m_{\text{in},z} = (\rho u_z)\,r\,dr\,d\theta \qquad \dot m_{\text{out},z} = \left[(\rho u_z) + \frac{\partial (\rho u_z)}{\partial z}\,dz\right] r\,dr\,d\theta \]
+          </div>
+          <div class="equation-scroll">
+            \[ \dot m_{\text{in},z} - \dot m_{\text{out},z} = -\frac{\partial (\rho u_z)}{\partial z}\, r\,dr\,d\theta\,dz \]
+          </div>
+        </li>
+        <li>
+          <span class="step-title">Step 6 — التعويض والقسمة على حجم العنصر</span>
+          نعوّض بالخطوتين 4 و5 في معادلة الـmass balance (مجموع الفروق في الاتجاهات التلاتة):
+          <div class="equation-scroll">
+            \[ \frac{\partial \rho}{\partial t}\, r\,dr\,d\theta\,dz = -\frac{\partial (r\rho u_r)}{\partial r}\,dr\,d\theta\,dz - \frac{\partial (\rho u_\theta)}{\partial \theta}\,dr\,d\theta\,dz - \frac{\partial (\rho u_z)}{\partial z}\, r\,dr\,d\theta\,dz \]
+          </div>
+          نقسم كل الحدود على \(r\,dr\,d\theta\,dz\) (مشترك وغير صفري) وننقل كل الحدود لطرف واحد:
+          <div class="formula-box">
+            <span class="box-label">🎯 Continuity Equation — Cylindrical Coordinates</span>
+            <div class="equation-scroll">
+              \[ \frac{\partial \rho}{\partial t} + \frac{1}{r}\frac{\partial(r\rho u_r)}{\partial r} + \frac{1}{r}\frac{\partial(\rho u_\theta)}{\partial \theta} + \frac{\partial(\rho u_z)}{\partial z} = 0 \]
+            </div>
+          </div>
+          وده بالظبط الشكل اللي في أول القسم.
+        </li>
+      </ol>
+
+      <div class="note-box">
+        <span class="box-label">💡 ليه ظهر الحد \(1/r\)؟</span>
+        <p style="margin-bottom:0;">بفك المشتقة الأولى: \(\dfrac{1}{r}\dfrac{\partial(r\rho u_r)}{\partial r} = \dfrac{\partial(\rho u_r)}{\partial r} + \dfrac{\rho u_r}{r}\). الحد الإضافي \(\rho u_r/r\) مصدره إن مساحة الوجه في اتجاه \(r\) بتكبر مع \(r\) (Step 3)، وده مش موجود في الكارتيزي لأن مساحات الأوجه هناك ثابتة.</p>
+      </div>
+
+    </div>
+  </details>
+
+<div class="doctor-box">
     <span class="box-label">🎓 Explanation</span>
     <p style="margin-bottom:0;">الحالات الخاصة (steady / incompressible) هتتطبق على الصيغة الأسطوانية دي بنفس الطريقة اللي بتتطبق بيها على الصيغة الكارتيزية — وده اللي هنشوفه في Section 6.</p>
   </div>
