@@ -1,409 +1,561 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fluid Mechanics | ميكانيكا الموائع — الفصول</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F5F9FD">
+<title>Fluid Mechanics — Lecture Notes</title>
+<meta name="description" content="Detailed study summaries for the Fluid Mechanics course chapters.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=Cairo:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&family=Amiri&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
+  chtml: { scale: 1.05 }
+};
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
 <style>
+/* =====================================================================
+   Design tokens
+   ===================================================================== */
 :root{
-  --navy:#0B2447; --royal:#1B4F8A; --sky:#2E86C1; --azure:#5DADE2; --mist:#D6EAF8; --pearl:#EBF5FB; --white:#FFFFFF; --ink:#1A1A2E; --graphite:#2C3E50; --slate:#5D6D7E; --gold:#D4AC0D; --amber:#F0B429; --mint:#1ABC9C; --mint-light:#D5F5E3; --coral:#E74C3C; --coral-light:#FADBD8;
-  --shadow:0 4px 20px rgba(11,36,71,0.10); --shadow-lg:0 8px 40px rgba(11,36,71,0.16); --radius:14px; --radius-sm:8px;
+  --bg:#F5F9FD; --bg-2:#EAF2FA; --surface:#FFFFFF; --tint:#EEF5FC; --tint-2:#E1EEF9;
+  --ink:#0E2240; --ink-2:#2B4160; --muted:#52667D;
+  --line:#D6E2EE; --line-2:#C2D3E5;
+  --primary:#1D5BA6; --primary-600:#174A8A; --primary-400:#3C8AD6; --primary-300:#7FB2E5;
+  --ring:rgba(29,91,166,.38);
+  --shadow-sm:0 1px 2px rgba(14,34,64,.05), 0 2px 8px rgba(14,34,64,.04);
+  --shadow-md:0 2px 4px rgba(14,34,64,.04), 0 12px 32px rgba(14,34,64,.08);
+  --shadow-lg:0 4px 8px rgba(14,34,64,.05), 0 24px 56px rgba(14,34,64,.12);
+  --r-sm:8px; --r-md:12px; --r-lg:18px; --r-pill:999px;
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px; --sp-7:48px; --sp-8:72px; --sp-9:104px;
+  --nav-h:60px;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --mono:ui-monospace,'SFMono-Regular','JetBrains Mono',Menlo,Consolas,monospace;
 }
-*{box-sizing:border-box; max-width:100%;}
-html,body{overflow-x:hidden; margin:0; padding:0;}
+
+/* =====================================================================
+   Base
+   ===================================================================== */
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth; -webkit-text-size-adjust:100%;}
 body{
-  background:linear-gradient(160deg, #f0f6ff 0%, #e8f1fb 50%, #f5f9ff 100%);
-  font-family:'Cairo','Source Serif 4',serif;
-  font-size:17px; line-height:1.85;
-  color:var(--ink);
+  margin:0; font-family:var(--font); font-size:17px; line-height:1.7; color:var(--ink);
+  background:var(--bg); -webkit-font-smoothing:antialiased; overflow-x:hidden; min-height:100vh;
 }
-img{max-width:100%; height:auto; display:block;}
-.content-wrapper{max-width:960px; margin:0 auto; padding:0 24px;}
-.toc-wrapper{max-width:900px; margin:0 auto; padding:0 24px;}
-.section-divider{
-  border:none; height:2px; margin:50px 0;
-  background:linear-gradient(90deg, transparent, rgba(46,134,193,0.35), transparent);
+/* Faint engineering grid + soft glows, behind everything */
+body::before{
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(900px 520px at 85% -8%, rgba(60,138,214,.14), transparent 70%),
+    radial-gradient(700px 480px at -5% 18%, rgba(29,91,166,.08), transparent 70%),
+    linear-gradient(rgba(29,91,166,.045) 1px, transparent 1px) 0 0/48px 48px,
+    linear-gradient(90deg, rgba(29,91,166,.045) 1px, transparent 1px) 0 0/48px 48px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 55%,transparent 100%);
+          mask-image:linear-gradient(to bottom,#000 0%,#000 55%,transparent 100%);
 }
-[dir="ltr"], .ltr{direction:ltr; unicode-bidi:isolate;}
-.mono{font-family:'JetBrains Mono', monospace;}
+img,svg{max-width:100%;}
+a{color:inherit;}
+h1,h2,h3,p{margin:0;}
+:focus-visible{outline:3px solid var(--ring); outline-offset:3px; border-radius:6px;}
+.wrap{width:100%; max-width:1120px; margin:0 auto; padding:0 var(--sp-5);}
+.sr-only{position:absolute!important; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+.skip-link{
+  position:fixed; left:var(--sp-4); top:-80px; z-index:1000; padding:10px 16px; border-radius:var(--r-sm);
+  background:var(--ink); color:#fff; font-weight:600; text-decoration:none; transition:top .15s;
+}
+.skip-link:focus{top:var(--sp-3);}
+section[id],article[id]{scroll-margin-top:calc(var(--nav-h) + 20px);}
 
-/* ===== HEADER ===== */
-header.lecture-header{
-  position:relative;
-  background:linear-gradient(135deg, var(--navy) 0%, var(--royal) 60%, var(--sky) 100%);
-  padding:84px 28px 76px; overflow:hidden; color:#fff;
+/* =====================================================================
+   Top bar: brand, section links, reading progress
+   ===================================================================== */
+.topbar{
+  position:sticky; top:0; z-index:100; height:var(--nav-h);
+  background:rgba(245,249,253,.86); -webkit-backdrop-filter:saturate(1.4) blur(12px); backdrop-filter:saturate(1.4) blur(12px);
+  border-bottom:1px solid var(--line);
 }
-header.lecture-header::before{
-  content:""; position:absolute; inset:0; opacity:0.06; pointer-events:none;
-  background-image:
-    repeating-linear-gradient(115deg, transparent 0 40px, rgba(255,255,255,0.5) 40px 41px),
-    repeating-linear-gradient(25deg, transparent 0 60px, rgba(255,255,255,0.5) 60px 61px);
+.topbar .wrap{height:100%; display:flex; align-items:center; justify-content:space-between; gap:var(--sp-4);}
+.brand{display:inline-flex; align-items:center; gap:10px; font-weight:700; letter-spacing:-.01em; text-decoration:none; color:var(--ink); font-size:1rem;}
+.brand svg{width:28px; height:28px; flex:none;}
+.nav-links{display:flex; align-items:center; gap:4px; list-style:none; margin:0; padding:0;}
+.nav-links a{
+  display:block; padding:7px 14px; border-radius:var(--r-pill); text-decoration:none; font-size:.9rem; font-weight:600; color:var(--ink-2);
+  transition:background .15s,color .15s;
 }
-header.lecture-header .header-inner{max-width:640px; margin:0 auto; text-align:center; position:relative;}
+.nav-links a:hover{background:var(--tint-2); color:var(--primary-600);}
+.nav-links a[aria-current="true"]{background:var(--primary); color:#fff;}
+.nav-toggle{
+  display:none; align-items:center; gap:8px; padding:7px 14px; border-radius:var(--r-pill); cursor:pointer;
+  border:1px solid var(--line-2); background:var(--surface); color:var(--ink); font:600 .88rem/1.2 var(--font);
+}
+.nav-toggle svg{width:16px; height:16px;}
+.progress{position:absolute; left:0; bottom:-1px; height:3px; width:100%; pointer-events:none;}
+.progress span{display:block; height:100%; width:100%; transform-origin:0 50%; transform:scaleX(0); background:linear-gradient(90deg,var(--primary),var(--primary-400));}
+
+/* =====================================================================
+   Hero
+   ===================================================================== */
+.hero{padding:var(--sp-8) 0 var(--sp-8);}
+.hero .wrap{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:var(--sp-7); align-items:center;}
 .badge{
-  display:inline-block; padding:7px 18px; margin-bottom:22px;
-  background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3);
-  border-radius:999px; font-family:'Cairo',sans-serif; font-weight:600;
-  font-size:0.78rem; letter-spacing:2px; text-transform:uppercase;
+  display:inline-flex; align-items:center; gap:8px; padding:6px 14px 6px 10px; border-radius:var(--r-pill);
+  background:var(--surface); border:1px solid var(--line); box-shadow:var(--shadow-sm);
+  font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--primary-600);
 }
-h1.lecture-title{
-  font-family:'Playfair Display', serif; font-weight:800;
-  font-size:clamp(2rem, 5vw, 3.2rem); line-height:1.25; margin:0 0 18px;
-  text-shadow:0 2px 12px rgba(0,0,0,0.2);
+.badge i{width:8px; height:8px; border-radius:50%; background:var(--primary-400); box-shadow:0 0 0 4px rgba(60,138,214,.18);}
+h1.title{
+  margin:var(--sp-5) 0 var(--sp-4); font-size:clamp(2.7rem,6.2vw,4.6rem); line-height:1.02; font-weight:800; letter-spacing:-.035em; color:var(--ink);
 }
-h1.lecture-title .ar-line{
-  display:block; font-size:0.65em; opacity:0.85; margin-top:10px; font-weight:700;
+h1.title em{
+  font-style:normal; color:var(--primary);
+  background:linear-gradient(100deg,var(--primary-600),var(--primary-400)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
 }
-.header-subtitle{
-  font-family:'Source Serif 4', serif; font-style:italic; font-size:1.1rem;
-  opacity:0.85; direction:ltr; max-width:650px; margin:0 auto 28px;
+.lede{font-size:1.2rem; line-height:1.6; color:var(--ink-2); max-width:34ch;}
+.meta{display:flex; flex-wrap:wrap; gap:var(--sp-2); margin:var(--sp-5) 0 var(--sp-6); padding:0; list-style:none;}
+.meta li{
+  display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:var(--r-pill);
+  background:rgba(255,255,255,.72); border:1px solid var(--line); font-size:.86rem; font-weight:600; color:var(--ink-2);
 }
-.meta-pills{display:flex; flex-wrap:wrap; gap:10px; justify-content:center;}
-.meta-pill{
-  background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25);
-  border-radius:999px; padding:7px 16px; font-size:0.85rem; font-family:'Cairo',sans-serif;
+.meta b{font-family:var(--mono); font-weight:600; color:var(--primary-600);}
+.cta-row{display:flex; flex-wrap:wrap; gap:var(--sp-3);}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:13px 22px; border-radius:var(--r-md);
+  font:700 .98rem/1.2 var(--font); text-decoration:none; cursor:pointer; border:1px solid transparent;
+  transition:transform .18s, box-shadow .18s, background .18s, border-color .18s;
 }
+.btn svg{width:18px; height:18px; transition:transform .18s;}
+.btn:hover svg{transform:translateX(3px);}
+.btn-primary{background:linear-gradient(180deg,var(--primary-400),var(--primary)); color:#fff; box-shadow:0 1px 0 rgba(255,255,255,.25) inset, 0 8px 20px rgba(29,91,166,.28);}
+.btn-primary:hover{transform:translateY(-1px); box-shadow:0 1px 0 rgba(255,255,255,.25) inset, 0 12px 26px rgba(29,91,166,.34);}
+.btn-ghost{background:var(--surface); color:var(--primary-600); border-color:var(--line-2);}
+.btn-ghost:hover{border-color:var(--primary-400); transform:translateY(-1px); box-shadow:var(--shadow-sm);}
 
+/* Flow-field figure */
+.flow{
+  position:relative; margin:0; border-radius:var(--r-lg); background:linear-gradient(180deg,#fff,var(--tint));
+  border:1px solid var(--line); box-shadow:var(--shadow-md); overflow:hidden;
+}
+.flow::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    linear-gradient(rgba(29,91,166,.07) 1px, transparent 1px) 0 0/28px 28px,
+    linear-gradient(90deg, rgba(29,91,166,.07) 1px, transparent 1px) 0 0/28px 28px;
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 78%); mask-image:radial-gradient(ellipse at center,#000 30%,transparent 78%);
+}
+.flow svg{position:relative; display:block; width:100%; height:auto;}
+.sl{fill:none; stroke:var(--primary-400); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; stroke-opacity:.62; stroke-dasharray:3 9; animation:drift 7s linear infinite;}
+.axis{stroke:var(--primary); stroke-opacity:.28; stroke-width:1;}
+.body-ring{fill:rgba(29,91,166,.07); stroke:var(--primary); stroke-opacity:.8; stroke-width:1.6;}
+@keyframes drift{to{stroke-dashoffset:-96;}}
 
-/* ===== TOC ===== */
-.toc-card{
-  background:#fff; border-radius:14px; box-shadow:var(--shadow); overflow:hidden; margin:36px auto;
-}
-.toc-head{
-  background:linear-gradient(90deg, var(--royal), var(--sky)); color:#fff;
-  padding:18px 26px; font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700;
-}
-.toc-body{
-  display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:20px 22px;
-}
-.toc-item{
-  display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:8px;
-  text-decoration:none; color:var(--graphite); font-size:0.95rem; transition:background 0.2s;
-}
-.toc-item:hover{background:var(--pearl);}
-.toc-num{
-  flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--sky); color:#fff;
-  display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace;
-  font-size:0.75rem; font-weight:500;
-}
+/* =====================================================================
+   Chapters
+   ===================================================================== */
+.chapters{padding:var(--sp-7) 0 var(--sp-9);}
+.sec-head{display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-5); margin-bottom:var(--sp-7); padding-bottom:var(--sp-4); border-bottom:1px solid var(--line);}
+.eyebrow{font-size:.78rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--primary);}
+.sec-head h2{font-size:clamp(1.8rem,3.4vw,2.5rem); font-weight:800; letter-spacing:-.025em; line-height:1.1; margin-top:var(--sp-2);}
+.sec-head p{color:var(--muted); font-size:.98rem; max-width:34ch; text-align:right;}
 
-/* ===== SECTIONS ===== */
-main{max-width:960px; margin:0 auto; padding:0 24px;}
-.section{margin-bottom:10px; scroll-margin-top:20px;}
-.section-header{
-  display:flex; align-items:center; gap:18px; padding-bottom:16px; margin-bottom:24px;
-  border-bottom:3px solid var(--mist);
+.chapter-list{list-style:none; margin:0; padding:0; display:grid; gap:var(--sp-6);}
+.chapter{display:grid; grid-template-columns:76px minmax(0,1fr); gap:var(--sp-5); position:relative;}
+.rail{position:relative; display:flex; flex-direction:column; align-items:center;}
+.rail .num{
+  width:60px; height:60px; border-radius:16px; display:grid; place-items:center; flex:none;
+  background:var(--surface); border:1px solid var(--line-2); box-shadow:var(--shadow-sm);
+  font-family:var(--mono); font-weight:600; font-size:1.15rem; color:var(--primary-600); transition:background .2s,color .2s,border-color .2s;
 }
-.section-icon{
-  flex-shrink:0; width:52px; height:52px; border-radius:14px;
-  background:linear-gradient(135deg, var(--royal), var(--sky));
-  display:flex; align-items:center; justify-content:center; font-size:1.6rem;
-  box-shadow:0 4px 14px rgba(27,79,138,0.25);
-}
-.section-titles h2{
-  font-family:'Playfair Display',serif; font-size:1.75rem; color:var(--navy); margin:0 0 4px; font-weight:700;
-}
-.section-titles .section-sub{
-  font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--slate); direction:ltr; display:block;
-}
-.subhead{
-  font-family:'Cairo',sans-serif; font-weight:700; font-size:1.18rem; color:var(--royal);
-  margin:30px 0 14px; padding-right:12px; border-right:4px solid var(--sky);
-}
+.rail::after{content:""; flex:1; width:2px; margin-top:var(--sp-2); background:repeating-linear-gradient(to bottom,var(--line-2) 0 6px,transparent 6px 12px);}
+.chapter:last-child .rail::after{display:none;}
+.chapter:hover .rail .num,.chapter:focus-within .rail .num{background:var(--primary); border-color:var(--primary); color:#fff;}
 
-/* ===== BOXES ===== */
-.def-box{
-  background:linear-gradient(135deg, var(--mist), var(--pearl));
-  border-right:5px solid var(--sky); border-radius:var(--radius-sm);
-  padding:20px 24px; margin:20px 0;
+.card{
+  position:relative; display:grid; grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr); background:var(--surface);
+  border:1px solid var(--line); border-radius:var(--r-lg); box-shadow:var(--shadow-sm); overflow:hidden;
+  transition:transform .22s, box-shadow .22s, border-color .22s;
 }
-.def-box .box-label{font-weight:700; color:var(--royal); font-family:'Cairo',sans-serif; margin-bottom:6px; display:block;}
+.card:hover,.card:focus-within{transform:translateY(-4px); box-shadow:var(--shadow-lg); border-color:var(--primary-300);}
+.card-main{padding:var(--sp-6) var(--sp-6) var(--sp-6); display:flex; flex-direction:column; min-width:0;}
+.card-top{display:flex; align-items:center; gap:var(--sp-3); margin-bottom:var(--sp-4);}
+.ico{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:var(--tint); border:1px solid var(--line); color:var(--primary);}
+.ico svg{width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;}
+.kicker{font-size:.76rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--primary);}
+.card h3{font-size:clamp(1.35rem,2.4vw,1.7rem); line-height:1.2; letter-spacing:-.02em; font-weight:800; color:var(--ink);}
+.card .sub{margin-top:var(--sp-2); font-size:.95rem; font-weight:600; color:var(--muted);}
+.card .desc{margin-top:var(--sp-4); color:var(--ink-2); font-size:1rem; line-height:1.75;}
+.topics{display:flex; flex-wrap:wrap; gap:var(--sp-2); margin:var(--sp-5) 0 var(--sp-6); padding:0; list-style:none;}
+.topics li{padding:5px 12px; border-radius:var(--r-pill); background:var(--tint); border:1px solid var(--line); color:var(--primary-600); font-size:.8rem; font-weight:600;}
+.open-btn{
+  margin-top:auto; align-self:flex-start; display:inline-flex; align-items:center; gap:10px; padding:11px 18px; border-radius:var(--r-md);
+  background:var(--ink); color:#fff; text-decoration:none; font-weight:700; font-size:.94rem; transition:background .18s;
+}
+.open-btn svg{width:18px; height:18px; transition:transform .18s;}
+/* The whole card is clickable through this one real link */
+.open-btn::after{content:""; position:absolute; inset:0; z-index:1; border-radius:var(--r-lg);}
+.card:hover .open-btn{background:var(--primary);}
+.card:hover .open-btn svg{transform:translateX(4px);}
 
-.formula-box{
-  background:var(--navy); color:#fff; border-radius:var(--radius);
-  padding:24px 26px; margin:22px 0; box-shadow:var(--shadow);
+.eq-panel{
+  position:relative; display:flex; flex-direction:column; justify-content:center; gap:var(--sp-4); padding:var(--sp-6) var(--sp-5); min-width:0;
+  background:linear-gradient(160deg,var(--tint),var(--tint-2)); border-left:1px solid var(--line);
 }
-.formula-box .box-label{
-  font-family:'Cairo',sans-serif; font-weight:600; font-size:0.82rem; letter-spacing:1px;
-  color:var(--azure); margin-bottom:10px; display:block;
+.eq-panel::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    linear-gradient(rgba(29,91,166,.07) 1px, transparent 1px) 0 0/24px 24px,
+    linear-gradient(90deg, rgba(29,91,166,.07) 1px, transparent 1px) 0 0/24px 24px;
+  -webkit-mask-image:linear-gradient(135deg,#000 0%,transparent 70%); mask-image:linear-gradient(135deg,#000 0%,transparent 70%);
 }
-.formula-box mjx-container{color:#fff !important;}
-.equation-scroll{width:100%; max-width:100%; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch;}
-.equation-scroll mjx-container{min-width:max-content;}
+.eq-panel > *{position:relative;}
+.eq-label{font-size:.74rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);}
+.eq{
+  background:rgba(255,255,255,.88); border:1px solid var(--line); border-radius:var(--r-md); padding:var(--sp-5) var(--sp-4);
+  box-shadow:var(--shadow-sm); overflow-x:auto; overflow-y:hidden; text-align:center; color:var(--ink); font-size:1.02rem;
+}
+.eq mjx-container{margin:0!important; min-width:max-content;}
+.copy{
+  position:relative; z-index:2; align-self:flex-start; display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:var(--r-pill);
+  border:1px solid var(--line-2); background:rgba(255,255,255,.9); color:var(--ink-2); font:600 .8rem/1.2 var(--font); cursor:pointer; transition:background .15s,border-color .15s,color .15s;
+}
+.copy svg{width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
+.copy:hover{border-color:var(--primary-400); color:var(--primary-600);}
+.copy[data-done="true"]{background:var(--primary); border-color:var(--primary); color:#fff;}
 
-.note-box{
-  background:#fffbea; border-right:5px solid var(--amber); border-radius:var(--radius-sm);
-  padding:18px 24px; margin:20px 0;
+/* =====================================================================
+   Footer, back-to-top
+   ===================================================================== */
+.foot{border-top:1px solid var(--line); background:rgba(255,255,255,.6);}
+.foot .wrap{display:flex; align-items:center; justify-content:space-between; gap:var(--sp-4); padding-top:var(--sp-5); padding-bottom:var(--sp-5); color:var(--muted); font-size:.9rem; font-weight:500;}
+.foot a{color:var(--primary-600); font-weight:600; text-decoration:none;}
+.foot a:hover{text-decoration:underline;}
+.to-top{
+  position:fixed; right:max(18px,env(safe-area-inset-right)); bottom:max(18px,env(safe-area-inset-bottom)); z-index:90;
+  width:46px; height:46px; display:grid; place-items:center; border-radius:50%; cursor:pointer;
+  background:var(--surface); border:1px solid var(--line-2); color:var(--primary-600); box-shadow:var(--shadow-md);
+  opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity .2s, transform .2s, visibility .2s, background .15s, color .15s;
 }
-.note-box .box-label{font-weight:700; color:#8a6300; font-family:'Cairo',sans-serif; margin-bottom:6px; display:block;}
+.to-top.show{opacity:1; visibility:visible; transform:none;}
+.to-top:hover{background:var(--primary); color:#fff;}
+.to-top svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round;}
 
-.assumption-box{
-  background:var(--mint-light); border-right:5px solid var(--mint); border-radius:var(--radius-sm);
-  padding:18px 24px; margin:20px 0;
-}
-.assumption-box .box-label{font-weight:700; color:#0e6655; font-family:'Cairo',sans-serif; margin-bottom:6px; display:block;}
+/* Reveal on scroll (only when JS is available) */
+.js .reveal{opacity:0; transform:translateY(16px); transition:opacity .55s ease, transform .55s ease;}
+.js .reveal.in{opacity:1; transform:none;}
 
-.warning-box{
-  background:var(--coral-light); border-right:5px solid var(--coral); border-radius:var(--radius-sm);
-  padding:18px 24px; margin:20px 0;
+/* =====================================================================
+   Responsive
+   ===================================================================== */
+@media (max-width:1000px){
+  .hero{padding:var(--sp-7) 0;}
+  .hero .wrap{grid-template-columns:1fr; gap:var(--sp-6);}
+  .lede{max-width:46ch;}
+  .flow{max-width:560px;}
+  .card{grid-template-columns:1fr;}
+  .eq-panel{border-left:0; border-top:1px solid var(--line);}
 }
-.warning-box .box-label{font-weight:700; color:#943126; font-family:'Cairo',sans-serif; margin-bottom:6px; display:block;}
-
-/* Explanation callouts */
-.doctor-box{
-  background:linear-gradient(135deg,#fff, var(--pearl)); border:1.5px dashed var(--royal);
-  border-radius:var(--radius-sm); padding:18px 24px; margin:20px 0;
+@media (max-width:720px){
+  .nav-toggle{display:inline-flex;}
+  .nav-links{
+    position:absolute; left:var(--sp-4); right:var(--sp-4); top:calc(var(--nav-h) + 8px); flex-direction:column; align-items:stretch; gap:2px; padding:var(--sp-2);
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--r-md); box-shadow:var(--shadow-lg);
+    opacity:0; visibility:hidden; transform:translateY(-6px); transition:opacity .15s, transform .15s, visibility .15s;
+  }
+  .nav-links.open{opacity:1; visibility:visible; transform:none;}
+  .nav-links a{padding:12px 14px; border-radius:var(--r-sm);}
+  .wrap{padding:0 var(--sp-4);}
+  .sec-head{flex-direction:column; align-items:flex-start;}
+  .sec-head p{text-align:left;}
+  .chapter{grid-template-columns:1fr; gap:var(--sp-3);}
+  .rail{flex-direction:row; align-items:center;}
+  .rail .num{width:46px; height:46px; border-radius:12px; font-size:1rem;}
+  .rail::after{display:none;}
+  .card-main{padding:var(--sp-5);}
+  .eq-panel{padding:var(--sp-5);}
+  .chapters{padding-bottom:var(--sp-8);}
+  .foot .wrap{flex-direction:column; align-items:flex-start; gap:var(--sp-2);}
 }
-.doctor-box .box-label{font-weight:700; color:var(--royal); font-family:'Cairo',sans-serif; margin-bottom:6px; display:block;}
-
-.uncertain-box{
-  background:#f4f4f4; border-right:5px solid var(--slate); border-radius:var(--radius-sm);
-  padding:14px 20px; margin:16px 0; font-family:'JetBrains Mono',monospace; font-size:0.86rem; color:var(--slate);
-}
-
-/* Meaning / takeaway end-of-part blocks */
-.meaning-block{
-  background:linear-gradient(135deg, var(--pearl), #fff); border:1px solid var(--mist);
-  border-radius:var(--radius); padding:20px 24px; margin:26px 0 14px;
-}
-.meaning-block h4{
-  font-family:'Playfair Display',serif; font-size:1.05rem; color:var(--royal); margin:0 0 8px; font-weight:700;
-}
-.takeaway-block{
-  background:linear-gradient(135deg, var(--navy), var(--royal)); color:#fff;
-  border-radius:var(--radius); padding:20px 24px; margin:14px 0 30px;
-}
-.takeaway-block h4{
-  font-family:'Playfair Display',serif; font-size:1.05rem; margin:0 0 8px; font-weight:700; color:var(--azure);
-}
-.takeaway-block ul{margin:0; padding-right:20px;}
-.takeaway-block li{margin-bottom:6px;}
-
-/* Example cards */
-.example-card{
-  border:2px solid var(--royal); border-radius:var(--radius); margin:26px 0; overflow:hidden; box-shadow:var(--shadow);
-}
-.example-head{
-  background:linear-gradient(135deg, var(--sky), var(--azure)); color:#fff;
-  padding:14px 22px; font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem;
-}
-.example-body{padding:22px 24px;}
-.example-question{
-  background:var(--pearl); border-radius:var(--radius-sm); padding:16px 20px; margin-bottom:18px;
-  direction:ltr; text-align:left; font-family:'Source Serif 4',serif; font-size:0.98rem; line-height:1.7; color:var(--graphite);
-}
-.solution-steps{list-style:none; margin:0; padding:0; counter-reset:step;}
-.solution-steps > li{
-  position:relative; padding:4px 0 4px 0; margin-bottom:18px; padding-right:42px;
-}
-.solution-steps > li::before{
-  counter-increment:step; content:counter(step);
-  position:absolute; right:0; top:2px; width:28px; height:28px; border-radius:50%;
-  background:var(--royal); color:#fff; font-family:'JetBrains Mono',monospace; font-size:0.85rem;
-  display:flex; align-items:center; justify-content:center; font-weight:500;
-}
-.step-title{font-weight:700; color:var(--navy); margin-bottom:4px; display:block;}
-.answer-badge{
-  display:inline-flex; align-items:center; gap:8px; background:var(--mint); color:#fff;
-  border-radius:999px; padding:8px 20px; font-family:'Cairo',sans-serif; font-weight:700;
-  margin-top:14px; font-size:0.92rem;
-}
-
-/* Practice questions */
-.q-section{border:2px solid var(--royal); border-radius:var(--radius); padding:4px; margin:22px 0;}
-.q-item{padding:18px 20px;}
-.q-item + .q-item{border-top:1px solid var(--mist);}
-.q-prompt{direction:ltr; text-align:left; font-family:'Source Serif 4',serif; line-height:1.7; margin-bottom:12px; color:var(--graphite);}
-.q-toggle{
-  background:linear-gradient(135deg, var(--royal), var(--sky)); color:#fff; border:none;
-  border-radius:999px; padding:9px 20px; font-family:'Cairo',sans-serif; font-weight:600;
-  font-size:0.88rem; cursor:pointer;
-}
-.q-solution{display:none; margin-top:16px; padding-top:16px; border-top:1px dashed var(--mist);}
-
-/* Figures */
-figure.lec-figure{margin:24px 0; text-align:center;}
-figure.lec-figure img{
-  margin:0 auto; border-radius:var(--radius-sm); box-shadow:var(--shadow);
-  max-width:100%; max-height:420px; object-fit:contain; background:#fff; padding:6px;
-}
-figure.lec-figure figcaption{
-  font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:var(--slate);
-  margin-top:10px; direction:ltr;
-}
-.figure-row{display:flex; gap:18px; flex-wrap:wrap; justify-content:center;}
-.figure-row figure.lec-figure{flex:1 1 260px; max-width:460px;}
-
-/* Custom SVG diagram card */
-.svg-diagram{
-  background:#fff; border-radius:var(--radius-sm); box-shadow:var(--shadow);
-  padding:14px; margin:24px 0; overflow-x:auto;
-}
-.svg-diagram svg{display:block; margin:0 auto; max-width:100%; height:auto;}
-.svg-diagram figcaption{
-  font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:var(--slate);
-  margin-top:10px; text-align:center; direction:ltr;
-}
-
-/* Tables */
-.table-scroll{width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; margin:20px 0;}
-table.lec-table{border-collapse:collapse; width:100%; min-width:520px; background:#fff; border-radius:var(--radius-sm); overflow:hidden;}
-table.lec-table th{background:var(--royal); color:#fff; font-family:'Cairo',sans-serif; padding:12px 14px; text-align:center; font-weight:600; font-size:0.9rem;}
-table.lec-table td{padding:11px 14px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:0.9rem; border-bottom:1px solid var(--mist);}
-table.lec-table td.label-cell{font-family:'Cairo',sans-serif; text-align:right; color:var(--navy); font-weight:600;}
-table.lec-table tr:nth-child(even){background:var(--pearl);}
-.scroll-hint{display:none; text-align:center; font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--slate); margin-top:6px;}
-
-p{margin:0 0 16px;}
-strong{color:var(--navy);}
-.eng-term{font-family:'Cairo',sans-serif; font-weight:600; color:var(--royal);}
-
-/* ===== FOOTER ===== */
-footer.lec-footer{
-  background:var(--navy); color:#fff; text-align:center; border-radius:14px;
-  margin:40px auto 0; max-width:960px; padding:34px 30px;
-}
-footer.lec-footer h3{font-family:'Playfair Display',serif; font-weight:700; font-size:1.2rem; margin:0 0 10px;}
-footer.lec-footer p{opacity:0.7; margin:0 0 18px; font-size:0.95rem;}
-.footer-tags{display:flex; flex-wrap:wrap; gap:8px; justify-content:center;}
-.footer-tag{background:rgba(255,255,255,0.1); border-radius:999px; padding:6px 16px; font-size:0.8rem; font-family:'JetBrains Mono',monospace;}
-
-
-/* ===== RESPONSIVE ===== */
-@media (max-width:768px){
-  header.lecture-header{padding:46px 26px 38px;}
-  .section-icon{width:44px; height:44px; font-size:1.35rem; border-radius:12px;}
-  .section-titles h2{font-size:1.5rem;}
-}
-@media (max-width:650px){
+@media (max-width:420px){
   body{font-size:16px;}
-  .toc-body{grid-template-columns:1fr;}
+  .brand span{font-size:.95rem;}
+  .btn{width:100%;}
+  .eq{font-size:.92rem;}
 }
-@media (max-width:600px){
-  header.lecture-header{padding:38px 20px 32px;}
-  .content-wrapper, .toc-wrapper, main{padding:0 16px;}
-  .meta-pills{gap:7px;}
-  .meta-pill{padding:6px 12px; font-size:0.78rem;}
-  .section-header{gap:12px;}
-  .formula-box{padding:18px 16px;}
-  .scroll-hint{display:block;}
-  .solution-steps > li{padding-right:36px;}
-  .meaning-block, .takeaway-block{padding:16px 18px;}
-}
-@media (max-width:380px){
-  h1.lecture-title{font-size:1.7rem;}
-  .badge{font-size:0.7rem; padding:6px 14px;}
-  .section-titles h2{font-size:1.3rem;}
-  .formula-box{padding:16px 12px;}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation:none!important; transition-duration:.01ms!important;}
+  .sl{stroke-dasharray:none; stroke-opacity:.45;}
+  .js .reveal{opacity:1; transform:none;}
 }
 
-.home-link{position:fixed; top:14px; right:14px; z-index:50; display:inline-flex; align-items:center; gap:6px;
-  padding:7px 16px; border-radius:999px; background:rgba(11,36,71,0.78); color:#fff; text-decoration:none;
-  font-family:'Cairo',sans-serif; font-weight:600; font-size:0.82rem; border:1px solid rgba(255,255,255,0.3);
-  backdrop-filter:blur(6px); transition:background 0.2s;}
-.home-link:hover{background:var(--royal);}
-
-
-/* ---- landing page ---- */
-.landing{max-width:680px; margin:0 auto; padding:0 22px;}
-.landing-intro{text-align:center; margin:52px 0 34px;}
-.landing-intro .eyebrow{display:inline-block; font-family:'Cairo',sans-serif; font-weight:700; font-size:0.78rem;
-  letter-spacing:2px; text-transform:uppercase; color:var(--sky);}
-.landing-intro .rule{width:56px; height:3px; border-radius:3px; margin:16px auto 0; background:linear-gradient(90deg,var(--royal),var(--sky));}
-.chapter-list{display:flex; flex-direction:column; gap:28px; margin-bottom:64px;}
-.chapter-card{position:relative; display:block; background:#fff; border-radius:18px; box-shadow:var(--shadow);
-  padding:34px 32px 30px; text-decoration:none; color:var(--ink); overflow:hidden;
-  transition:transform .25s, box-shadow .25s;}
-.chapter-card::before{content:""; position:absolute; top:0; left:0; right:0; height:5px;
-  background:linear-gradient(90deg,var(--navy),var(--royal),var(--sky));}
-.chapter-card:hover{transform:translateY(-5px); box-shadow:var(--shadow-lg);}
-.chapter-head{display:flex; align-items:center; gap:18px; margin-bottom:18px;}
-.chapter-head .section-icon{width:58px; height:58px; font-size:1.8rem;}
-.chapter-num{display:block; font-family:'Cairo',sans-serif; font-weight:700; font-size:0.74rem; letter-spacing:2px; text-transform:uppercase; color:var(--sky);}
-.chapter-card h3{font-family:'Playfair Display',serif; font-size:1.45rem; line-height:1.3; margin:2px 0 0; color:var(--navy);}
-.chapter-card .ar{font-family:'Cairo',sans-serif; font-size:0.98rem; color:var(--slate);}
-.chapter-card p{margin:0 0 18px; font-size:0.97rem; line-height:1.9; color:var(--graphite);}
-.topic-list{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px;}
-.topic{background:var(--pearl); color:var(--royal); border:1px solid var(--mist); border-radius:999px;
-  padding:5px 14px; font-size:0.8rem; font-family:'Cairo',sans-serif; font-weight:600;}
-.open-btn{display:flex; align-items:center; justify-content:center; gap:8px; width:100%;
-  background:linear-gradient(90deg,var(--royal),var(--sky)); color:#fff; border-radius:12px; padding:13px 20px;
-  font-family:'Cairo',sans-serif; font-weight:700; font-size:0.98rem; transition:filter .2s;}
-.chapter-card:hover .open-btn{filter:brightness(1.08);}
-.landing-foot{text-align:center; color:var(--slate); font-family:'Cairo',sans-serif; font-size:0.85rem; padding:0 22px 44px;}
-@media (max-width:560px){
-  header.lecture-header{padding:60px 20px 52px;}
-  .landing-intro{margin:38px 0 26px;}
-  .chapter-card{padding:28px 22px 24px; border-radius:16px;}
-  .chapter-head{gap:14px;}
-  .chapter-card h3{font-size:1.25rem;}
-  .chapter-list{gap:22px; margin-bottom:44px;}
+/* =====================================================================
+   Print: clean reference sheet
+   ===================================================================== */
+@media print{
+  @page{margin:16mm;}
+  body{background:#fff!important; font-size:11pt; color:#000;}
+  body::before,.topbar,.progress,.to-top,.flow,.copy,.btn,.rail::after,.skip-link{display:none!important;}
+  .hero{padding:0 0 12mm;} .hero .wrap{grid-template-columns:1fr;}
+  h1.title{font-size:30pt; -webkit-text-fill-color:currentColor; color:var(--ink);} h1.title em{background:none; -webkit-text-fill-color:var(--primary); color:var(--primary);}
+  .chapters{padding:0;} .chapter-list{gap:8mm;}
+  .chapter{grid-template-columns:1fr; break-inside:avoid; page-break-inside:avoid;}
+  .rail{display:none;}
+  .card{grid-template-columns:1fr; box-shadow:none; border-color:#9fb4ca; transform:none!important; break-inside:avoid;}
+  .eq-panel{border-left:0; border-top:1px solid #c9d6e3; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  .eq-panel::before{display:none;}
+  .open-btn{background:none!important; color:var(--primary-600)!important; padding:0; font-weight:600;}
+  .open-btn svg{display:none;}
+  .open-btn::after{content:"  \2192  " attr(href); position:static; inset:auto;}
+  .js .reveal{opacity:1!important; transform:none!important;}
+  .foot{background:none; border-top:1px solid #9fb4ca;}
 }
 </style>
 </head>
 <body>
-<header class="lecture-header">
-  <div class="header-inner">
-    <span class="badge">Fluid Mechanics · Lecture Notes</span>
-    <h1 class="lecture-title">
-      Fluid Mechanics
-      <span class="ar-line">ميكانيكا الموائع</span>
-    </h1>
-    <p class="header-subtitle">ملخصات دراسية مفصّلة لفصول المادة</p>
+<a class="skip-link" href="#chapters">Skip to chapters</a>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#overview" aria-label="Fluid Mechanics — back to overview">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="9" fill="#1D5BA6"/><circle cx="16" cy="16" r="4.2" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M3.5 11c5-1.6 8.4-1.2 12.5-1.2S24 9.4 28.5 11M3.5 21c5 1.6 8.4 1.2 12.5 1.2S24 22.6 28.5 21" fill="none" stroke="#9CC6F0" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span>Fluid Mechanics</span>
+    </a>
+    <nav aria-label="Page sections">
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        Menu
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#overview" data-spy="overview">Overview</a></li>
+        <li><a href="#chapter-1" data-spy="chapter-1">Chapter 1</a></li>
+        <li><a href="#chapter-2" data-spy="chapter-2">Chapter 2</a></li>
+        <li><a href="#chapter-3" data-spy="chapter-3">Chapter 3</a></li>
+      </ul>
+    </nav>
   </div>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 </header>
 
-<main class="landing">
-  <div class="landing-intro">
-    <span class="eyebrow">Chapters · الفصول</span>
-    <div class="rule"></div>
-  </div>
-  <div class="chapter-list">
-    <a class="chapter-card" href="chapter-1.html">
-      <div class="chapter-head">
-        <div class="section-icon">🌀</div>
-        <div>
-          <span class="chapter-num">Chapter 1</span>
-          <h3>Introduction / Discussion</h3>
-          <span class="ar">مقدمة ومناقشة — وصف حركة الموائع</span>
+<main>
+  <section class="hero" id="overview" aria-labelledby="page-title">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="badge"><i aria-hidden="true"></i>Fluid Mechanics · Lecture Notes</span>
+        <h1 class="title" id="page-title">Fluid <em>Mechanics</em></h1>
+        <p class="lede">Detailed study summaries for the course chapters.</p>
+        <ul class="meta" aria-label="At a glance">
+          <li><b>3</b> chapters</li>
+          <li>Full derivations</li>
+          <li>Worked examples</li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#chapters">Browse chapters
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="chapter-1.html">Start with Chapter 1
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </div>
       </div>
-      <p>الوصف اللاجرانجي والأويلري، الـMaterial Derivative، خطوط الجريان، والدوران والـVorticity ومعدلات الانفعال.</p>
-      <div class="topic-list"><span class="topic">Lagrangian &amp; Eulerian</span><span class="topic">Streamlines</span><span class="topic">Vorticity</span><span class="topic">Strain Rate Tensor</span></div>
-      <span class="open-btn">فتح الفصل 1 <span aria-hidden="true">←</span></span>
-    </a>
-    <a class="chapter-card" href="chapter-2.html">
-      <div class="chapter-head">
-        <div class="section-icon">⚖️</div>
+
+      <figure class="flow" aria-hidden="true">
+        <svg viewBox="0 0 560 380" role="presentation" focusable="false">
+          <defs><g id="upper"><path class="sl" d="M0 176 7 176 14 176 21 176 28 176 35 176 42 176 49 176 56 176 63 175 70 175 77 175 84 175 91 175 98 175 105 175 112 174 119 174 126 174 133 174 140 173 147 173 154 172 161 172 168 171 175 169 182 168 188 166 195 163 201 159 206 155 212 151 217 146 222 142 228 137 234 133 240 130 246 127 252 124 259 122 266 120 273 119 280 119 287 119 294 120 301 122 307 124 314 126 320 130 326 133 332 137 337 141 343 146 348 151 353 155 359 159 365 163 371 166 378 168 385 169 392 171 399 171 406 172 413 173 420 173 427 174 434 174 441 174 448 174 455 175 462 175 469 175 476 175 483 175 490 175 497 175 504 176 511 176 518 176 525 176 532 176 539 176 546 176 553 176 560 176 567 176 574 176"/><path class="sl" d="M0 154 7 154 14 154 21 154 28 154 35 153 42 153 49 153 56 153 63 153 70 152 77 152 84 152 91 152 98 151 105 151 112 150 119 150 126 149 133 149 140 148 147 147 154 146 161 144 167 143 174 141 181 139 187 137 194 134 200 131 207 128 213 125 219 122 226 119 232 117 239 114 245 112 252 110 259 109 266 108 273 107 280 107 287 107 294 108 301 109 307 110 314 112 321 114 327 117 334 119 340 122 347 125 353 128 359 131 366 134 372 137 379 139 385 141 392 143 399 144 406 146 413 147 420 148 427 149 434 149 441 150 448 150 455 151 462 151 469 152 476 152 483 152 490 152 497 153 504 153 511 153 518 153 525 153 532 154 539 154 546 154 553 154 560 154 567 154 574 154"/><path class="sl" d="M0 132 7 132 14 132 21 132 28 131 35 131 42 131 49 131 56 130 63 130 70 130 77 129 84 129 91 129 98 128 105 128 112 127 119 126 126 125 133 125 140 124 147 123 153 121 160 120 167 118 174 117 181 115 187 113 194 111 201 109 208 107 214 105 221 103 228 101 234 99 241 97 248 96 255 95 262 94 269 93 276 93 283 93 290 93 297 94 304 95 311 96 318 97 324 99 331 100 338 102 345 104 351 107 358 109 365 111 371 113 378 115 385 117 392 118 398 120 405 121 412 122 419 123 426 124 433 125 440 126 447 127 454 127 461 128 468 128 475 129 482 129 489 130 496 130 503 130 510 131 517 131 524 131 531 131 538 131 545 132 552 132 559 132 566 132 573 132"/><path class="sl" d="M0 108 7 108 14 108 21 107 28 107 35 107 42 107 49 106 56 106 63 106 70 105 77 105 84 104 91 104 98 103 105 103 112 102 119 101 126 100 133 100 140 99 147 98 153 96 160 95 167 94 174 93 181 91 188 90 195 88 201 87 208 85 215 84 222 82 229 81 236 80 243 79 250 78 257 77 264 77 271 76 278 76 285 76 292 76 299 77 306 77 312 78 319 79 326 80 333 82 340 83 347 84 354 86 361 87 367 89 374 90 381 92 388 93 395 94 402 96 409 97 416 98 422 99 429 100 436 101 443 101 450 102 457 103 464 103 471 104 478 104 485 105 492 105 499 106 506 106 513 106 520 107 527 107 534 107 541 107 548 108 555 108 562 108 569 108 576 108"/><path class="sl" d="M0 82 7 82 14 82 21 81 28 81 35 81 42 80 49 80 56 80 63 79 70 79 77 78 84 78 91 77 98 77 105 76 112 76 119 75 126 74 133 73 140 73 147 72 154 71 160 70 167 69 174 68 181 67 188 66 195 65 202 63 209 62 216 61 223 60 230 60 237 59 244 58 251 57 258 57 265 57 272 56 279 56 286 56 293 56 300 57 307 57 314 58 320 58 327 59 334 60 341 61 348 62 355 63 362 64 369 65 376 66 383 67 390 68 397 69 404 70 411 71 418 72 424 73 431 74 438 75 445 75 452 76 459 77 466 77 473 78 480 78 487 79 494 79 501 80 508 80 515 80 522 81 529 81 536 81 543 81 550 82 557 82 564 82 571 82"/><path class="sl" d="M0 54 7 54 14 53 21 53 28 53 35 53 42 52 49 52 56 52 63 51 70 51 77 50 84 50 91 49 98 49 105 48 112 48 119 47 126 47 133 46 140 45 147 44 154 44 161 43 168 42 174 41 181 41 188 40 195 39 202 38 209 38 216 37 223 36 230 36 237 35 244 35 251 34 258 34 265 34 272 34 279 34 286 34 293 34 300 34 307 34 314 35 321 35 328 36 335 36 342 37 349 37 356 38 363 39 370 40 377 40 384 41 391 42 398 43 405 44 412 44 419 45 426 46 433 46 439 47 446 48 453 48 460 49 467 49 474 50 481 50 488 51 495 51 502 51 509 52 516 52 523 53 530 53 537 53 544 53 551 54 558 54 565 54 572 54"/><path class="sl" d="M0 24 7 24 14 23 21 23 28 23 35 23 42 22 49 22 56 22 63 21 70 21 77 20 84 20 91 20 98 19 105 19 112 18 119 18 126 17 133 17 140 16 147 16 154 15 161 14 168 14 175 13 182 13 189 12 196 12 203 11 210 11 217 10 224 10 231 9 237 9 244 9 251 8 258 8 265 8 272 8 279 8 286 8 293 8 300 8 307 8 314 9 321 9 328 9 335 10 342 10 349 11 356 11 363 12 370 12 377 13 384 13 391 14 398 14 405 15 412 16 419 16 426 17 433 17 440 18 447 18 454 19 461 19 468 20 475 20 482 20 489 21 496 21 503 22 510 22 517 22 524 23 531 23 538 23 545 23 552 24 559 24 566 24 573 24"/><path class="sl" d="M0 6 7 6 14 6 21 5 28 5 35 5 42 4 49 4 56 4 63 3 70 3 77 3 84 2 91 2 98 1 105 1 112 1 119 0 126 -0 133 -1 140 -1 147 -2 154 -2 161 -3 168 -3 175 -4 182 -4 189 -5 196 -5 203 -5 210 -6 217 -6 224 -7 231 -7 238 -7 245 -7 252 -8 259 -8 266 -8 273 -8 280 -8 287 -8 294 -8 301 -8 308 -8 315 -7 322 -7 329 -7 336 -7 343 -6 350 -6 357 -5 364 -5 371 -5 378 -4 385 -4 391 -3 398 -3 405 -2 412 -2 419 -1 426 -1 433 -0 440 0 447 1 454 1 461 1 468 2 475 2 482 3 489 3 496 3 503 4 510 4 517 4 524 5 531 5 538 5 545 5 552 6 559 6 566 6 573 6"/></g></defs>
+          <line class="axis" x1="0" y1="190" x2="560" y2="190"/>
+          <line class="axis" x1="280" y1="0" x2="280" y2="380"/>
+          <use href="#upper"/>
+          <use href="#upper" transform="translate(0 380) scale(1 -1)"/>
+          <circle class="body-ring" cx="280" cy="190" r="64"/>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <section class="chapters" id="chapters" aria-labelledby="chapters-title">
+    <div class="wrap">
+      <div class="sec-head reveal">
         <div>
-          <span class="chapter-num">Chapter 2</span>
-          <h3>Continuity Equation</h3>
-          <span class="ar">معادلة الاستمرارية</span>
+          <span class="eyebrow">Course contents</span>
+          <h2 id="chapters-title">Chapters</h2>
         </div>
+        <p>Select a chapter to open its lecture notes.</p>
       </div>
-      <p>الاشتقاق الكامل من الـControl Volume والـTaylor Expansion للصيغة التفاضلية، ثم الإحداثيات الأسطوانية والـStream Function مع أمثلة محلولة.</p>
-      <div class="topic-list"><span class="topic">Control Volume</span><span class="topic">Taylor Expansion</span><span class="topic">Cylindrical Coordinates</span><span class="topic">Stream Function ψ</span></div>
-      <span class="open-btn">فتح الفصل 2 <span aria-hidden="true">←</span></span>
-    </a>
-    <a class="chapter-card" href="chapter-3.html">
-      <div class="chapter-head">
-        <div class="section-icon">💧</div>
-        <div>
-          <span class="chapter-num">Chapter 3</span>
-          <h3>Momentum Equation and Navier–Stokes Equation</h3>
-          <span class="ar">معادلة الـ Momentum ومعادلة Navier–Stokes</span>
-        </div>
-      </div>
-      <p>من قانون نيوتن الثاني على الـControl Volume إلى معادلة Cauchy والـStress Tensor والـNewtonian Fluid، ثم معادلة Navier–Stokes مع مثال محلول.</p>
-      <div class="topic-list"><span class="topic">Cauchy's Equation</span><span class="topic">Stress Tensor</span><span class="topic">Newtonian Fluid</span><span class="topic">Navier–Stokes</span></div>
-      <span class="open-btn">فتح الفصل 3 <span aria-hidden="true">←</span></span>
-    </a>
-  </div>
+
+      <ol class="chapter-list">
+        <li class="chapter reveal" id="chapter-1">
+          <div class="rail" aria-hidden="true"><span class="num">01</span></div>
+          <article class="card">
+            <div class="card-main">
+              <div class="card-top">
+                <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 7.5c2.6-2.6 4.6 2.6 7.2 0s4.6 2.6 7.2 0 3.6.6 5.6-1.2"/><path d="M2 13c2.6-2.6 4.6 2.6 7.2 0s4.6 2.6 7.2 0 3.6.6 5.6-1.2"/><path d="M2 18.5c2.6-2.6 4.6 2.6 7.2 0s4.6 2.6 7.2 0 3.6.6 5.6-1.2"/></svg></span>
+                <span class="kicker">Chapter 1</span>
+              </div>
+              <h3>Introduction / Discussion</h3>
+              <p class="sub">Describing fluid motion</p>
+              <p class="desc">Lagrangian and Eulerian descriptions, the Material Derivative, streamlines, and rotation, vorticity and strain rates.</p>
+              <ul class="topics" aria-label="Topics in Chapter 1">
+                <li>Lagrangian &amp; Eulerian</li><li>Streamlines</li><li>Vorticity</li><li>Strain Rate Tensor</li>
+              </ul>
+              <a class="open-btn" href="chapter-1.html" aria-label="Open Chapter 1: Introduction / Discussion">Open Chapter 1
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+            <div class="eq-panel">
+              <span class="eq-label">Material derivative</span>
+              <div class="eq" data-plain="D/Dt = ∂/∂t + (V·∇)" data-tex="\frac{D}{Dt} = \frac{\partial}{\partial t} + (\vec{V} \cdot \vec{\nabla})">\[ \frac{D}{Dt} = \frac{\partial}{\partial t} + (\vec{V} \cdot \vec{\nabla}) \]</div>
+              <button class="copy" type="button" data-copy="\frac{D}{Dt} = \frac{\partial}{\partial t} + (\vec{V} \cdot \vec{\nabla})" aria-label="Copy the material derivative equation as LaTeX">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><span>Copy LaTeX</span>
+              </button>
+            </div>
+          </article>
+        </li>
+
+        <li class="chapter reveal" id="chapter-2">
+          <div class="rail" aria-hidden="true"><span class="num">02</span></div>
+          <article class="card">
+            <div class="card-main">
+              <div class="card-top">
+                <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M2 12h3.5M4 10l1.8 2L4 14M18.5 12H22M20.2 10l1.8 2-1.8 2"/></svg></span>
+                <span class="kicker">Chapter 2</span>
+              </div>
+              <h3>Continuity Equation</h3>
+              <p class="desc">The full derivation of the differential form from the Control Volume and Taylor Expansion, then cylindrical coordinates and the Stream Function, with worked examples.</p>
+              <ul class="topics" aria-label="Topics in Chapter 2">
+                <li>Control Volume</li><li>Taylor Expansion</li><li>Cylindrical Coordinates</li><li>Stream Function ψ</li>
+              </ul>
+              <a class="open-btn" href="chapter-2.html" aria-label="Open Chapter 2: Continuity Equation">Open Chapter 2
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+            <div class="eq-panel">
+              <span class="eq-label">Continuity equation</span>
+              <div class="eq" data-plain="∂ρ/∂t + ∇·(ρV) = 0" data-tex="\frac{\partial \rho}{\partial t} + \vec{\nabla}\cdot(\rho \vec{V}) = 0">\[ \frac{\partial \rho}{\partial t} + \vec{\nabla}\cdot(\rho \vec{V}) = 0 \]</div>
+              <button class="copy" type="button" data-copy="\frac{\partial \rho}{\partial t} + \vec{\nabla}\cdot(\rho \vec{V}) = 0" aria-label="Copy the continuity equation as LaTeX">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><span>Copy LaTeX</span>
+              </button>
+            </div>
+          </article>
+        </li>
+
+        <li class="chapter reveal" id="chapter-3">
+          <div class="rail" aria-hidden="true"><span class="num">03</span></div>
+          <article class="card">
+            <div class="card-main">
+              <div class="card-top">
+                <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3c3.6 4.2 6 7.1 6 10.4A6 6 0 0 1 6 13.4C6 10.1 8.4 7.2 12 3z"/></svg></span>
+                <span class="kicker">Chapter 3</span>
+              </div>
+              <h3>Momentum Equation and Navier–Stokes Equation</h3>
+              <p class="desc">From Newton's second law on the Control Volume to Cauchy's equation, the Stress Tensor and the Newtonian Fluid, then the Navier–Stokes equation with a worked example.</p>
+              <ul class="topics" aria-label="Topics in Chapter 3">
+                <li>Cauchy's Equation</li><li>Stress Tensor</li><li>Newtonian Fluid</li><li>Navier–Stokes</li>
+              </ul>
+              <a class="open-btn" href="chapter-3.html" aria-label="Open Chapter 3: Momentum Equation and Navier–Stokes Equation">Open Chapter 3
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+            <div class="eq-panel">
+              <span class="eq-label">Cauchy's equation</span>
+              <div class="eq" data-plain="ρ DV/Dt = ρg + ∇·σᵢⱼ" data-tex="\rho\frac{D\vec V}{Dt}=\rho\vec g+\vec\nabla\cdot\boldsymbol\sigma_{ij}">\[ \rho\frac{D\vec V}{Dt}=\rho\vec g+\vec\nabla\cdot\boldsymbol\sigma_{ij} \]</div>
+              <button class="copy" type="button" data-copy="\rho\frac{D\vec V}{Dt}=\rho\vec g+\vec\nabla\cdot\boldsymbol\sigma_{ij}" aria-label="Copy Cauchy's equation as LaTeX">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><span>Copy LaTeX</span>
+              </button>
+            </div>
+          </article>
+        </li>
+      </ol>
+    </div>
+  </section>
 </main>
 
-<div class="landing-foot">Fluid Mechanics · Lecture Notes</div>
+<footer class="foot">
+  <div class="wrap">
+    <span>Fluid Mechanics · Lecture Notes</span>
+    <a href="#overview">Back to top ↑</a>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</button>
+
+<script>
+(function(){
+  var doc=document, root=doc.documentElement;
+  var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Reading progress + back-to-top (one rAF-throttled scroll handler) */
+  var bar=doc.getElementById('progressBar'), toTop=doc.getElementById('toTop'), tick=false;
+  function onScroll(){
+    var max=root.scrollHeight-root.clientHeight, y=window.pageYOffset||root.scrollTop;
+    bar.style.transform='scaleX('+(max>0?Math.min(1,y/max):0)+')';
+    toTop.classList.toggle('show', y>640);
+    tick=false;
+  }
+  window.addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(onScroll);} },{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
+  toTop.addEventListener('click',function(){ window.scrollTo({top:0,behavior:reduce?'auto':'smooth'}); });
+
+  /* Mobile menu */
+  var toggle=doc.getElementById('navToggle'), links=doc.getElementById('navLinks');
+  function setMenu(open){ links.classList.toggle('open',open); toggle.setAttribute('aria-expanded',open?'true':'false'); }
+  toggle.addEventListener('click',function(){ setMenu(!links.classList.contains('open')); });
+  links.addEventListener('click',function(e){ if(e.target.closest('a')) setMenu(false); });
+  doc.addEventListener('keydown',function(e){ if(e.key==='Escape'&&links.classList.contains('open')){ setMenu(false); toggle.focus(); } });
+  doc.addEventListener('click',function(e){ if(!e.target.closest('.topbar')) setMenu(false); });
+
+  /* Highlight the current section in the top bar */
+  var spyLinks=[].slice.call(doc.querySelectorAll('[data-spy]'));
+  var targets=spyLinks.map(function(a){ return doc.getElementById(a.getAttribute('data-spy')); });
+  function setActive(id){ spyLinks.forEach(function(a){ if(a.getAttribute('data-spy')===id){ a.setAttribute('aria-current','true'); } else { a.removeAttribute('aria-current'); } }); }
+  setActive('overview');
+  if('IntersectionObserver' in window){
+    var spy=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ setActive(en.target.id); } });
+    },{rootMargin:'-35% 0px -55% 0px',threshold:0});
+    targets.forEach(function(t){ if(t) spy.observe(t); });
+
+    /* Reveal on scroll */
+    var rv=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); rv.unobserve(en.target); } });
+    },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    [].forEach.call(doc.querySelectorAll('.reveal'),function(el){ rv.observe(el); });
+  } else {
+    [].forEach.call(doc.querySelectorAll('.reveal'),function(el){ el.classList.add('in'); });
+  }
+
+  /* Copy equation as LaTeX */
+  [].forEach.call(doc.querySelectorAll('.copy'),function(btn){
+    var label=btn.querySelector('span'), original=label.textContent, timer;
+    btn.addEventListener('click',function(){
+      var text=btn.getAttribute('data-copy');
+      function done(ok){
+        label.textContent=ok?'Copied':'Copy failed'; btn.setAttribute('data-done',ok?'true':'false');
+        clearTimeout(timer); timer=setTimeout(function(){ label.textContent=original; btn.removeAttribute('data-done'); },1600);
+      }
+      if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(function(){done(true);},function(){done(false);}); }
+      else {
+        var ta=doc.createElement('textarea'); ta.value=text; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.opacity='0'; doc.body.appendChild(ta); ta.select();
+        var ok=false; try{ ok=doc.execCommand('copy'); }catch(e){} doc.body.removeChild(ta); done(ok);
+      }
+    });
+  });
+
+  /* If MathJax could not load (offline), fall back to plain-text equations */
+  window.addEventListener('load',function(){
+    setTimeout(function(){
+      if(!doc.querySelector('mjx-container')){
+        [].forEach.call(doc.querySelectorAll('.eq[data-plain]'),function(el){ el.textContent=el.getAttribute('data-plain'); el.style.fontFamily='var(--mono)'; });
+      }
+    },3000);
+  });
+})();
+</script>
 </body>
 </html>
