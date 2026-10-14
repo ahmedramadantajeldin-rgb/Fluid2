@@ -11,14 +11,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js');</script>
-<script>
-window.MathJax = {
-  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
-  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
-  chtml: { scale: 1.05 }
-};
-</script>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
 <style>
 /* =====================================================================
    Design tokens — deep-water palette (aqua / sky / azure)
@@ -121,8 +113,8 @@ section[id],article[id],li[id]{scroll-margin-top:calc(var(--nav-h) + 20px);}
 .hero{
   position:relative; overflow:hidden; isolation:isolate;
   display:flex; align-items:center;
-  min-height:clamp(560px,82vh,780px);
-  padding:clamp(72px,9vw,112px) 0 clamp(104px,11vw,150px);
+  min-height:clamp(420px,60vh,560px);
+  padding:clamp(64px,8vw,96px) 0 clamp(96px,10vw,130px);
 }
 .hero .wrap{position:relative; z-index:2;}
 .hero-copy{max-width:580px;}
@@ -161,7 +153,7 @@ section[id],article[id],li[id]{scroll-margin-top:calc(var(--nav-h) + 20px);}
 }
 .badge i{width:8px; height:8px; border-radius:50%; background:var(--aqua); box-shadow:0 0 0 4px rgba(43,212,197,.2);}
 h1.title{
-  margin:var(--sp-5) 0 var(--sp-4); font-family:var(--serif); font-size:clamp(2.8rem,6.6vw,5rem); line-height:1.06; font-weight:800; letter-spacing:-.02em; color:var(--ink);
+  margin:0 0 var(--sp-4); font-family:var(--serif); font-size:clamp(2.8rem,6.6vw,5rem); line-height:1.06; font-weight:800; letter-spacing:-.02em; color:var(--ink);
 }
 h1.title em{
   font-style:normal; color:var(--sky);
@@ -196,7 +188,7 @@ h1.title em{
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='60' viewBox='0 0 160 60' fill='none' stroke='%232BD4C5' stroke-opacity='.10' stroke-width='1.2'%3E%3Cpath d='M0 30C20 10 60 10 80 30S140 50 160 30'/%3E%3C/svg%3E") 0 0/160px 60px repeat;
   -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 14%,#000 72%,transparent 100%); mask-image:linear-gradient(to bottom,transparent 0%,#000 14%,#000 72%,transparent 100%);
 }
-.sec-head{display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-5); margin-bottom:var(--sp-7); padding-bottom:var(--sp-4); border-bottom:1px solid var(--line);}
+.sec-head{display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-5); margin-bottom:var(--sp-5); padding-bottom:var(--sp-3); border-bottom:1px solid var(--line);}
 .eyebrow{font-size:.76rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--aqua);}
 .sec-head h2{font-family:var(--serif); font-size:clamp(1.9rem,3.6vw,2.7rem); font-weight:700; letter-spacing:-.015em; line-height:1.15; margin-top:var(--sp-2);}
 .sec-head p{color:var(--muted); font-size:.98rem; max-width:34ch; text-align:right;}
@@ -207,69 +199,26 @@ h1.title em{
 .chapter:nth-child(3){--accent:#6FA2FF; --accent-rgb:111,162,255;}
 
 .card{
-  position:relative; flex:1; min-width:0; display:flex; flex-direction:column; overflow:hidden;
+  position:relative; flex:1; min-width:0; display:flex; align-items:center; gap:var(--sp-4); min-height:92px; padding:var(--sp-4) var(--sp-5); overflow:hidden;
+  text-decoration:none; color:inherit;
   background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.012)), var(--surface);
   border:1px solid var(--line); border-radius:var(--r-lg); box-shadow:var(--shadow-sm);
   transition:transform .22s, box-shadow .22s, border-color .22s;
 }
 .card::before{content:""; position:absolute; left:0; right:0; top:0; height:3px; background:linear-gradient(90deg,var(--accent),transparent 85%);}
-.card:hover,.card:focus-within{
-  transform:translateY(-5px); border-color:rgba(var(--accent-rgb),.55);
-  box-shadow:var(--shadow-lg), 0 22px 60px rgba(var(--accent-rgb),.14);
+.card:active{transform:scale(.985);}
+.card:focus-visible{border-color:rgba(var(--accent-rgb),.7);}
+@media (hover:hover){
+  .card:hover{transform:translateY(-4px); border-color:rgba(var(--accent-rgb),.55); box-shadow:var(--shadow-lg), 0 18px 48px rgba(var(--accent-rgb),.14);}
+  .card:hover .go{transform:translateX(4px);}
 }
-.card-main{position:relative; flex:1; display:flex; flex-direction:column; min-width:0; padding:var(--sp-6) var(--sp-6) var(--sp-5);}
-.num{
-  position:absolute; top:18px; right:24px; font-family:var(--serif); font-weight:700; font-size:3.4rem; line-height:1; letter-spacing:-.02em;
-  color:transparent; -webkit-text-stroke:1px rgba(var(--accent-rgb),.42); pointer-events:none; user-select:none;
-}
-.card-top{display:flex; align-items:center; gap:var(--sp-3); margin-bottom:var(--sp-4);}
-.ico{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:rgba(var(--accent-rgb),.12); border:1px solid rgba(var(--accent-rgb),.32); color:var(--accent);}
+.ico{flex:none; width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:rgba(var(--accent-rgb),.12); border:1px solid rgba(var(--accent-rgb),.32); color:var(--accent);}
 .ico svg{width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;}
-.kicker{font-size:.74rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent);}
-.card h3{font-family:var(--serif); font-size:clamp(1.3rem,2vw,1.5rem); line-height:1.28; letter-spacing:-.005em; font-weight:700; color:var(--ink);}
-.card .sub{margin-top:var(--sp-2); font-size:.95rem; font-weight:600; color:var(--muted);}
-.card .desc{margin-top:var(--sp-4); color:var(--ink-2); font-size:.98rem; line-height:1.75;}
-.topics{display:flex; flex-wrap:wrap; gap:var(--sp-2); margin:auto 0 0; padding:var(--sp-5) 0 0; list-style:none;}
-.topics li{padding:4px 12px; border-radius:var(--r-pill); background:rgba(var(--accent-rgb),.09); border:1px solid rgba(var(--accent-rgb),.26); color:var(--ink-2); font-size:.8rem; font-weight:600;}
+.card-text{flex:1; min-width:0; display:block;}
+.kicker{display:block; font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent);}
+.card h3{font-family:var(--serif); font-size:1.1rem; line-height:1.3; font-weight:700; color:var(--ink); margin-top:2px;}
+.go{flex:none; width:20px; height:20px; color:var(--accent); transition:transform .22s;}
 
-/* Equation band — streamlines flow behind the formula */
-.eq-panel{
-  position:relative; display:flex; flex-direction:column; gap:var(--sp-3); min-width:0; overflow:hidden;
-  padding:var(--sp-5) var(--sp-6); border-top:1px solid var(--line);
-  background:linear-gradient(160deg,rgba(var(--accent-rgb),.11),rgba(var(--accent-rgb),.03));
-}
-.eq-panel::before{
-  content:""; position:absolute; inset:0; pointer-events:none; background:var(--accent); opacity:.22;
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' preserveAspectRatio='none' fill='none' stroke='white' stroke-width='1.4' stroke-linecap='round'%3E%3Cpath d='M0 150C80 150 120 90 200 90S320 150 400 150'/%3E%3Cpath d='M0 125C80 125 130 62 200 62S320 125 400 125'/%3E%3Cpath d='M0 100C80 100 140 34 200 34S320 100 400 100'/%3E%3Cpath d='M0 175C80 175 115 118 200 118S320 175 400 175'/%3E%3Cpath d='M0 75C80 75 150 8 200 8S320 75 400 75'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;
-          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' preserveAspectRatio='none' fill='none' stroke='white' stroke-width='1.4' stroke-linecap='round'%3E%3Cpath d='M0 150C80 150 120 90 200 90S320 150 400 150'/%3E%3Cpath d='M0 125C80 125 130 62 200 62S320 125 400 125'/%3E%3Cpath d='M0 100C80 100 140 34 200 34S320 100 400 100'/%3E%3Cpath d='M0 175C80 175 115 118 200 118S320 175 400 175'/%3E%3Cpath d='M0 75C80 75 150 8 200 8S320 75 400 75'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;
-}
-.eq-panel > *{position:relative;}
-.eq-label{font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);}
-.eq{
-  z-index:2; background:rgba(3,16,23,.62); border:1px solid var(--line); border-radius:var(--r-md); padding:var(--sp-4) var(--sp-3);
-  box-shadow:var(--shadow-sm); overflow-x:auto; overflow-y:hidden; text-align:center; color:var(--ink); font-size:.98rem;
-  scrollbar-width:thin; scrollbar-color:var(--line-2) transparent;
-}
-.eq mjx-container{margin:0!important; min-width:max-content;}
-.copy{
-  z-index:2; align-self:flex-start; display:inline-flex; align-items:center; gap:8px; padding:5px 12px; border-radius:var(--r-pill);
-  border:1px solid var(--line-2); background:rgba(255,255,255,.06); color:var(--ink-2); font:600 .8rem/1.3 var(--font); cursor:pointer; transition:background .15s,border-color .15s,color .15s;
-}
-.copy svg{width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
-.copy:hover{border-color:var(--accent); color:var(--accent);}
-.copy[data-done="true"]{background:var(--accent); border-color:var(--accent); color:var(--on-accent);}
-
-.card-foot{padding:var(--sp-4) var(--sp-6) var(--sp-5); border-top:1px solid var(--line);}
-.open-btn{
-  display:inline-flex; align-items:center; gap:10px; padding:10px 18px; border-radius:var(--r-md);
-  background:rgba(var(--accent-rgb),.12); border:1px solid rgba(var(--accent-rgb),.5); color:var(--ink);
-  text-decoration:none; font-weight:700; font-size:.94rem; transition:background .18s,color .18s,border-color .18s;
-}
-.open-btn svg{width:18px; height:18px; transition:transform .18s;}
-/* The whole card is clickable through this one real link */
-.open-btn::after{content:""; position:absolute; inset:0; z-index:1; border-radius:var(--r-lg);}
-.card:hover .open-btn,.card:focus-within .open-btn{background:var(--accent); border-color:var(--accent); color:var(--on-accent);}
-.card:hover .open-btn svg{transform:translateX(4px);}
 
 /* =====================================================================
    Footer, back-to-top
@@ -317,18 +266,12 @@ h1.title em{
   .sec-head{flex-direction:column; align-items:flex-start;}
   .sec-head p{text-align:left;}
   .chapter-grid{grid-template-columns:minmax(0,1fr); gap:var(--sp-4);}
-  .card-main{padding:var(--sp-5);}
-  .eq-panel{padding:var(--sp-4) var(--sp-5);}
-  .card-foot{padding:var(--sp-4) var(--sp-5) var(--sp-5);}
-  .num{font-size:2.8rem; top:14px; right:18px;}
   .chapters{padding-bottom:var(--sp-8);}
   .foot .wrap{flex-direction:column; align-items:flex-start; gap:var(--sp-2);}
 }
 @media (max-width:420px){
   body{font-size:16px;}
   .brand span{font-size:.95rem;}
-  .btn{width:100%;}
-  .eq{font-size:.92rem;}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto;}
@@ -414,7 +357,7 @@ h1.title em{
           <stop offset="0" stop-color="#2BD4C5" stop-opacity=".30"/>
           <stop offset="1" stop-color="#0E5A8A" stop-opacity=".06"/>
         </radialGradient>
-        <!--STREAMLINES-->
+        <g id="upper"><path class="sl" d="M0,118.5 L10,118.2 L20,117.9 L30,117.6 L40,117.3 L50,116.9 L60,116.4 L70,115.9 L80,115.3 L90,114.6 L100,113.8 L110,112.9 L120,111.9 L130,110.7 L140,109.3 L150,107.8 L160,106.0 L170,103.9 L180,101.7 L190,99.2 L200,96.7 L210,94.1 L220,91.6 L230,89.4 L240,87.4 L250,85.7 L260,84.5 L270,83.8 L280,83.5 L290,83.8 L300,84.5 L310,85.7 L320,87.4 L330,89.4 L340,91.6 L350,94.1 L360,96.7 L370,99.2 L380,101.7 L390,103.9 L400,106.0 L410,107.8 L420,109.3 L430,110.7 L440,111.9 L450,112.9 L460,113.8 L470,114.6 L480,115.3 L490,115.9 L500,116.4 L510,116.9 L520,117.3 L530,117.6 L540,117.9 L550,118.2 L560,118.5"/><path class="sl" d="M0,108.1 L10,107.8 L20,107.5 L30,107.1 L40,106.7 L50,106.3 L60,105.8 L70,105.2 L80,104.6 L90,103.9 L100,103.1 L110,102.2 L120,101.1 L130,99.9 L140,98.6 L150,97.1 L160,95.4 L170,93.5 L180,91.5 L190,89.4 L200,87.2 L210,85.0 L220,82.9 L230,81.0 L240,79.3 L250,77.9 L260,76.9 L270,76.3 L280,76.1 L290,76.3 L300,76.9 L310,77.9 L320,79.3 L330,81.0 L340,82.9 L350,85.0 L360,87.2 L370,89.4 L380,91.5 L390,93.5 L400,95.4 L410,97.1 L420,98.6 L430,99.9 L440,101.1 L450,102.2 L460,103.1 L470,103.9 L480,104.6 L490,105.2 L500,105.8 L510,106.3 L520,106.7 L530,107.1 L540,107.5 L550,107.8 L560,108.1"/><path class="sl" d="M0,93.5 L10,93.2 L20,92.8 L30,92.5 L40,92.0 L50,91.6 L60,91.0 L70,90.5 L80,89.8 L90,89.1 L100,88.3 L110,87.3 L120,86.3 L130,85.2 L140,83.9 L150,82.5 L160,81.0 L170,79.4 L180,77.7 L190,75.9 L200,74.1 L210,72.3 L220,70.6 L230,69.1 L240,67.7 L250,66.6 L260,65.8 L270,65.4 L280,65.2 L290,65.4 L300,65.8 L310,66.6 L320,67.7 L330,69.1 L340,70.6 L350,72.3 L360,74.1 L370,75.9 L380,77.7 L390,79.4 L400,81.0 L410,82.5 L420,83.9 L430,85.2 L440,86.3 L450,87.3 L460,88.3 L470,89.1 L480,89.8 L490,90.5 L500,91.0 L510,91.6 L520,92.0 L530,92.5 L540,92.8 L550,93.2 L560,93.5"/><path class="sl" d="M0,74.9 L10,74.5 L20,74.1 L30,73.7 L40,73.3 L50,72.8 L60,72.3 L70,71.7 L80,71.0 L90,70.3 L100,69.5 L110,68.6 L120,67.6 L130,66.6 L140,65.5 L150,64.3 L160,63.0 L170,61.6 L180,60.2 L190,58.8 L200,57.4 L210,56.0 L220,54.7 L230,53.5 L240,52.5 L250,51.7 L260,51.1 L270,50.7 L280,50.6 L290,50.7 L300,51.1 L310,51.7 L320,52.5 L330,53.5 L340,54.7 L350,56.0 L360,57.4 L370,58.8 L380,60.2 L390,61.6 L400,63.0 L410,64.3 L420,65.5 L430,66.6 L440,67.6 L450,68.6 L460,69.5 L470,70.3 L480,71.0 L490,71.7 L500,72.3 L510,72.8 L520,73.3 L530,73.7 L540,74.1 L550,74.5 L560,74.9"/><path class="sl" d="M0,52.2 L10,51.8 L20,51.5 L30,51.0 L40,50.6 L50,50.1 L60,49.6 L70,49.0 L80,48.3 L90,47.7 L100,46.9 L110,46.1 L120,45.3 L130,44.4 L140,43.4 L150,42.4 L160,41.3 L170,40.2 L180,39.1 L190,38.0 L200,37.0 L210,36.0 L220,35.0 L230,34.2 L240,33.4 L250,32.9 L260,32.4 L270,32.2 L280,32.1 L290,32.2 L300,32.4 L310,32.9 L320,33.4 L330,34.2 L340,35.0 L350,36.0 L360,37.0 L370,38.0 L380,39.1 L390,40.2 L400,41.3 L410,42.4 L420,43.4 L430,44.4 L440,45.3 L450,46.1 L460,46.9 L470,47.7 L480,48.3 L490,49.0 L500,49.6 L510,50.1 L520,50.6 L530,51.0 L540,51.5 L550,51.8 L560,52.2"/><path class="sl" d="M0,25.6 L10,25.3 L20,24.9 L30,24.5 L40,24.0 L50,23.5 L60,23.0 L70,22.5 L80,21.9 L90,21.3 L100,20.6 L110,20.0 L120,19.2 L130,18.5 L140,17.7 L150,16.9 L160,16.0 L170,15.2 L180,14.4 L190,13.6 L200,12.8 L210,12.1 L220,11.4 L230,10.8 L240,10.3 L250,9.9 L260,9.6 L270,9.4 L280,9.3 L290,9.4 L300,9.6 L310,9.9 L320,10.3 L330,10.8 L340,11.4 L350,12.1 L360,12.8 L370,13.6 L380,14.4 L390,15.2 L400,16.0 L410,16.9 L420,17.7 L430,18.5 L440,19.2 L450,20.0 L460,20.6 L470,21.3 L480,21.9 L490,22.5 L500,23.0 L510,23.5 L520,24.0 L530,24.5 L540,24.9 L550,25.3 L560,25.6"/><path class="sl" d="M0,-2.8 L10,-3.2 L20,-3.5 L30,-3.9 L40,-4.3 L50,-4.8 L60,-5.2 L70,-5.7 L80,-6.2 L90,-6.8 L100,-7.3 L110,-7.9 L120,-8.5 L130,-9.1 L140,-9.8 L150,-10.4 L160,-11.0 L170,-11.7 L180,-12.3 L190,-12.9 L200,-13.4 L210,-14.0 L220,-14.4 L230,-14.9 L240,-15.2 L250,-15.5 L260,-15.7 L270,-15.9 L280,-15.9 L290,-15.9 L300,-15.7 L310,-15.5 L320,-15.2 L330,-14.9 L340,-14.4 L350,-14.0 L360,-13.4 L370,-12.9 L380,-12.3 L390,-11.7 L400,-11.0 L410,-10.4 L420,-9.8 L430,-9.1 L440,-8.5 L450,-7.9 L460,-7.3 L470,-6.8 L480,-6.2 L490,-5.7 L500,-5.2 L510,-4.8 L520,-4.3 L530,-3.9 L540,-3.5 L550,-3.2 L560,-2.8"/></g>
       </defs>
       <g transform="translate(660 120) scale(1.4)">
         <use href="#upper"/>
@@ -431,123 +374,37 @@ h1.title em{
 
     <div class="wrap">
       <div class="hero-copy">
-        <span class="badge"><i aria-hidden="true"></i>Fluid Mechanics · Lecture Notes</span>
         <h1 class="title" id="page-title">Fluid <em>Mechanics</em></h1>
         <p class="lede">Detailed study summaries for the course chapters.</p>
-        <ul class="meta" aria-label="At a glance">
-          <li><b>3</b> chapters</li>
-          <li>Full derivations</li>
-          <li>Worked examples</li>
-        </ul>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="#chapters">Browse chapters
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
-          </a>
-          <a class="btn btn-ghost" href="chapter-1.html">Start with Chapter 1
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
       </div>
     </div>
   </section>
 
   <section class="chapters" id="chapters" aria-labelledby="chapters-title">
     <div class="wrap">
-      <div class="sec-head reveal">
-        <div>
-          <span class="eyebrow">Course contents</span>
-          <h2 id="chapters-title">Chapters</h2>
-        </div>
-        <p>Select a chapter to open its lecture notes.</p>
-      </div>
+      <div class="sec-head reveal"><h2 id="chapters-title">Chapters</h2></div>
 
       <ol class="chapter-grid">
         <li class="chapter reveal" id="chapter-1">
-          <article class="card">
-            <div class="card-main">
-              <span class="num" aria-hidden="true">01</span>
-              <div class="card-top">
-                <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 7.5c2.6-2.6 4.6 2.6 7.2 0s4.6 2.6 7.2 0 3.6.6 5.6-1.2"/><path d="M2 13c2.6-2.6 4.6 2.6 7.2 0s4.6 2.6 7.2 0 3.6.6 5.6-1.2"/><path d="M2 18.5c2.6-2.6 4.6 2.6 7.2 0s4.6 2.6 7.2 0 3.6.6 5.6-1.2"/></svg></span>
-                <span class="kicker">Chapter 1</span>
-              </div>
-              <h3>Introduction / Discussion</h3>
-              <p class="sub">Describing fluid motion</p>
-              <p class="desc">Lagrangian and Eulerian descriptions, the Material Derivative, streamlines, and rotation, vorticity and strain rates.</p>
-              <ul class="topics" aria-label="Topics in Chapter 1">
-                <li>Lagrangian &amp; Eulerian</li><li>Streamlines</li><li>Vorticity</li><li>Strain Rate Tensor</li>
-              </ul>
-            </div>
-            <div class="eq-panel">
-              <span class="eq-label">Material derivative</span>
-              <div class="eq" data-plain="D/Dt = ∂/∂t + (V·∇)" data-tex="\frac{D}{Dt} = \frac{\partial}{\partial t} + (\vec{V} \cdot \vec{\nabla})">\[ \frac{D}{Dt} = \frac{\partial}{\partial t} + (\vec{V} \cdot \vec{\nabla}) \]</div>
-              <button class="copy" type="button" data-copy="\frac{D}{Dt} = \frac{\partial}{\partial t} + (\vec{V} \cdot \vec{\nabla})" aria-label="Copy the material derivative equation as LaTeX">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><span>Copy LaTeX</span>
-              </button>
-            </div>
-            <div class="card-foot">
-              <a class="open-btn" href="chapter-1.html" aria-label="Open Chapter 1: Introduction / Discussion">Open Chapter 1
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-            </div>
-          </article>
+          <a class="card" href="chapter-1.html" aria-label="Open Chapter 1: Introduction / Discussion">
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 7.5c2.6-2.6 4.6 2.6 7.2 0s4.6 2.6 7.2 0 3.6.6 5.6-1.2"/><path d="M2 13c2.6-2.6 4.6 2.6 7.2 0s4.6 2.6 7.2 0 3.6.6 5.6-1.2"/><path d="M2 18.5c2.6-2.6 4.6 2.6 7.2 0s4.6 2.6 7.2 0 3.6.6 5.6-1.2"/></svg></span>
+            <span class="card-text"><span class="kicker">Chapter 1</span><h3>Introduction / Discussion</h3></span>
+            <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </li>
-
         <li class="chapter reveal" id="chapter-2">
-          <article class="card">
-            <div class="card-main">
-              <span class="num" aria-hidden="true">02</span>
-              <div class="card-top">
-                <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M2 12h3.5M4 10l1.8 2L4 14M18.5 12H22M20.2 10l1.8 2-1.8 2"/></svg></span>
-                <span class="kicker">Chapter 2</span>
-              </div>
-              <h3>Continuity Equation</h3>
-              <p class="desc">The full derivation of the differential form from the Control Volume and Taylor Expansion, then cylindrical coordinates and the Stream Function, with worked examples.</p>
-              <ul class="topics" aria-label="Topics in Chapter 2">
-                <li>Control Volume</li><li>Taylor Expansion</li><li>Cylindrical Coordinates</li><li>Stream Function ψ</li>
-              </ul>
-            </div>
-            <div class="eq-panel">
-              <span class="eq-label">Continuity equation</span>
-              <div class="eq" data-plain="∂ρ/∂t + ∇·(ρV) = 0" data-tex="\frac{\partial \rho}{\partial t} + \vec{\nabla}\cdot(\rho \vec{V}) = 0">\[ \frac{\partial \rho}{\partial t} + \vec{\nabla}\cdot(\rho \vec{V}) = 0 \]</div>
-              <button class="copy" type="button" data-copy="\frac{\partial \rho}{\partial t} + \vec{\nabla}\cdot(\rho \vec{V}) = 0" aria-label="Copy the continuity equation as LaTeX">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><span>Copy LaTeX</span>
-              </button>
-            </div>
-            <div class="card-foot">
-              <a class="open-btn" href="chapter-2.html" aria-label="Open Chapter 2: Continuity Equation">Open Chapter 2
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-            </div>
-          </article>
+          <a class="card" href="chapter-2.html" aria-label="Open Chapter 2: Continuity Equation">
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M2 12h3.5M4 10l1.8 2L4 14M18.5 12H22M20.2 10l1.8 2-1.8 2"/></svg></span>
+            <span class="card-text"><span class="kicker">Chapter 2</span><h3>Continuity Equation</h3></span>
+            <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </li>
-
         <li class="chapter reveal" id="chapter-3">
-          <article class="card">
-            <div class="card-main">
-              <span class="num" aria-hidden="true">03</span>
-              <div class="card-top">
-                <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3c3.6 4.2 6 7.1 6 10.4A6 6 0 0 1 6 13.4C6 10.1 8.4 7.2 12 3z"/></svg></span>
-                <span class="kicker">Chapter 3</span>
-              </div>
-              <h3>Momentum Equation and Navier–Stokes Equation</h3>
-              <p class="desc">From Newton's second law on the Control Volume to Cauchy's equation, the Stress Tensor and the Newtonian Fluid, then the Navier–Stokes equation with a worked example.</p>
-              <ul class="topics" aria-label="Topics in Chapter 3">
-                <li>Cauchy's Equation</li><li>Stress Tensor</li><li>Newtonian Fluid</li><li>Navier–Stokes</li>
-              </ul>
-            </div>
-            <div class="eq-panel">
-              <span class="eq-label">Cauchy's equation</span>
-              <div class="eq" data-plain="ρ DV/Dt = ρg + ∇·σᵢⱼ" data-tex="\rho\frac{D\vec V}{Dt}=\rho\vec g+\vec\nabla\cdot\boldsymbol\sigma_{ij}">\[ \rho\frac{D\vec V}{Dt}=\rho\vec g+\vec\nabla\cdot\boldsymbol\sigma_{ij} \]</div>
-              <button class="copy" type="button" data-copy="\rho\frac{D\vec V}{Dt}=\rho\vec g+\vec\nabla\cdot\boldsymbol\sigma_{ij}" aria-label="Copy Cauchy's equation as LaTeX">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><span>Copy LaTeX</span>
-              </button>
-            </div>
-            <div class="card-foot">
-              <a class="open-btn" href="chapter-3.html" aria-label="Open Chapter 3: Momentum Equation and Navier–Stokes Equation">Open Chapter 3
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-            </div>
-          </article>
+          <a class="card" href="chapter-3.html" aria-label="Open Chapter 3: Momentum Equation and Navier–Stokes Equation">
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3c3.6 4.2 6 7.1 6 10.4A6 6 0 0 1 6 13.4C6 10.1 8.4 7.2 12 3z"/></svg></span>
+            <span class="card-text"><span class="kicker">Chapter 3</span><h3>Momentum Equation and Navier–Stokes Equation</h3></span>
+            <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </li>
       </ol>
     </div>
@@ -625,31 +482,6 @@ h1.title em{
     [].forEach.call(doc.querySelectorAll('.reveal'),function(el){ el.classList.add('in'); });
   }
 
-  /* Copy equation as LaTeX */
-  [].forEach.call(doc.querySelectorAll('.copy'),function(btn){
-    var label=btn.querySelector('span'), original=label.textContent, timer;
-    btn.addEventListener('click',function(){
-      var text=btn.getAttribute('data-copy');
-      function done(ok){
-        label.textContent=ok?'Copied':'Copy failed'; btn.setAttribute('data-done',ok?'true':'false');
-        clearTimeout(timer); timer=setTimeout(function(){ label.textContent=original; btn.removeAttribute('data-done'); },1600);
-      }
-      if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(function(){done(true);},function(){done(false);}); }
-      else {
-        var ta=doc.createElement('textarea'); ta.value=text; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.opacity='0'; doc.body.appendChild(ta); ta.select();
-        var ok=false; try{ ok=doc.execCommand('copy'); }catch(e){} doc.body.removeChild(ta); done(ok);
-      }
-    });
-  });
-
-  /* If MathJax could not load (offline), fall back to plain-text equations */
-  window.addEventListener('load',function(){
-    setTimeout(function(){
-      if(!doc.querySelector('mjx-container')){
-        [].forEach.call(doc.querySelectorAll('.eq[data-plain]'),function(el){ el.textContent=el.getAttribute('data-plain'); el.style.fontFamily='var(--mono)'; });
-      }
-    },3000);
-  });
 })();
 </script>
 </body>
